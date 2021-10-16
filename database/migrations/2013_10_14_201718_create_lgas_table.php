@@ -19,6 +19,7 @@ class CreateLgasTable extends Migration
             $table->string('lga_name')->index();
             $table->string('lga_code')->index();
             $table->string('state_name');
+            $table->string('state_id');
             $table->foreignIdFor(State::class, 'state_code');
         });
     }

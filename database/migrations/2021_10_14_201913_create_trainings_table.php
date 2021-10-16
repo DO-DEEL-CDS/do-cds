@@ -23,6 +23,7 @@ class CreateTrainingsTable extends Migration
             $table->timestamp('attendance_time');
             $table->tinyInteger('status')->default(TrainingStatus::Pending);
             $table->string('batch')->nullable()->index();
+            $table->string('live_video')->nullable();
             $table->unsignedBigInteger('trainer_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();

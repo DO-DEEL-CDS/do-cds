@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\State;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,9 +20,12 @@ class CreateProfilesTable extends Migration
             $table->string('nysc_call_up_number')->nullable();
             $table->string('nysc_state_code')->nullable();
             $table->string('phone_number')->nullable();
-            $table->foreignIdFor(State::class, 'state_code');
+            $table->string('state_code');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('state_code')->references('state_code')->on('states')->cascadeOnDelete();
+
         });
     }
 
