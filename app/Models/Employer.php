@@ -23,8 +23,8 @@ class Employer extends Model
         'updated_at'
     ];
 
-    public function jobs(): HasMany
+    public function employments(): HasMany
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(Employment::class);
     }
 }

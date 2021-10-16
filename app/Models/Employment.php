@@ -6,11 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Job extends Model
+class Employment extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected $fillable = [
+        'title',
+        'location',
+        'description',
+        'employment_type'
+    ];
 
     public function employer(): BelongsTo
     {
