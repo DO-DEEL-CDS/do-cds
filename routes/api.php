@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,5 +24,5 @@ Route::prefix('auth')->group(function () {
     Route::post('get-started', [RegistrationController::class, 'getStarted']);
     Route::post('verify-email', [RegistrationController::class, 'verifyEmail']);
     Route::post('account', [RegistrationController::class, 'createAccount']);
-//    Route::post('')
+    Route::post('login', LoginController::class);
 });

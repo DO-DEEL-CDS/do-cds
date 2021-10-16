@@ -68,6 +68,28 @@ class UserRepository extends BaseRepository
     public function generateApiKey(User $user): string
     {
         $token = $user->createToken($user->name);
-        return $token->plainTextToken;
+        return explode('|', $token->plainTextToken)[1];
+    }
+
+    public function getCurrentUser(string $deviceId, bool $withNewToken = false): User
+    {
+        $user = request()->user('sanctum')->load(['profile', 'permissions']);
+
+        if ($deviceId) {
+            $user->device_id = $deviceId;
+            $user->update();
+        }
+
+        if ($withNewToken) {
+            $this->deleteAPiIKeys($user);
+            $user->api_token = $this->generateApiKey($user);
+        }
+        return $user;
+    }
+
+    public function deleteAPiIKeys(User $user): string
+    {
+        $user->tokens()->delete();
+        return true;
     }
 }

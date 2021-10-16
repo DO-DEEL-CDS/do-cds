@@ -32,7 +32,8 @@ class CreateCorperAccountRequest extends FormRequest
             'deployed_state' => ['required', 'exists:states,state_code'],
             'call_up_number' => ['required', 'string', 'max:20'],
             'password' => $this->passwordRules(),
-            'secret' => new RegistrationSecret()
+            'secret' => new RegistrationSecret(),
+            'device_id' => ['sometimes', 'present', 'string']
         ];
     }
 }

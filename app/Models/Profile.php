@@ -17,7 +17,15 @@ class Profile extends Model
         'phone_number',
         'nysc_call_up_number',
         'nysc_state_code',
-        'state_code'
+        'state_code',
+        'deployed_state'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+        'state_code',
+        'user_id',
     ];
 
     public function user(): BelongsTo
