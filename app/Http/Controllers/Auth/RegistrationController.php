@@ -35,10 +35,6 @@ class RegistrationController extends Controller
         $this->authService = $authService;
     }
 
-    /**
-     * @param  Request  $request
-     * @return JsonResponse
-     */
     public function getStarted(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -46,9 +42,7 @@ class RegistrationController extends Controller
         ]);
 
         abort_if($this->prospectRepository->hasAccount($validated['email']), Response::HTTP_BAD_REQUEST, 'Account Already Exist');
-
         $this->prospectService->sendOTP($validated['email']);
-
         return $this->success('OTP Sent');
     }
 
@@ -56,15 +50,13 @@ class RegistrationController extends Controller
     {
         $validated = $request->validate([
             'email' => ['required', 'email', 'exists:prospects,email'],
-            'otp' => ['required', Rule::exists('prospects', 'verify_token')->where('email', $request->input('email'))]
+            'otp' => [
+                'required',
+                Rule::exists('prospects', 'verify_token')->where('email', $request->input('email'))
+            ]
         ]);
 
-        abort_if(
-            !$this->prospectRepository->isOTPValid($validated['email']),
-            Response::HTTP_BAD_REQUEST,
-            'OTP Expired, Request a new one'
-        );
-
+        abort_if(!$this->prospectRepository->isOTPValid($validated['email']), Response::HTTP_BAD_REQUEST, 'OTP Expired, Request a new one');
         return $this->success('Email Verified', $this->prospectService->registrationSecret($validated['email']));
     }
 

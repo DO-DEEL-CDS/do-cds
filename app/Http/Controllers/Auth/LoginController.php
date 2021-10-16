@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 
 class LoginController extends Controller
 {
@@ -14,7 +13,8 @@ class LoginController extends Controller
      * Handle the incoming request.
      *
      * @param  LoginRequest  $request
-     * @return Response
+     * @param  AuthService  $authService
+     * @return JsonResponse
      */
     public function __invoke(LoginRequest $request, AuthService $authService): JsonResponse
     {
