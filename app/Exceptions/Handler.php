@@ -34,6 +34,7 @@ class Handler extends ExceptionHandler
         'current_password',
         'password',
         'password_confirmation',
+        'secret'
     ];
 
     /**
@@ -94,6 +95,15 @@ class Handler extends ExceptionHandler
                         'code' => $e->getStatusCode()
                     ]
                 ], $e->getStatusCode());
+            }
+
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    'error' => [
+                        'message' => $e->getMessage(),
+                        'errors' => $e->errors()
+                    ]
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         }
         return parent::render($request, $e);

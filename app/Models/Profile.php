@@ -15,7 +15,6 @@ class Profile extends Model
     protected $fillable = [
         'photo',
         'phone_number',
-        'deployed_state',
         'nysc_call_up_number',
         'nysc_state_code',
         'state_code'

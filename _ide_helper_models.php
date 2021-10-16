@@ -1,7 +1,6 @@
 <?php
 
 // @formatter:off
-
 /**
  * A helper file for your Eloquent Models
  * Copy the phpDocs from this file to the correct Model,
@@ -97,8 +96,8 @@ namespace App\Models {
      * @property string|null $email
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
-     * @property-read Collection|Employment[] $jobs
-     * @property-read int|null $jobs_count
+     * @property-read Collection|Employment[] $employments
+     * @property-read int|null $employments_count
      * @method static EmployerFactory factory(...$parameters)
      * @method static Builder|Employer newModelQuery()
      * @method static Builder|Employer newQuery()
@@ -168,6 +167,7 @@ namespace App\Models {
      * @property string $lga_name
      * @property string $lga_code
      * @property string $state_name
+     * @property string $state_id
      * @property int $state_code
      * @method static Builder|Lga newModelQuery()
      * @method static Builder|Lga newQuery()
@@ -176,6 +176,7 @@ namespace App\Models {
      * @method static Builder|Lga whereLgaCode($value)
      * @method static Builder|Lga whereLgaName($value)
      * @method static Builder|Lga whereStateCode($value)
+     * @method static Builder|Lga whereStateId($value)
      * @method static Builder|Lga whereStateName($value)
      */
     class Lga extends Eloquent
@@ -230,7 +231,7 @@ namespace App\Models {
      * @property string|null $nysc_call_up_number
      * @property string|null $nysc_state_code
      * @property string|null $phone_number
-     * @property int $state_code
+     * @property string $state_code
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
      * @property string|null $deleted_at
@@ -262,6 +263,8 @@ namespace App\Models {
     use Database\Factories\ProspectFactory;
     use Eloquent;
     use Illuminate\Database\Eloquent\Builder;
+    use Illuminate\Notifications\DatabaseNotification;
+    use Illuminate\Notifications\DatabaseNotificationCollection;
     use Illuminate\Support\Carbon;
 
     /**
@@ -274,6 +277,8 @@ namespace App\Models {
      * @property string|null $verify_token
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
+     * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+     * @property-read int|null $notifications_count
      * @property-read User $user
      * @method static ProspectFactory factory(...$parameters)
      * @method static Builder|Prospect newModelQuery()
@@ -511,6 +516,7 @@ namespace App\Models {
      * @property string $attendance_time
      * @property int $status
      * @property string|null $batch
+     * @property string|null $live_video
      * @property int|null $trainer_id
      * @property int|null $created_by
      * @property Carbon|null $created_at
@@ -529,6 +535,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedBy($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereEndTime($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Training whereLiveVideo($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereOverview($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereStartTime($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereStatus($value)
@@ -575,6 +582,7 @@ namespace App\Models {
 
 namespace App\Models {
 
+    use App\Enums\UserStatus;
     use Database\Factories\UserFactory;
     use Eloquent;
     use Illuminate\Database\Eloquent\Builder;
@@ -593,7 +601,7 @@ namespace App\Models {
      * @property string $name
      * @property string $email
      * @property string|null $device_id
-     * @property int $status
+     * @property UserStatus $status
      * @property Carbon|null $email_verified_at
      * @property string $password
      * @property string|null $remember_token
@@ -603,6 +611,7 @@ namespace App\Models {
      * @property-read int|null $notifications_count
      * @property-read Collection|Permission[] $permissions
      * @property-read int|null $permissions_count
+     * @property-read Profile|null $profile
      * @property-read Collection|Role[] $roles
      * @property-read int|null $roles_count
      * @property-read Collection|PersonalAccessToken[] $tokens
