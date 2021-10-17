@@ -67,8 +67,29 @@ class UserRepository extends BaseRepository
 
     public function generateApiKey(User $user): string
     {
+        $this->deleteAPiIKeys($user);
         $token = $user->createToken($user->name);
         return explode('|', $token->plainTextToken)[1];
+    }
+
+    public function deleteAPiIKeys(User $user): string
+    {
+        $user->tokens()->delete();
+        return true;
+    }
+
+    public function findByEmail(string $email): User
+    {
+        return User::whereEmail($email)->firstOrFail();
+    }
+
+    public function setPassword(User $user, $password): User
+    {
+        $user->update([
+            'password' => Hash::make($password)
+        ]);
+
+        return $user;
     }
 
     public function getCurrentUser(string $deviceId, bool $withNewToken = false): User
@@ -81,15 +102,8 @@ class UserRepository extends BaseRepository
         }
 
         if ($withNewToken) {
-            $this->deleteAPiIKeys($user);
             $user->api_token = $this->generateApiKey($user);
         }
         return $user;
-    }
-
-    public function deleteAPiIKeys(User $user): string
-    {
-        $user->tokens()->delete();
-        return true;
     }
 }

@@ -3,9 +3,12 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Notifications\PasswordChanged;
+use App\Notifications\PasswordReset;
 use App\Repositories\AuthRepository;
 use App\Repositories\ProspectRepository;
 use App\Repositories\UserRepository;
+use Auth;
 use Illuminate\Http\Response;
 use Throwable;
 
@@ -51,5 +54,51 @@ class AuthService extends BaseService
     public function loginUser(string $deviceId): User
     {
         return $this->userRepository->getCurrentUser($deviceId, true);
+    }
+
+    public function sendPasswordResetCode(string $email): void
+    {
+        $user = $this->userRepository->findByEmail($email);
+        $code = $user->getPasswordResetCode();
+        $user->notify(new PasswordReset($code));
+    }
+
+    public function verifyPasswordResetCode(array $data): User
+    {
+        $user = $this->userRepository->findByEmail($data['email']);
+        $code = $user->getPasswordResetCode();
+
+        abort_if((int) $code !== $data['code'], Response::HTTP_BAD_REQUEST, 'Reset Code Expired');
+
+        return $user;
+    }
+
+    public function setPassword(array $data): User
+    {
+        $user = $this->userRepository->setPassword($this->getUserFromSecret($data['secret']), $data['password']);
+        Auth::login($user);
+        $user->deletePasswordResetCode();
+        $user->notify(new PasswordChanged());
+        return $this->userRepository->getCurrentUser($data['device_id']);
+    }
+
+    public function getUserFromSecret(string $secret): User
+    {
+        $data = decrypt($secret);
+        return $this->userRepository->findByEmail($data['email']);
+    }
+
+    public function verifyResetSecret($secret): bool
+    {
+        $data = decrypt($secret);
+        $user = $this->getUserFromSecret($secret);
+        return $data['code'] === $user->getPasswordResetCode();
+    }
+
+    public function generateResetSecret(User $user)
+    {
+        $data['code'] = $user->getPasswordResetCode();
+        $data['email'] = $user->email;
+        return encrypt($data);
     }
 }

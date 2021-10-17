@@ -53,4 +53,22 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function getPasswordResetCode()
+    {
+        $expires = config('auth.passwords.users.expire');
+        return $this->passwordReset()
+            ->whereDate('created_at', '>=', now()->subtract($expires . ' minutes'))
+            ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
+    }
+
+    public function deletePasswordResetCode()
+    {
+        $this->passwordReset()->delete();
+    }
+
+    private function passwordReset()
+    {
+        return $this->hasOne(PasswordReset::class, 'email', 'email');
+    }
 }

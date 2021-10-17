@@ -2,18 +2,25 @@
 
 namespace App\Rules;
 
-use App\Repositories\ProspectRepository;
+use App\Services\AuthService;
+use Exception;
 use Illuminate\Contracts\Validation\Rule;
 
-class RegistrationSecret implements Rule
+class PasswordResetSecret implements Rule
 {
+    /**
+     * @var AuthService
+     */
+    private $authService;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AuthService $authService)
     {
+        $this->authService = $authService;
     }
 
     /**
@@ -25,13 +32,11 @@ class RegistrationSecret implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $prospectRepository = new ProspectRepository();
-        $prospect = $prospectRepository->getProspectFromSecret($value);
-
-        if (!$prospect || $prospect->updated_at->isBefore(now()->subtract("30 minutes"))) {
+        try {
+            return $this->authService->verifyResetSecret($value);
+        } catch (Exception $exception) {
             return false;
         }
-        return true;
     }
 
     /**
@@ -39,8 +44,8 @@ class RegistrationSecret implements Rule
      *
      * @return string
      */
-    public function message(): string
+    public function message()
     {
-        return 'The Registration Secret is Expired. Kindly start again.';
+        return 'The Secret provided is invalid.';
     }
 }

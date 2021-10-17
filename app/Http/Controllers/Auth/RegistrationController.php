@@ -51,7 +51,7 @@ class RegistrationController extends Controller
         $validated = $request->validate([
             'email' => ['required', 'email', 'exists:prospects,email'],
             'otp' => [
-                'required',
+                'required', "digits:4",
                 Rule::exists('prospects', 'verify_token')->where('email', $request->input('email'))
             ]
         ]);

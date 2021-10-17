@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,7 @@ Route::prefix('auth')->group(function () {
     Route::post('verify-email', [RegistrationController::class, 'verifyEmail']);
     Route::post('account', [RegistrationController::class, 'createAccount']);
     Route::post('login', LoginController::class);
+    Route::post('forgot-password', [PasswordController::class, 'sendPasswordResetCode']);
+    Route::post('verify-password-code', [PasswordController::class, 'verifyPasswordResetCode']);
+    Route::post('reset-password', [PasswordController::class, 'setNewPassword']);
 });
