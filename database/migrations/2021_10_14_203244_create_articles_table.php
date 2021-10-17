@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ArticleStatus;
 use App\Models\State;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
+            $table->tinyInteger('status')->default(ArticleStatus::Draft);
             $table->foreignId('author')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('category_id');
             $table->foreignIdFor(State::class, 'state_code')->nullable();

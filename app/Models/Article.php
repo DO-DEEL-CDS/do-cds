@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ArticleStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,12 +17,17 @@ class Article extends Model
         'title',
         'content',
         'category_id',
-        'state_code'
+        'state_code',
+        'status'
     ];
 
     protected $with = [
         'author:id,name',
         'category:title'
+    ];
+
+    protected $casts = [
+        'status' => ArticleStatus::class
     ];
 
     public function author(): BelongsTo

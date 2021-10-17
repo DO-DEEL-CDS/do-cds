@@ -12,24 +12,26 @@
 
 namespace App\Models {
 
-    use Database\Factories\ArticlesFactory;
+    use App\Enums\ArticleStatus;
+    use Database\Factories\ArticleFactory;
     use Eloquent;
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Support\Carbon;
 
     /**
-     * App\Models\Articles
+     * App\Models\Article
      *
      * @property int $id
      * @property string $title
      * @property string $content
+     * @property ArticleStatus $status
      * @property User $author
      * @property int $category_id
      * @property int|null $state_code
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
      * @property-read Category $category
-     * @method static ArticlesFactory factory(...$parameters)
+     * @method static ArticleFactory factory(...$parameters)
      * @method static Builder|Article newModelQuery()
      * @method static Builder|Article newQuery()
      * @method static Builder|Article query()
@@ -39,10 +41,11 @@ namespace App\Models {
      * @method static Builder|Article whereCreatedAt($value)
      * @method static Builder|Article whereId($value)
      * @method static Builder|Article whereStateCode($value)
+     * @method static Builder|Article whereStatus($value)
      * @method static Builder|Article whereTitle($value)
      * @method static Builder|Article whereUpdatedAt($value)
      */
-    class Articles extends Eloquent
+    class Article extends Eloquent
     {
     }
 }
@@ -638,8 +641,6 @@ namespace App\Models {
      * @property string|null $remember_token
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
-     * @property-read Collection|Article[] $articles
-     * @property-read int|null $articles_count
      * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
      * @property-read int|null $notifications_count
      * @property-read Collection|Permission[] $permissions
