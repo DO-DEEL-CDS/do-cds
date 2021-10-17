@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Articles::class, 'author', 'id');
+    }
 }

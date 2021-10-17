@@ -28,7 +28,7 @@ namespace App\Models {
      * @property int|null $state_code
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
-     * @property-read Category|null $category
+     * @property-read Category $category
      * @method static ArticlesFactory factory(...$parameters)
      * @method static Builder|Articles newModelQuery()
      * @method static Builder|Articles newQuery()
@@ -216,6 +216,30 @@ namespace App\Models {
 
 namespace App\Models {
 
+    use Eloquent;
+    use Illuminate\Database\Eloquent\Builder;
+    use Illuminate\Support\Carbon;
+
+    /**
+     * App\Models\PasswordReset
+     *
+     * @property string $email
+     * @property string $token
+     * @property Carbon|null $created_at
+     * @method static Builder|PasswordReset newModelQuery()
+     * @method static Builder|PasswordReset newQuery()
+     * @method static Builder|PasswordReset query()
+     * @method static Builder|PasswordReset whereCreatedAt($value)
+     * @method static Builder|PasswordReset whereEmail($value)
+     * @method static Builder|PasswordReset whereToken($value)
+     */
+    class PasswordReset extends Eloquent
+    {
+    }
+}
+
+namespace App\Models {
+
     use Database\Factories\ProfileFactory;
     use Eloquent;
     use Illuminate\Database\Eloquent\Builder;
@@ -274,7 +298,9 @@ namespace App\Models {
      * @property string $name
      * @property string $email
      * @property string $nysc_state_code
+     * @property string|null $state_code
      * @property string|null $verify_token
+     * @property string|null $intro_video
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
      * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
@@ -287,8 +313,10 @@ namespace App\Models {
      * @method static Builder|Prospect whereCreatedAt($value)
      * @method static Builder|Prospect whereEmail($value)
      * @method static Builder|Prospect whereId($value)
+     * @method static Builder|Prospect whereIntroVideo($value)
      * @method static Builder|Prospect whereName($value)
      * @method static Builder|Prospect whereNyscStateCode($value)
+     * @method static Builder|Prospect whereStateCode($value)
      * @method static Builder|Prospect whereUpdatedAt($value)
      * @method static Builder|Prospect whereVerifyToken($value)
      */
@@ -375,7 +403,7 @@ namespace App\Models {
      * App\Models\StateMember
      *
      * @property int $id
-     * @property int $state_code
+     * @property string $state_code
      * @property int $user_id
      * @property int $type
      * @property Carbon|null $created_at
@@ -607,6 +635,8 @@ namespace App\Models {
      * @property string|null $remember_token
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
+     * @property-read Collection|Articles[] $articles
+     * @property-read int|null $articles_count
      * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
      * @property-read int|null $notifications_count
      * @property-read Collection|Permission[] $permissions

@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(LgaSeeder::class);
         $this->call(AclSeeder::class);
         $this->call(ProspectSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(ArticlesSeeder::class);
     }
 }
