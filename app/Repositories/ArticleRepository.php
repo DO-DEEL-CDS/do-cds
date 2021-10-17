@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\News;
+use App\Models\Article;
 
-class NewsRepository extends BaseRepository
+class ArticleRepository extends BaseRepository
 {
     /**
      * Instantiate repository
      *
-     * @param  News  $model
+     * @param  Article  $model
      */
-    public function __construct(News $model)
+    public function __construct(Article $model)
     {
         parent::__construct($model);
     }

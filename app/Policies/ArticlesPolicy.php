@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Articles;
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
@@ -26,10 +26,10 @@ class ArticlesPolicy
      * Determine whether the user can view the model.
      *
      * @param  User  $user
-     * @param  Articles  $articles
+     * @param  Article  $articles
      * @return Response|bool
      */
-    public function view(User $user, Articles $articles)
+    public function view(User $user, Article $articles)
     {
         //
     }
@@ -49,10 +49,10 @@ class ArticlesPolicy
      * Determine whether the user can update the model.
      *
      * @param  User  $user
-     * @param  Articles  $articles
+     * @param  Article  $articles
      * @return Response|bool
      */
-    public function update(User $user, Articles $articles)
+    public function update(User $user, Article $articles)
     {
         //
     }
@@ -61,10 +61,10 @@ class ArticlesPolicy
      * Determine whether the user can delete the model.
      *
      * @param  User  $user
-     * @param  Articles  $articles
+     * @param  Article  $articles
      * @return Response|bool
      */
-    public function delete(User $user, Articles $articles)
+    public function delete(User $user, Article $articles)
     {
         //
     }
@@ -73,10 +73,10 @@ class ArticlesPolicy
      * Determine whether the user can restore the model.
      *
      * @param  User  $user
-     * @param  Articles  $articles
+     * @param  Article  $articles
      * @return Response|bool
      */
-    public function restore(User $user, Articles $articles)
+    public function restore(User $user, Article $articles)
     {
         //
     }
@@ -85,10 +85,10 @@ class ArticlesPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  User  $user
-     * @param  Articles  $articles
+     * @param  Article  $articles
      * @return Response|bool
      */
-    public function forceDelete(User $user, Articles $articles)
+    public function forceDelete(User $user, Article $articles)
     {
         //
     }

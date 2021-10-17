@@ -24,6 +24,6 @@ class Category extends Model
 
     public function articles(): BelongsTo
     {
-        return $this->belongsTo(Articles::class);
+        return $this->belongsTo(Article::class);
     }
 }
