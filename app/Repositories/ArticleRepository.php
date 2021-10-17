@@ -3,18 +3,26 @@
 namespace App\Repositories;
 
 use App\Models\Article;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class ArticleRepository extends BaseRepository
 {
-    /**
-     * Instantiate repository
-     *
-     * @param  Article  $model
-     */
-    public function __construct(Article $model)
+    public function __construct()
     {
-        parent::__construct($model);
+        parent::__construct(new Article());
     }
 
-    // Your methods for repository
+    public function getArticles(array $search): Paginator
+    {
+        return Article::query()
+            ->search($search)
+            ->published()
+            ->latest()
+            ->simplePaginate();
+    }
+
+    public function getSingeArticle(Article $article)
+    {
+        return $article;
+    }
 }

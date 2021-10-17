@@ -24,6 +24,7 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
+            'image' => $this->faker->imageUrl,
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
             'author' => User::inRandomOrder()->first()->id,

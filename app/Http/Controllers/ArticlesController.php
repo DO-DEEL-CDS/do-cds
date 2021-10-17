@@ -3,26 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Repositories\ArticleRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ArticlesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @var ArticleRepository
      */
-    public function index()
+    private $articleRepository;
+
+    public function __construct(ArticleRepository $articleRepository)
     {
-        //
+        $this->articleRepository = $articleRepository;
+    }
+
+    public function index(Request $request): JsonResponse
+    {
+        $articles = $this->articleRepository->getArticles($request->all());
+
+        return $this->success($articles);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return Response
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
@@ -32,22 +40,22 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Article  $articles
-     * @return Response
+     * @param  Article  $article
+     * @return JsonResponse
      */
-    public function show(Article $articles)
+    public function show(Article $article): JsonResponse
     {
-        //
+        return $this->success($this->articleRepository->getSingeArticle($article));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  Request  $request
-     * @param  Article  $articles
-     * @return Response
+     * @param  Article  $article
+     * @return JsonResponse
      */
-    public function update(Request $request, Article $articles)
+    public function update(Request $request, Article $article)
     {
         //
     }
@@ -55,10 +63,10 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Article  $articles
-     * @return Response
+     * @param  Article  $article
+     * @return JsonResponse
      */
-    public function destroy(Article $articles)
+    public function destroy(Article $article)
     {
         //
     }

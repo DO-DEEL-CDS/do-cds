@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('image');
             $table->string('content');
             $table->tinyInteger('status')->default(ArticleStatus::Draft);
             $table->foreignId('author')->references('id')->on('users')->cascadeOnDelete();

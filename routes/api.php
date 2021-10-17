@@ -40,5 +40,6 @@ Route::prefix('misc')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('articles', [ArticlesController::class, 'index']);
+    Route::get('news', [ArticlesController::class, 'index']);
+    Route::get('news/{article}', [ArticlesController::class, 'show']);
 });
