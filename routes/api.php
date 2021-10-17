@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Misc\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +32,13 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [PasswordController::class, 'sendPasswordResetCode']);
     Route::post('verify-password-code', [PasswordController::class, 'verifyPasswordResetCode']);
     Route::post('reset-password', [PasswordController::class, 'setNewPassword']);
+});
+
+Route::prefix('misc')->group(function () {
+    Route::get('states', [LocationController::class, 'states']);
+    Route::get('categories', [CategoryController::class, 'index']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('articles', [ArticlesController::class, 'index']);
 });

@@ -3,19 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Repositories\CategoryRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
     /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function index()
     {
-        //
+        return $this->success($this->categoryRepository->all());
     }
 
     /**
