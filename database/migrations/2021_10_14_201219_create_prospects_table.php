@@ -18,8 +18,11 @@ class CreateProspectsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('nysc_state_code', 20);
+            $table->string('state_code', 20);
             $table->string('verify_token', 6)->nullable();
+            $table->mediumText('intro_video')->nullable();
             $table->timestamps();
+            $table->foreign('state_code')->references('state_code')->on('states')->cascadeOnDelete();
         });
     }
 

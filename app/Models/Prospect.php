@@ -17,7 +17,9 @@ class Prospect extends Model
         'name',
         'email',
         'nysc_state_code',
-        'verify_token'
+        'verify_token',
+        'state_code',
+        'intro_video',
     ];
 
     public function user(): BelongsTo

@@ -25,7 +25,6 @@ class CreateProfilesTable extends Migration
             $table->softDeletes();
 
             $table->foreign('state_code')->references('state_code')->on('states')->cascadeOnDelete();
-
         });
     }
 
