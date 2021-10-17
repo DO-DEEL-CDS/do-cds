@@ -43,7 +43,7 @@ class RegistrationController extends Controller
 
         abort_if($this->prospectRepository->hasAccount($validated['email']), Response::HTTP_BAD_REQUEST, 'Account Already Exist');
         $this->prospectService->sendOTP($validated['email']);
-        return $this->success('OTP Sent');
+        return $this->success([], 'OTP Sent');
     }
 
     public function verifyEmail(Request $request): JsonResponse
@@ -57,12 +57,12 @@ class RegistrationController extends Controller
         ]);
 
         abort_if(!$this->prospectRepository->isOTPValid($validated['email']), Response::HTTP_BAD_REQUEST, 'OTP Expired, Request a new one');
-        return $this->success('Email Verified', $this->prospectService->registrationSecret($validated['email']));
+        return $this->success($this->prospectService->registrationSecret($validated['email']), 'Email Verified');
     }
 
     public function createAccount(CreateCorperAccountRequest $request): JsonResponse
     {
         $user = $this->authService->createAccount($request->validated());
-        return $this->success('Registration Completed', $user, Response::HTTP_CREATED);
+        return $this->success($user, 'Registration Completed', Response::HTTP_CREATED);
     }
 }

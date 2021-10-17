@@ -19,6 +19,6 @@ class LoginController extends Controller
     public function __invoke(LoginRequest $request, AuthService $authService): JsonResponse
     {
         $request->authenticate();
-        return $this->success('Login Successful', $authService->loginUser((string) $request->post('device_id')));
+        return $this->success($authService->loginUser((string) $request->post('device_id')), 'Login Successful');
     }
 }

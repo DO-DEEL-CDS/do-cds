@@ -31,7 +31,7 @@ class PasswordController extends Controller
         ]);
 
         $this->authService->sendPasswordResetCode($request->post('email'));
-        return $this->success('Password Reset Code Sent');
+        return $this->success([], 'Password Reset Code Sent');
     }
 
     public function verifyPasswordResetCode(Request $request): JsonResponse
@@ -46,7 +46,7 @@ class PasswordController extends Controller
 
         $user = $this->authService->verifyPasswordResetCode($request->only(['email', 'code']));
         $data['secret'] = $this->authService->generateResetSecret($user);
-        return $this->success('verified OTP, continue to Set new password', $data);
+        return $this->success($data, 'verified OTP, continue to Set new password');
     }
 
     public function setNewPassword(Request $request): JsonResponse
@@ -58,6 +58,6 @@ class PasswordController extends Controller
         ]);
 
         $data = $this->authService->setPassword($request->only('secret', 'password', 'device_id'));
-        return $this->success('Password Reset Completed.', $data);
+        return $this->success($data, 'Password Reset Completed.');
     }
 }
