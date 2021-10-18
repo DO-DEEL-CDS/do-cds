@@ -34,9 +34,11 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/dodeel.douglasokolaa.codes
-            # git checkout master
-            # git pull
-            # composer update
-            # php artisan serve
+            git add .
+            git stash
+            git checkout master
+            git pull origin master
+            composer install
+            php artisan migrate:fresh --seed
             echo "End"
             echo $USER
