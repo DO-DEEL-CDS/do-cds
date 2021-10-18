@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Prospect;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class ProspectRepository extends BaseRepository
 {
@@ -49,10 +50,14 @@ class ProspectRepository extends BaseRepository
 
     public function getProspectFromSecret($secret)
     {
-        $string = decrypt($secret);
-        $data = explode(':', $string);
+        try {
+            $string = decrypt($secret);
+            $data = explode(':', $string);
 
-        if (!isset($data[0]) || $data[0] === '') {
+            if (!isset($data[0]) || $data[0] === '') {
+                return false;
+            }
+        } catch (DecryptException $exception) {
             return false;
         }
 

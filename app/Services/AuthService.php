@@ -5,10 +5,10 @@ namespace App\Services;
 use App\Models\User;
 use App\Notifications\PasswordChanged;
 use App\Notifications\PasswordReset;
-use App\Repositories\AuthRepository;
 use App\Repositories\ProspectRepository;
 use App\Repositories\UserRepository;
 use Auth;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Response;
 use Throwable;
 
@@ -84,14 +84,19 @@ class AuthService extends BaseService
 
     public function getUserFromSecret(string $secret): User
     {
-        $data = decrypt($secret);
+        try {
+            $data = decrypt($secret);
+        } catch (DecryptException $e) {
+            abort(400, 'Invalid Secret Provided');
+            exit('Invalid Secret Provided');
+        }
         return $this->userRepository->findByEmail($data['email']);
     }
 
     public function verifyResetSecret($secret): bool
     {
-        $data = decrypt($secret);
         $user = $this->getUserFromSecret($secret);
+        $data = decrypt($secret);
         return $data['code'] === $user->getPasswordResetCode();
     }
 

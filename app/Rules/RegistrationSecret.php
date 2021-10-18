@@ -28,10 +28,7 @@ class RegistrationSecret implements Rule
         $prospectRepository = new ProspectRepository();
         $prospect = $prospectRepository->getProspectFromSecret($value);
 
-        if (!$prospect || $prospect->updated_at->isBefore(now()->subtract("30 minutes"))) {
-            return false;
-        }
-        return true;
+        return !(!$prospect || $prospect->updated_at->isBefore(now()->subtract("30 minutes")));
     }
 
     /**
@@ -41,6 +38,6 @@ class RegistrationSecret implements Rule
      */
     public function message(): string
     {
-        return 'The Registration Secret is Expired. Kindly start again.';
+        return 'The Registration Secret is Invalid. Start a fresh registration.';
     }
 }
