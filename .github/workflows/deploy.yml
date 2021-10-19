@@ -38,7 +38,29 @@ jobs:
             git stash
             git checkout master
             git pull origin master
+            php artisan down
             composer install
             php artisan migrate:fresh --seed
+            php artisan up
             echo "End"
-            echo $USER
+
+      - name: Notify slack Deployment Suceded
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: deploys
+          status: SUCCESS
+          color: good
+
+      - name: Notify slack Deployment Failed
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: deploys
+          status: FAILED
+          color: danger
+
