@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ProspectStatus;
 use App\Models\Prospect;
 use App\Models\State;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,7 +26,8 @@ class ProspectFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
-            'nysc_state_code' => State::query()->inRandomOrder()->first()->state_code . '/21A/' . mt_rand(1000, 9999),
+            'nysc_state_code' => State::query()->inRandomOrder()->first()->state_code . '/21A/' . random_int(1000, 9999),
+            'status' => ProspectStatus::getRandomValue()
         ];
     }
 }

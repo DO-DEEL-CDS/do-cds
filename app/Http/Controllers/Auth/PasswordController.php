@@ -14,10 +14,7 @@ class PasswordController extends Controller
 {
     use PasswordValidationRules;
 
-    /**
-     * @var AuthService
-     */
-    private $authService;
+    private AuthService $authService;
 
     public function __construct(AuthService $authService)
     {

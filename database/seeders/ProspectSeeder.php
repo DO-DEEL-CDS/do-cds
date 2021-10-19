@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ProspectStatus;
 use App\Models\Prospect;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ class ProspectSeeder extends Seeder
             'name' => 'Doug',
             'email' => 'corper@example.com',
             'nysc_state_code' => 'FC/21A/0000',
+            'status' => ProspectStatus::Approved(),
         ]);
         Prospect::factory(5)->create();
     }

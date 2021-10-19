@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateCorperAccount;
 use App\Http\Requests\CreateCorperAccountRequest;
 use App\Repositories\ProspectRepository;
 use App\Services\AuthService;
@@ -15,18 +14,11 @@ use Illuminate\Validation\Rule;
 
 class RegistrationController extends Controller
 {
-    /**
-     * @var ProspectService
-     */
-    private $prospectService;
-    /**
-     * @var ProspectRepository
-     */
-    private $prospectRepository;
-    /**
-     * @var AuthService
-     */
-    private $authService;
+    private ProspectService $prospectService;
+
+    private ProspectRepository $prospectRepository;
+
+    private AuthService $authService;
 
     public function __construct(ProspectRepository $prospectRepository, AuthService $authService)
     {
@@ -41,8 +33,13 @@ class RegistrationController extends Controller
             'email' => ['required', 'exists:prospects,email']
         ]);
 
+        $prospect = $this->prospectRepository->findByEmail($validated['email']);
+
+        abort_if(!$this->prospectRepository->isApproved($prospect), Response::HTTP_BAD_REQUEST, 'Your Application Has not been Approved');
         abort_if($this->prospectRepository->hasAccount($validated['email']), Response::HTTP_BAD_REQUEST, 'Account Already Exist');
+
         $this->prospectService->sendOTP($validated['email']);
+
         return $this->success([], 'OTP Sent');
     }
 

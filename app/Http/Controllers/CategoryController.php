@@ -10,10 +10,7 @@ use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
+    private CategoryRepository $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository)
     {

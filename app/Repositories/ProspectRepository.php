@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Enums\ProspectStatus;
 use App\Models\Prospect;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 class ProspectRepository extends BaseRepository
 {
-    /** @var Prospect */
+    /** @var */
     protected $model;
 
     /**
@@ -16,6 +17,16 @@ class ProspectRepository extends BaseRepository
     public function __construct()
     {
         parent::__construct(new Prospect());
+    }
+
+    public function findByEmail(string $email)
+    {
+        return Prospect::whereEmail($email)->firstOrFail();
+    }
+
+    public function isApproved(Prospect $prospect)
+    {
+        return $prospect->status->is(ProspectStatus::Approved);
     }
 
     public function generateToken(string $prospectEmail): Prospect

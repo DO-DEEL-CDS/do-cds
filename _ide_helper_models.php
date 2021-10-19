@@ -308,6 +308,7 @@ namespace App\Models {
      * @property string|null $state_code
      * @property string|null $verify_token
      * @property string|null $intro_video
+     * @property int $status
      * @property Carbon|null $created_at
      * @property Carbon|null $updated_at
      * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
@@ -324,6 +325,7 @@ namespace App\Models {
      * @method static Builder|Prospect whereName($value)
      * @method static Builder|Prospect whereNyscStateCode($value)
      * @method static Builder|Prospect whereStateCode($value)
+     * @method static Builder|Prospect whereStatus($value)
      * @method static Builder|Prospect whereUpdatedAt($value)
      * @method static Builder|Prospect whereVerifyToken($value)
      */
@@ -454,6 +456,7 @@ namespace App\Models {
     use App\Enums\TicketStatus;
     use Database\Factories\TicketFactory;
     use Eloquent;
+    use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Support\Carbon;
 
@@ -473,19 +476,19 @@ namespace App\Models {
      * @property-read int|null $replies_count
      * @property-read User $user
      * @method static TicketFactory factory(...$parameters)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket newQuery()
+     * @method static Builder|Ticket newModelQuery()
+     * @method static Builder|Ticket newQuery()
      * @method static Builder|Ticket onlyTrashed()
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket query()
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereAgent($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereDeletedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereMessage($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereStatus($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereTitle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUserId($value)
+     * @method static Builder|Ticket query()
+     * @method static Builder|Ticket whereAgent($value)
+     * @method static Builder|Ticket whereCreatedAt($value)
+     * @method static Builder|Ticket whereDeletedAt($value)
+     * @method static Builder|Ticket whereId($value)
+     * @method static Builder|Ticket whereMessage($value)
+     * @method static Builder|Ticket whereStatus($value)
+     * @method static Builder|Ticket whereTitle($value)
+     * @method static Builder|Ticket whereUpdatedAt($value)
+     * @method static Builder|Ticket whereUserId($value)
      * @method static Builder|Ticket withTrashed()
      * @method static Builder|Ticket withoutTrashed()
      */
@@ -498,6 +501,7 @@ namespace App\Models {
 
     use Database\Factories\TicketReplyFactory;
     use Eloquent;
+    use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Support\Carbon;
 
     /**
@@ -514,17 +518,17 @@ namespace App\Models {
      * @property-read Ticket $ticket
      * @property-read User $user
      * @method static TicketReplyFactory factory(...$parameters)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply newQuery()
+     * @method static Builder|TicketReply newModelQuery()
+     * @method static Builder|TicketReply newQuery()
      * @method static Builder|TicketReply onlyTrashed()
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply query()
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereDeletedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereReply($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereTicketId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|TicketReply whereUserId($value)
+     * @method static Builder|TicketReply query()
+     * @method static Builder|TicketReply whereCreatedAt($value)
+     * @method static Builder|TicketReply whereDeletedAt($value)
+     * @method static Builder|TicketReply whereId($value)
+     * @method static Builder|TicketReply whereReply($value)
+     * @method static Builder|TicketReply whereTicketId($value)
+     * @method static Builder|TicketReply whereUpdatedAt($value)
+     * @method static Builder|TicketReply whereUserId($value)
      * @method static Builder|TicketReply withTrashed()
      * @method static Builder|TicketReply withoutTrashed()
      */
@@ -537,6 +541,7 @@ namespace App\Models {
 
     use Database\Factories\TrainingFactory;
     use Eloquent;
+    use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\Collection;
     use Illuminate\Support\Carbon;
 
@@ -560,23 +565,23 @@ namespace App\Models {
      * @property-read int|null $attendance_count
      * @property-read User|null $trainer
      * @method static TrainingFactory factory(...$parameters)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|Training newQuery()
+     * @method static Builder|Training newModelQuery()
+     * @method static Builder|Training newQuery()
      * @method static Builder|Training onlyTrashed()
-     * @method static \Illuminate\Database\Eloquent\Builder|Training query()
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereAttendanceTime($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereBatch($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedBy($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereEndTime($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereLiveVideo($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereOverview($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereStartTime($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereStatus($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereTitle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereTrainerId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereUpdatedAt($value)
+     * @method static Builder|Training query()
+     * @method static Builder|Training whereAttendanceTime($value)
+     * @method static Builder|Training whereBatch($value)
+     * @method static Builder|Training whereCreatedAt($value)
+     * @method static Builder|Training whereCreatedBy($value)
+     * @method static Builder|Training whereEndTime($value)
+     * @method static Builder|Training whereId($value)
+     * @method static Builder|Training whereLiveVideo($value)
+     * @method static Builder|Training whereOverview($value)
+     * @method static Builder|Training whereStartTime($value)
+     * @method static Builder|Training whereStatus($value)
+     * @method static Builder|Training whereTitle($value)
+     * @method static Builder|Training whereTrainerId($value)
+     * @method static Builder|Training whereUpdatedAt($value)
      * @method static Builder|Training withTrashed()
      * @method static Builder|Training withoutTrashed()
      */

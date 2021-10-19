@@ -9,10 +9,8 @@ use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
-    /**
-     * @var ArticleRepository
-     */
-    private $articleRepository;
+
+    private ArticleRepository $articleRepository;
 
     public function __construct(ArticleRepository $articleRepository)
     {

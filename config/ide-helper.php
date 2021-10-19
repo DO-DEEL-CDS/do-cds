@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'filename'  => '_ide_helper.php',
+    'filename' => '_ide_helper.php',
 
     /*
     |--------------------------------------------------------------------------
@@ -301,8 +301,8 @@ return [
     | The specified commands should run after migrations are finished running.
     |
     */
-    'post_migrate' => [
-         'ide-helper:models --nowrite',
-    ],
+    'post_migrate' => (env('APP_ENV') === 'local') ? [
+        'ide-helper:models --nowrite',
+    ] : [],
 
 ];

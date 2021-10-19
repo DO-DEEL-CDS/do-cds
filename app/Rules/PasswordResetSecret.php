@@ -8,10 +8,8 @@ use Illuminate\Contracts\Validation\Rule;
 
 class PasswordResetSecret implements Rule
 {
-    /**
-     * @var AuthService
-     */
-    private $authService;
+
+    private AuthService $authService;
 
     /**
      * Create a new rule instance.
@@ -44,7 +42,7 @@ class PasswordResetSecret implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return 'The Secret provided is invalid.';
     }

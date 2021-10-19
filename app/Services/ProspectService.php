@@ -8,10 +8,7 @@ use App\Repositories\ProspectRepository;
 
 class ProspectService extends BaseService
 {
-    /**
-     * @var ProspectRepository
-     */
-    private $repository;
+    private ProspectRepository $repository;
 
     /**
      * @param  ProspectRepository  $repository

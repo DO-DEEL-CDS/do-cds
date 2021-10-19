@@ -14,14 +14,10 @@ use Throwable;
 
 class AuthService extends BaseService
 {
-    /**
-     * @var ProspectRepository
-     */
-    private $prospectRepository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+
+    private ProspectRepository $prospectRepository;
+
+    private UserRepository $userRepository;
 
     /**
      * AuthService constructor.
@@ -100,7 +96,7 @@ class AuthService extends BaseService
         return $data['code'] === $user->getPasswordResetCode();
     }
 
-    public function generateResetSecret(User $user)
+    public function generateResetSecret(User $user): string
     {
         $data['code'] = $user->getPasswordResetCode();
         $data['email'] = $user->email;
