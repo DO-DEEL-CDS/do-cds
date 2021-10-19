@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Batch;
 use App\Enums\StateMembershipType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,21 +16,17 @@ class StateMember extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'type' => StateMembershipType::class
+        'type' => StateMembershipType::class,
+        'batch' => Batch::class,
     ];
 
-    protected $with = [
-        'user'
+    protected $hidden = [
+        'user_id'
     ];
 
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class, 'state_code', 'state_code');
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class)->with('profile');
     }
 
     public function scopeType(Builder $builder, StateMembershipType $type): void

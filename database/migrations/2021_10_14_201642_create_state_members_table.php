@@ -15,9 +15,16 @@ class CreateStateMembersTable extends Migration
     {
         Schema::create('state_members', function (Blueprint $table) {
             $table->id();
-            $table->string('state_code');
-            $table->foreignId('user_id')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->onDelete('cascade');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone_number', 16);
+            $table->string('instagram')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('position')->nullable();
             $table->tinyInteger('type');
+            $table->string('batch');
+            $table->string('state_code');
             $table->timestamps();
 
             $table->foreign('state_code')->references('state_code')->on('states')->cascadeOnDelete();

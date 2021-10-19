@@ -21,8 +21,6 @@ class CreateProfilesTable extends Migration
             $table->string('nysc_state_code')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('state_code');
-            $table->string('instagram_username')->nullable();
-            $table->string('facebook_link')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\StateMemberResource;
 use App\Models\State;
 use App\Models\StateMember;
 use App\Repositories\StateRepository;
@@ -27,13 +26,9 @@ class StateMemberController extends Controller
      */
     public function index(State $state): JsonResponse
     {
-        $officers = $this->stateRepository->getScheduleOfficers($state);
-        $managers = $this->stateRepository->getScheduleOfficers($state);
-        $executives = $this->stateRepository->getScheduleOfficers($state);
-
-        $state->schedule_officers = StateMemberResource::collection($officers);
-        $state->community_managers = StateMemberResource::collection($managers);
-        $state->executives = StateMemberResource::collection($executives);
+        $state->schedule_officers = $this->stateRepository->getScheduleOfficers($state);
+        $state->community_managers = $this->stateRepository->getScheduleOfficers($state);
+        $state->executives = $this->stateRepository->getScheduleOfficers($state);
 
         return $this->success($state);
     }
