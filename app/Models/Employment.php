@@ -16,7 +16,21 @@ class Employment extends Model
         'title',
         'location',
         'description',
-        'employment_type'
+        'role',
+        'type',
+        'apply_link'
+    ];
+
+    protected $dates = [
+        'closing_date'
+    ];
+
+    protected $with = [
+        'employer'
+    ];
+
+    protected $hidden = [
+        'employer_id'
     ];
 
     public function employer(): BelongsTo
@@ -27,5 +41,16 @@ class Employment extends Model
     public function scopeOpen($builder)
     {
         $builder->whereDate('closing_date', '>=', now());
+    }
+
+    public function scopeSearch($builder, array $search)
+    {
+        if (!empty($search['role'])) {
+            return $builder->whereRole($search['role']);
+        }
+
+        if (!empty($search['type'])) {
+            return $builder->whereType($search['type']);
+        }
     }
 }

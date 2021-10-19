@@ -19,10 +19,15 @@ class EmploymentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->jobTitle,
+            'description' => $this->faker->paragraph,
+            'type' => $this->faker->domainWord,
+            'location' => $this->faker->address,
+            'closing_date' => $this->faker->dateTimeThisMonth(now()->add('+ 1month')),
+            'apply_link' => $this->faker->url
         ];
     }
 }

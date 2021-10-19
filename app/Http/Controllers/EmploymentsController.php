@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jobs;
+use App\Models\Employment;
+use App\Repositories\EmploymentRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class EmploymentsController extends Controller
 {
+    private EmploymentRepository $employmentRepository;
+
+    public function __construct(EmploymentRepository $employmentRepository)
+    {
+        $this->employmentRepository = $employmentRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param  Request  $request
+     * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $jobs = $this->employmentRepository->getLatestJobs($request->all());
+        return $this->success($jobs);
     }
 
     /**
@@ -24,30 +35,24 @@ class EmploymentsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request): ?Response
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Jobs  $jobs
-     * @return Response
-     */
-    public function show(Jobs $jobs)
+    public function show(Employment $job): JsonResponse
     {
-        //
+        return $this->success($job);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  Request  $request
-     * @param  Jobs  $jobs
+     * @param  Employment  $jobs
      * @return Response
      */
-    public function update(Request $request, Jobs $jobs)
+    public function update(Request $request, Employment $jobs): ?Response
     {
         //
     }
@@ -55,10 +60,10 @@ class EmploymentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Jobs  $jobs
+     * @param  Employment  $jobs
      * @return Response
      */
-    public function destroy(Jobs $jobs)
+    public function destroy(Employment $jobs): ?Response
     {
         //
     }

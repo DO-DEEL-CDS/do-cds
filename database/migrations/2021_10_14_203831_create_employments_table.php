@@ -17,9 +17,11 @@ class CreateEmploymentsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
+            $table->string('role')->index();
             $table->timestamp('closing_date');
             $table->string('location')->nullable();
-            $table->string('employment_type')->nullable();
+            $table->string('type')->nullable();
+            $table->string('apply_link')->nullable();
             $table->foreignId('employer_id');
             $table->timestamps();
         });

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmploymentsController;
 use App\Http\Controllers\Misc\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,7 @@ Route::prefix('misc')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('news', [ArticlesController::class, 'index']);
     Route::get('news/{article}', [ArticlesController::class, 'show']);
+
+    Route::get('jobs', [EmploymentsController::class, 'index']);
+    Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
 });
