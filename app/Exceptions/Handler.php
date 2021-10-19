@@ -49,6 +49,14 @@ class Handler extends ExceptionHandler
         });
     }
 
+    public function report(Throwable $e)
+    {
+        if ($this->shouldReport($e) && app()->bound('sentry')) {
+            app('sentry')->captureException($e);
+        }
+        return parent::report($e);
+    }
+
     public function render($request, Throwable $e)
     {
         if ($request->expectsJson() || $request->isJson()) {

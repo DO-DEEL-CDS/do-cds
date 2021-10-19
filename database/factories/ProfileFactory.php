@@ -24,7 +24,9 @@ class ProfileFactory extends Factory
     {
         return [
             'state_code' => State::inRandomOrder()->first()->state_code,
-            'phone_number' => $this->faker->e164PhoneNumber
+            'phone_number' => $this->faker->e164PhoneNumber,
+            'instagram_username' => $this->faker->userName,
+            'facebook_link' => $this->faker->url
         ];
     }
 }

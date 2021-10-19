@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\StateMember;
 use Illuminate\Database\Seeder;
 
 class StateMemberSeeder extends Seeder
@@ -13,6 +14,6 @@ class StateMemberSeeder extends Seeder
      */
     public function run()
     {
-        //
+        StateMember::factory(30)->create();
     }
 }

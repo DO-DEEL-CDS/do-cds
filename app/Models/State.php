@@ -14,10 +14,17 @@ class State extends Model
         'id',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'state_code';
+    }
+
+    /**
+     * @return HasMany<StateMember::class>
+     */
     public function members(): HasMany
     {
         return $this->hasMany(StateMember::class, 'state_code', 'state_code');
     }
-
 
 }

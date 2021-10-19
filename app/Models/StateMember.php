@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\StateMembershipType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StateMember extends Model
 {
@@ -11,8 +14,26 @@ class StateMember extends Model
 
     protected $guarded = ['id'];
 
-    public function state()
+    protected $casts = [
+        'type' => StateMembershipType::class
+    ];
+
+    protected $with = [
+        'user'
+    ];
+
+    public function state(): BelongsTo
     {
         return $this->belongsTo(State::class, 'state_code', 'state_code');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class)->with('profile');
+    }
+
+    public function scopeType(Builder $builder, StateMembershipType $type): void
+    {
+        $builder->where('type', $type->key);
     }
 }

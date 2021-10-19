@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmploymentsController;
 use App\Http\Controllers\Misc\LocationController;
+use App\Http\Controllers\StateMemberController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,4 +47,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
+
+    Route::get('states/{state}/members', [StateMemberController::class, 'index']);
 });
