@@ -33,7 +33,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/dodeel.douglasokolaa.codes
+            cd ${{ secrets.APP_PATH }}
             git add .
             git stash
             git checkout master
