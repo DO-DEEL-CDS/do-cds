@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Enums\ProspectStatus;
 use App\Models\Prospect;
+use App\Notifications\ApplicationReceived;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 class ProspectRepository extends BaseRepository
@@ -19,12 +20,22 @@ class ProspectRepository extends BaseRepository
         parent::__construct(new Prospect());
     }
 
+    public function create(array $data): void
+    {
+        if ($data['deployed_state']) {
+            $data['state_code'] = $data['deployed_state'];
+        }
+
+        $prospect = Prospect::create($data);
+        $prospect->notify(new ApplicationReceived());
+    }
+
     public function findByEmail(string $email)
     {
         return Prospect::whereEmail($email)->firstOrFail();
     }
 
-    public function isApproved(Prospect $prospect)
+    public function isApproved(Prospect $prospect): bool
     {
         return $prospect->status->is(ProspectStatus::Approved);
     }

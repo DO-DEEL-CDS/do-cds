@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PasswordChanged extends Notification
+class ApplicationReceived extends Notification
 {
     use Queueable;
 
@@ -26,7 +26,7 @@ class PasswordChanged extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -37,15 +37,14 @@ class PasswordChanged extends Notification
      * @param  mixed  $notifiable
      * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Password Change Notification')
-            ->greeting("Hello {$notifiable->name}")
-            ->line('You as receiving this email because your password was changed/reset recently.')
-            ->line('If you did not carry out this action, get in-touch with us immediately')
-            ->line('Thank you for choosing Do-DEEL CDS!')
-            ->success();
+            ->subject('Application Received')
+            ->success()
+            ->line('Thank you for indicating interest in the Digital On-boarders CDS group.')
+            ->line('We would review the request and revert to you soonest, In the mean time kindly get intouch with your states CDS officer for more information.')
+            ->line('Thank you for showing interest.');
     }
 
     /**
@@ -54,7 +53,7 @@ class PasswordChanged extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //

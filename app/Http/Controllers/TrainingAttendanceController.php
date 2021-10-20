@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Training;
 use App\Models\TrainingAttendance;
+use App\Repositories\AttendanceRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class TrainingAttendanceController extends Controller
 {
+    private AttendanceRepository $attendanceRepository;
+
+    public function __construct(AttendanceRepository $attendanceRepository)
+    {
+        $this->attendanceRepository = $attendanceRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,11 +32,12 @@ class TrainingAttendanceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, Training $training): JsonResponse
     {
-        //
+        $this->attendanceRepository->recordAttendance($training, $request->user());
+        return $this->success();
     }
 
     /**

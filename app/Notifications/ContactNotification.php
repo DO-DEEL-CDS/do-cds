@@ -3,27 +3,28 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Lang;
 
-class PasswordReset extends Notification
+class ContactNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * @var int
-     */
-    private int $code;
+    private string $name;
+    private string $email;
+    private string $message;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(int $code)
+    public function __construct(array $data)
     {
-        $this->code = $code;
+        $this->name = $data['name'];
+        $this->email = $data['email'];
+        $this->message = $data['message'];
     }
 
     /**
@@ -32,7 +33,7 @@ class PasswordReset extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function vsia($notifiable): array
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -41,18 +42,20 @@ class PasswordReset extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return MailMessage
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(Lang::get('Reset Password Notification'))
-            ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
-            ->line("**{$this->code}**")
-            ->line(Lang::get('This password reset code will expire in :count minutes.',
-                ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')]))
-            ->line(Lang::get('If you did not request a password reset, no further action is required.'))
-            ->line('Thank you for choosing Do-DEEL CDS!');
+            ->subject('New Message on DO-DEEL Website')
+            ->line('A new submission has been received. Details Below.')
+            ->line('****')
+            ->line('**Name :** ' . $this->name)
+            ->line('**Email :** ' . $this->email)
+            ->line('**Message :** ')
+            ->line($this->message)
+            ->line('***')
+            ->success();
     }
 
     /**

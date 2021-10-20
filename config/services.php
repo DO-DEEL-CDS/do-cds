@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'deel' => [
+        'contact' => [
+            'email' => env('CONTACT_EMAIL'),
+        ],
+    ],
+
 ];

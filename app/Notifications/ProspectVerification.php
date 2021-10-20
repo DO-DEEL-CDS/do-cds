@@ -13,7 +13,7 @@ class ProspectVerification extends Notification
     /**
      * @var string
      */
-    private $code;
+    private string $code;
 
     /**
      * Create a new notification instance.
@@ -31,7 +31,7 @@ class ProspectVerification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -42,13 +42,13 @@ class ProspectVerification extends Notification
      * @param  mixed  $notifiable
      * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject('Email Verification')
             ->line('Kindly use the code below to verify Your Email Address')
             ->line("**{$this->code}**")
-            ->line('Thank you choosing Digital On-boarders CDS!');
+            ->line('Thank you for choosing Do-DEEL CDS!');
     }
 
     /**
@@ -57,7 +57,7 @@ class ProspectVerification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //

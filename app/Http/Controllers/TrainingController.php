@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Training;
+use App\Repositories\TrainingRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class TrainingController extends Controller
 {
+    private TrainingRepository $trainingRepository;
+
+    public function __construct(TrainingRepository $trainingRepository)
+    {
+        $this->trainingRepository = $trainingRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $trainings = $this->trainingRepository->getUpcomingTraining();
+        return $this->success($trainings);
     }
 
     /**
@@ -33,11 +43,12 @@ class TrainingController extends Controller
      * Display the specified resource.
      *
      * @param  Training  $training
-     * @return Response
+     * @return JsonResponse
      */
-    public function show(Training $training)
+    public function show(Training $training): JsonResponse
     {
-        //
+        $training->load('resources');
+        return $this->success($training);
     }
 
     /**

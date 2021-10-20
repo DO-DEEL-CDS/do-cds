@@ -486,37 +486,39 @@ namespace App\Models {
      *
      * @property int $id
      * @property string $title
+     * @property string $tutor
      * @property string $overview
      * @property string $start_time
-     * @property string $end_time
      * @property string $attendance_time
-     * @property int $status
+     * @property \App\Enums\TrainingStatus $status
      * @property string|null $batch
      * @property string|null $live_video
-     * @property int|null $trainer_id
      * @property int|null $created_by
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TrainingAttendance[] $attendance
      * @property-read int|null $attendance_count
-     * @property-read \App\Models\User|null $trainer
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Resource[] $resources
+     * @property-read int|null $resources_count
      * @method static \Database\Factories\TrainingFactory factory(...$parameters)
      * @method static \Illuminate\Database\Eloquent\Builder|Training newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Training newQuery()
      * @method static \Illuminate\Database\Query\Builder|Training onlyTrashed()
      * @method static \Illuminate\Database\Eloquent\Builder|Training query()
+     * @method static \Illuminate\Database\Eloquent\Builder|Training search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereAttendanceTime($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereBatch($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereCreatedBy($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereEndTime($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Training whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereLiveVideo($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereOverview($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereStartTime($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereTitle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|Training whereTrainerId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Training whereTutor($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Training whereUpdatedAt($value)
      * @method static \Illuminate\Database\Query\Builder|Training withTrashed()
      * @method static \Illuminate\Database\Query\Builder|Training withoutTrashed()

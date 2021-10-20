@@ -21,8 +21,9 @@ class ResourceFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            //
+            'attachment' => $this->faker->url,
         ];
     }
 }

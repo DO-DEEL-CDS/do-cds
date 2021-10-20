@@ -6,9 +6,12 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmploymentsController;
+use App\Http\Controllers\Misc\InfoController;
 use App\Http\Controllers\Misc\LocationController;
+use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\StateMemberController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\TrainingAttendanceController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +25,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/profile', function (Request $request) {
-    return $request->user();
+Route::get('ping', function () {
+    return response()->json('pong');
 });
 
-Route::prefix('auth')->group(function () {
+Route::middleware('throttle:5')->post('apply', [ProspectController::class, 'store']);
+
+Route::middleware('throttle:10')->prefix('auth')->group(function () {
     Route::post('get-started', [RegistrationController::class, 'getStarted']);
     Route::post('verify-email', [RegistrationController::class, 'verifyEmail']);
     Route::post('account', [RegistrationController::class, 'createAccount']);
@@ -39,6 +44,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('misc')->group(function () {
     Route::get('states', [LocationController::class, 'states']);
     Route::get('categories', [CategoryController::class, 'index']);
+    Route::middleware('throttle:5')->post('contact-us', [InfoController::class, 'contact']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -47,6 +53,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
+
+    Route::get('trainings', [TrainingController::class, 'index']);
+    Route::get('trainings/{training}', [TrainingController::class, 'show']);
+    Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);
 });

@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Training;
 use App\Models\TrainingAttendance;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TrainingAttendanceFactory extends Factory
@@ -19,10 +21,11 @@ class TrainingAttendanceFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'training_id' => Training::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id
         ];
     }
 }

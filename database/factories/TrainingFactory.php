@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\TrainingStatus;
 use App\Models\Training;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TrainingFactory extends Factory
@@ -19,10 +21,16 @@ class TrainingFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence,
+            'status' => TrainingStatus::getRandomInstance(),
+            'live_video' => $this->faker->url,
+            'start_time' => $this->faker->dateTimeThisMonth(now()->add('20 days')),
+            'tutor' => $this->faker->name,
+            'created_by' => User::first()->id,
+            'overview' => $this->faker->paragraph
         ];
     }
 }

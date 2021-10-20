@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TrainingAttendance;
 use Illuminate\Database\Seeder;
 
 class TrainingAttendanceSeeder extends Seeder
@@ -13,6 +14,6 @@ class TrainingAttendanceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        TrainingAttendance::factory(21)->create();
     }
 }

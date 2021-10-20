@@ -17,18 +17,19 @@ class CreateTrainingsTable extends Migration
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('tutor');
             $table->text('overview');
             $table->timestamp('start_time')->index();
-            $table->timestamp('end_time');
             $table->timestamp('attendance_time');
             $table->tinyInteger('status')->default(TrainingStatus::Pending);
             $table->string('batch')->nullable()->index();
             $table->string('live_video')->nullable();
-            $table->unsignedBigInteger('trainer_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('trainer_id')->on('users')->references('id')->onDelete('cascade');
+//            $table->unsignedBigInteger('trainer_id')->nullable();
+//            $table->foreign('trainer_id')->on('users')->references('id')->onDelete('cascade');
             $table->foreign('created_by')->on('users')->references('id')->onDelete('cascade');
         });
     }

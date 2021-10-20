@@ -18,7 +18,7 @@ class CreateProspectsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique()->index();
-            $table->string('nysc_state_code', 20);
+            $table->string('nysc_state_code', 20)->unique()->index();
             $table->string('state_code')->nullable();
             $table->string('verify_token', 6)->nullable();
             $table->mediumText('intro_video')->nullable();

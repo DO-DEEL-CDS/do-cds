@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Training;
 use Illuminate\Database\Seeder;
 
 class TrainingSeeder extends Seeder
@@ -11,8 +12,10 @@ class TrainingSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        //
+        Training::factory(10)
+            ->hasResources()
+            ->create();
     }
 }
