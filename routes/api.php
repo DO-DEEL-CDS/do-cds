@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmploymentsController;
@@ -48,6 +49,9 @@ Route::prefix('misc')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('auth/profile', [ProfileController::class, 'show']);
+    Route::patch('auth/profile', [ProfileController::class, 'update']);
+
     Route::get('news', [ArticlesController::class, 'index']);
     Route::get('news/{article}', [ArticlesController::class, 'show']);
 

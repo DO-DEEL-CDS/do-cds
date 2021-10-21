@@ -8,6 +8,7 @@ use Exception;
 use Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
+use Illuminate\Support\ValidatedInput;
 use Throwable;
 
 class UserRepository extends BaseRepository
@@ -105,5 +106,13 @@ class UserRepository extends BaseRepository
             $user->api_token = $this->generateApiKey($user);
         }
         return $user;
+    }
+
+    public function updateProfile(User $user, ValidatedInput $data)
+    {
+        $user->update($data->only('name', 'email', 'device_id'));
+
+        $user->profile()->update($data->only('photo', 'deployed_state', 'nysc_call_up_number', 'nysc_state_code', 'phone_number'));
+        return $user->refresh();
     }
 }

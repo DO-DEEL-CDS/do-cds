@@ -18,7 +18,13 @@ class Employment extends Model
         'description',
         'role',
         'type',
-        'apply_link'
+        'apply_link',
+        'rate',
+        'perks'
+    ];
+
+    protected $casts = [
+        'perks' => 'array'
     ];
 
     protected $dates = [

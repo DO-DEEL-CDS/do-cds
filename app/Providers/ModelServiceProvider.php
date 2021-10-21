@@ -25,7 +25,7 @@ class ModelServiceProvider extends ServiceProvider
             'training' => Training::class,
             'project' => Project::class,
             'user' => User::class,
-            'prospect' => Prospect::class
+            'prospect' => Prospect::class,
         ]);
     }
 }

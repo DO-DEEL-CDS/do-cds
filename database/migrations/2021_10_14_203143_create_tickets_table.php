@@ -19,8 +19,8 @@ class CreateTicketsTable extends Migration
             $table->string('title');
             $table->mediumText('message');
             $table->tinyInteger('status')->default(TicketStatus::New)->index();
-            $table->foreignId('user_id')->onDelete('cascade');
-            $table->foreignId('agent')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('agent_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

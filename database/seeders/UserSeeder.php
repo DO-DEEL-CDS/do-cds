@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Hash;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -15,15 +16,29 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(50)
+        $corperRole = Role::findByName('corper');
+        User::factory(1)
+            ->state([
+                'email' => 'corpmember@example.com',
+                'password' => Hash::make('password123')
+            ])
+            ->hasAttached($corperRole)
             ->hasProfile()
             ->create();
 
+        User::factory(50)
+            ->hasAttached($corperRole)
+            ->hasProfile()
+            ->create();
+
+
+        $admin = Role::findByName('admin');
         User::factory(1)
             ->state([
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password123')
             ])
+            ->hasAttached($admin)
             ->hasProfile()
             ->create();
     }

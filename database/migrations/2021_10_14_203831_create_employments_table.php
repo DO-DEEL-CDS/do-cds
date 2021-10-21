@@ -22,6 +22,8 @@ class CreateEmploymentsTable extends Migration
             $table->string('location')->nullable();
             $table->string('type')->nullable();
             $table->string('apply_link')->nullable();
+            $table->string('rate')->nullable();
+            $table->mediumText('perks')->nullable();
             $table->foreignId('employer_id');
             $table->timestamps();
         });

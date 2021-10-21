@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\TicketStatus;
+use App\Models\Roles\Admin;
+use App\Models\Roles\Corper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +21,7 @@ class Ticket extends Model
         'title',
         'message',
         'status',
-        'agent',
+        'agent_id',
     ];
 
     protected $casts = [
@@ -34,11 +36,11 @@ class Ticket extends Model
 
     public function agent(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'agent', 'id');
+        return $this->belongsTo(Admin::class, 'agent_id');
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Corper::class);
     }
 }

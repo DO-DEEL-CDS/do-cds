@@ -27,7 +27,9 @@ class EmploymentFactory extends Factory
             'type' => $this->faker->domainWord,
             'location' => $this->faker->address,
             'closing_date' => $this->faker->dateTimeThisMonth(now()->add('+ 1month')),
-            'apply_link' => $this->faker->url
+            'apply_link' => $this->faker->url,
+            'rate' => '',
+            'perks' => $this->faker->words
         ];
     }
 }

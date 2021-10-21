@@ -36,7 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'created_at'
+        'created_at',
     ];
 
     /**
@@ -48,6 +48,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'status' => UserStatus::class
     ];
+
+    /**
+     * The attributes that should be retrieved always.
+     *
+     * @var array
+     */
+    protected $with = [
+        'profile',
+        'permissions',
+        'roles'
+    ];
+
 
     public function profile(): HasOne
     {
@@ -62,12 +74,12 @@ class User extends Authenticatable
             ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
     }
 
-    public function deletePasswordResetCode()
+    public function deletePasswordResetCode(): void
     {
         $this->passwordReset()->delete();
     }
 
-    private function passwordReset()
+    private function passwordReset(): HasOne
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
     }

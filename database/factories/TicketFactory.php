@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,10 +20,12 @@ class TicketFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'status' => TicketStatus::getRandomInstance(),
+            'message' => $this->faker->paragraph,
+            'title' => $this->faker->sentence,
         ];
     }
 }
