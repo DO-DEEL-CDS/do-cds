@@ -32,7 +32,7 @@ class PasswordReset extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function vsia($notifiable): array
+    public function via($notifiable): array
     {
         return ['mail'];
     }
