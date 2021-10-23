@@ -1,0 +1,66 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Prod server
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+
+      # Runs a single command using the runners shell
+      - name: Executing Dev remote commands via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ${{ secrets.PROD_APP_PATH }}
+            git add .
+            git stash
+            git checkout master
+            git pull origin master
+            php artisan down
+            composer install
+            php artisan migrate:fresh --seed
+            php artisan up
+            echo "End"
+
+      - name: Notify slack Deployment Suceded
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: deploys
+          status: SUCCESS
+          color: good
+
+      - name: Notify slack Deployment Failed
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: deploys
+          status: FAILED
+          color: danger
+
