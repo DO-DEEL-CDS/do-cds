@@ -34,6 +34,7 @@ class StateMemberFactory extends Factory
             'position' => $this->faker->title,
             'phone_number' => $this->faker->e164PhoneNumber,
             'batch' => Batch::getRandomInstance(),
+            'year' => $this->faker->year,
         ];
     }
 }

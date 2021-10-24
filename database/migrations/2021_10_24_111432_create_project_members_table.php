@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStateMembersTable extends Migration
+class CreateProjectMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateStateMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('state_members', function (Blueprint $table) {
+        Schema::create('project_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->onDelete('cascade');
+            $table->foreignId('project_id');
+            $table->tinyInteger('type');
             $table->string('name');
             $table->string('email');
-            $table->string('phone_number', 16);
-            $table->string('instagram')->nullable();
-            $table->string('facebook')->nullable();
+            $table->string('phone_number');
+            $table->string('instagram');
+            $table->string('facebook_link');
             $table->string('position')->nullable();
-            $table->tinyInteger('type');
-            $table->year('year');
-            $table->string('batch');
+            $table->string('batch')->nullable();
+            $table->year('year')->nullable();
             $table->string('state_code');
             $table->timestamps();
 
@@ -39,6 +39,6 @@ class CreateStateMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('state_members');
+        Schema::dropIfExists('project_members');
     }
 }

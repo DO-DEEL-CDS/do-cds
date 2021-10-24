@@ -13,11 +13,23 @@ class StateMember extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'year',
+        'type',
+        'name',
+        'email',
+        'position',
+        'state_code',
+        'phone_number',
+        'instagram',
+        'batch',
+        'facebook',
+    ];
 
     protected $casts = [
         'type' => StateMembershipType::class,
         'batch' => Batch::class,
+        'year' => 'date:Y'
     ];
 
     protected $hidden = [

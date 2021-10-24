@@ -23,7 +23,8 @@ class Training extends Model
     protected $hidden = [
         'batch',
         'deleted_at',
-        'attendance_time'
+        'attendance_time',
+        'created_by'
     ];
 
     public function attendance(): HasMany

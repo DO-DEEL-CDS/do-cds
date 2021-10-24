@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmploymentsController;
 use App\Http\Controllers\Misc\InfoController;
 use App\Http\Controllers\Misc\LocationController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\StateMemberController;
 use App\Http\Controllers\TrainingAttendanceController;
@@ -61,6 +62,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('trainings', [TrainingController::class, 'index']);
     Route::get('trainings/{training}', [TrainingController::class, 'show']);
     Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
+
+    Route::get('projects', [ProjectController::class, 'index']);
+    Route::get('projects/{project}', [ProjectController::class, 'show']);
+
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);
 });

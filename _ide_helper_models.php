@@ -230,6 +230,8 @@ namespace App\Models {
      * @property string $guard_name
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Illuminate\Database\Eloquent\Collection|Permission[] $permissions
+     * @property-read int|null $permissions_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
      * @property-read int|null $roles_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
@@ -285,6 +287,93 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
      */
     class Profile extends \Eloquent
+    {
+    }
+}
+
+namespace App\Models {
+
+    /**
+     * App\Models\Project
+     *
+     * @property int $id
+     * @property string $title
+     * @property \App\Enums\ProjectType $type
+     * @property \App\Enums\ProjectStatus $status
+     * @property string $overview
+     * @property string $guide
+     * @property int $user_id
+     * @property \App\Enums\Batch|null $batch
+     * @property mixed|null $year
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\User $author
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProjectMember[] $excos
+     * @property-read int|null $excos_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Resource[] $resources
+     * @property-read int|null $resources_count
+     * @method static \Illuminate\Database\Eloquent\Builder|Project active()
+     * @method static \Database\Factories\ProjectFactory factory(...$parameters)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Project newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Project query()
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereBatch($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereGuide($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereOverview($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereTitle($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereType($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereUserId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Project whereYear($value)
+     */
+    class Project extends \Eloquent
+    {
+    }
+}
+
+namespace App\Models {
+
+    /**
+     * App\Models\ProjectMember
+     *
+     * @property int $id
+     * @property int $project_id
+     * @property \App\Enums\ProjectMemberType $type
+     * @property string $name
+     * @property string $email
+     * @property string $phone_number
+     * @property string $instagram
+     * @property string $facebook_link
+     * @property string|null $position
+     * @property \App\Enums\Batch|null $batch
+     * @property mixed|null $year
+     * @property string $state_code
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\Project $project
+     * @method static \Database\Factories\ProjectMemberFactory factory(...$parameters)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember query()
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereBatch($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereFacebookLink($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereInstagram($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember wherePhoneNumber($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember wherePosition($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereProjectId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereStateCode($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereType($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|ProjectMember whereYear($value)
+     */
+    class ProjectMember extends \Eloquent
     {
     }
 }
@@ -517,6 +606,7 @@ namespace App\Models {
      * @property string|null $facebook
      * @property string|null $position
      * @property \App\Enums\StateMembershipType $type
+     * @property mixed $year
      * @property \App\Enums\Batch $batch
      * @property string $state_code
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -540,6 +630,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereUserId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereYear($value)
      */
     class StateMember extends \Eloquent
     {
