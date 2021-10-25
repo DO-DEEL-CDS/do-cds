@@ -33,7 +33,9 @@ class StateMember extends Model
     ];
 
     protected $hidden = [
-        'user_id'
+        'user_id',
+        'created_at',
+        'updated_at'
     ];
 
     public function state(): BelongsTo

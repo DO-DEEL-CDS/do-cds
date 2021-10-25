@@ -17,6 +17,7 @@ class ArticleRepository extends BaseRepository
         return Article::query()
             ->search($search)
             ->published()
+            ->withOnly(['author'])
             ->latest()
             ->simplePaginate();
     }

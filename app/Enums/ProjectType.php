@@ -19,6 +19,6 @@ final class ProjectType extends Enum
 
     public function toArray()
     {
-        return $this->description;
+        return \Str::slug($this->description);
     }
 }

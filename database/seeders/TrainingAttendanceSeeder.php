@@ -14,6 +14,6 @@ class TrainingAttendanceSeeder extends Seeder
      */
     public function run()
     {
-        TrainingAttendance::factory(21)->create();
+        TrainingAttendance::factory(100)->create();
     }
 }
