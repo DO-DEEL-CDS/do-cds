@@ -14,7 +14,7 @@ class TrainingSeeder extends Seeder
      */
     public function run(): void
     {
-        Training::factory(10)
+        Training::factory(30)
             ->hasResources()
             ->create();
     }

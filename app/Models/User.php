@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,10 +61,19 @@ class User extends Authenticatable
         'roles'
     ];
 
-
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function ticket(): HasOne
+    {
+        return $this->hasOne(Ticket::class);
+    }
+
+    public function attendance(): HasMany
+    {
+        return $this->hasMany(TrainingAttendance::class);
     }
 
     public function getPasswordResetCode()

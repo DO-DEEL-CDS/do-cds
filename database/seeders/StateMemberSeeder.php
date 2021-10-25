@@ -14,6 +14,6 @@ class StateMemberSeeder extends Seeder
      */
     public function run()
     {
-        StateMember::factory(100)->create();
+        StateMember::factory(500)->create();
     }
 }
