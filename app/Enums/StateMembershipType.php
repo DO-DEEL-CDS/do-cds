@@ -15,8 +15,8 @@ final class StateMembershipType extends Enum
     public const CommunityManager = 1;
     public const Executive = 2;
 
-    public function toArray()
+    public function toArray(): string
     {
-        return ucwords($this->description);
+        return \Str::slug($this->description);
     }
 }

@@ -21,6 +21,6 @@ final class TrainingStatus extends Enum
 
     public function toArray()
     {
-        return \Str::snake($this->description);
+        return \Str::slug($this->description);
     }
 }

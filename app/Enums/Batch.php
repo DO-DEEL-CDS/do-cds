@@ -19,6 +19,6 @@ final class Batch extends Enum
     public function toArray()
     {
         return ucwords($this->description);
-//        return preg_replace('/(\d+)/', '20$0 Batch ', $this->value);
+//      return preg_replace('/(\d+)/', '20$0 Batch ', $this->value);
     }
 }
