@@ -89,7 +89,7 @@ class ProspectRepository extends BaseRepository
 
     public function getProspects(array $search)
     {
-        return Prospect::query()->filter($search)->simplePaginate();
+        return Prospect::query()->latest()->filter($search)->simplePaginate();
     }
 
     /**

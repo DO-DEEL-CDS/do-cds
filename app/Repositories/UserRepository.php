@@ -38,6 +38,7 @@ class UserRepository extends BaseRepository
         try {
             DB::beginTransaction();
             $user = $this->addUser($data);
+            $user->markEmailAsVerified();
             $this->createProfile($user, $data);
             $user->api_token = $this->generateApiKey($user);
             DB::commit();

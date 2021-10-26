@@ -38,6 +38,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'created_at',
+        'email_verified_at',
+        'status'
     ];
 
     /**
@@ -55,11 +57,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = [
-        'profile',
-        'permissions',
-        'roles'
-    ];
+//    protected $with = [
+//        'profile',
+//        'permissions',
+//        'roles'
+//    ];
 
     public function profile(): HasOne
     {
@@ -92,5 +94,10 @@ class User extends Authenticatable
     private function passwordReset(): HasOne
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
+    }
+
+    public function businesses(): HasMany
+    {
+        return $this->hasMany(GmbSubmission::class);
     }
 }

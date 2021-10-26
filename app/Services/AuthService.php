@@ -10,7 +10,6 @@ use App\Repositories\UserRepository;
 use Auth;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Response;
-use Throwable;
 
 class AuthService extends BaseService
 {
@@ -30,9 +29,7 @@ class AuthService extends BaseService
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @throws Throwable
-     */
+
     public function createAccount(array $data)
     {
         $prospect = $this->prospectRepository->getProspectFromSecret($data['secret']);
@@ -49,7 +46,9 @@ class AuthService extends BaseService
 
     public function loginUser(string $deviceId): User
     {
-        return $this->userRepository->getCurrentUser($deviceId, true);
+        $user = $this->userRepository->getCurrentUser($deviceId, true);
+        $user->load(['profile', 'roles', 'permissions']);
+        return $user;
     }
 
     public function sendPasswordResetCode(string $email): void
