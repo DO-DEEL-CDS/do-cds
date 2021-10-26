@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\createArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use App\Repositories\ArticleRepository;
 use Illuminate\Http\JsonResponse;
@@ -24,38 +26,23 @@ class ArticlesController extends Controller
         return $this->success($articles);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return JsonResponse
-     */
-    public function store(Request $request)
+
+    public function store(createArticleRequest $request): JsonResponse
     {
-        //
+        $article = $this->articleRepository->createArticle($request->all());
+        return $this->success($article, 'News Created', 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Article  $article
-     * @return JsonResponse
-     */
     public function show(Article $article): JsonResponse
     {
         return $this->success($this->articleRepository->getSingeArticle($article));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  Article  $article
-     * @return JsonResponse
-     */
-    public function update(Request $request, Article $article)
+
+    public function update(UpdateArticleRequest $request, Article $article): JsonResponse
     {
-        //
+        $article = $this->articleRepository->updateArticle($article, $request->validated());
+        return $this->success($article, 'Article Updated', 200);
     }
 
     /**

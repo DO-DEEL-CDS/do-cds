@@ -78,6 +78,16 @@ class User extends Authenticatable
         return $this->hasMany(TrainingAttendance::class);
     }
 
+    public function businesses(): HasMany
+    {
+        return $this->hasMany(GmbSubmission::class);
+    }
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class, 'author');
+    }
+
     public function getPasswordResetCode()
     {
         $expires = config('auth.passwords.users.expire');
@@ -94,10 +104,5 @@ class User extends Authenticatable
     private function passwordReset(): HasOne
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
-    }
-
-    public function businesses(): HasMany
-    {
-        return $this->hasMany(GmbSubmission::class);
     }
 }

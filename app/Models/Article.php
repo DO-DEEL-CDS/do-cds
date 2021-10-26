@@ -51,6 +51,11 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function getImageAttribute($value)
+    {
+        return url($value);
+    }
+
     public function scopeSearch($query, array $search): void
     {
         if (!empty($search['category'])) {

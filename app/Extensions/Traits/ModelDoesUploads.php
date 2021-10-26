@@ -23,7 +23,7 @@ trait ModelDoesUploads
         });
     }
 
-    private static function doUpload(Model $model)
+    private static function doUpload(Model $model): void
     {
         if (!empty($model->uploadable)) {
             foreach ($model->uploadable as $uploadable_field) {

@@ -55,7 +55,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('auth/profile', [ProfileController::class, 'update']);
 
     Route::get('news', [ArticlesController::class, 'index']);
+    Route::post('news', [ArticlesController::class, 'store']);
     Route::get('news/{article}', [ArticlesController::class, 'show']);
+    Route::patch('news/{article}', [ArticlesController::class, 'update']);
 
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);

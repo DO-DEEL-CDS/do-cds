@@ -32,7 +32,7 @@ class UpdateProfile extends FormRequest
             'nysc_call_up_number' => ['sometimes', 'string', 'filled'],
             'nysc_state_code' => ['sometimes', new NyscStateCode()],
             'device_id' => ['sometimes', 'string'],
-            'photo' => ['sometimes', 'image', 'size:10000']
+            'photo' => ['sometimes', 'image', 'max:10000']
         ];
     }
 
