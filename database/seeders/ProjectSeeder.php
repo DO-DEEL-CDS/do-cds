@@ -21,6 +21,7 @@ class ProjectSeeder extends Seeder
                 'title' => 'Google My Business'
             ])
             ->hasResources(5)
+            ->hasBusinesses(100)
             ->hasExcos(20)
             ->create();
 

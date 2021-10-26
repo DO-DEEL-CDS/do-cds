@@ -66,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('projects', [ProjectController::class, 'index']);
     Route::get('projects/{project}', [ProjectController::class, 'show']);
+    Route::post('projects/{project}/business', [ProjectController::class, 'gmbSubmission']);
 
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);

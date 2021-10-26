@@ -50,6 +50,11 @@ class Project extends Model
         return $this->hasMany(ProjectMember::class)->where('type', ProjectMemberType::Exco());
     }
 
+    public function businesses(): HasMany
+    {
+        return $this->hasMany(GmbSubmission::class);
+    }
+
     public function resources(): MorphMany
     {
         return $this->morphMany(Resource::class, 'resourceable');
