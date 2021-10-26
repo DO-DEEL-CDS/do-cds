@@ -71,6 +71,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);
 
+    Route::get('prospects', [ProspectController::class, 'index']);
+    Route::patch('prospects', [ProspectController::class, 'updateProspectsStatus']);
+    Route::patch('prospects/{prospect}', [ProspectController::class, 'update']);
+
     Route::prefix('enums')->group(function () {
         Route::get('batches', [EnumsController::class, 'batches']);
         Route::get('project-statuses', [EnumsController::class, 'projectStatuses']);
