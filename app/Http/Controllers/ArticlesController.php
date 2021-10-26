@@ -45,14 +45,9 @@ class ArticlesController extends Controller
         return $this->success($article, 'Article Updated', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Article  $article
-     * @return JsonResponse
-     */
-    public function destroy(Article $article)
+    public function destroy(Article $article): JsonResponse
     {
-        //
+        $this->articleRepository->deleteArticle($article);
+        return $this->success();
     }
 }

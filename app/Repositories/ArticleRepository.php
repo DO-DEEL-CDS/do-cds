@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Enums\ArticleStatus;
+use App\Extensions\Utils\UploadManager;
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\Paginator;
 
@@ -40,5 +41,11 @@ class ArticleRepository extends BaseRepository
         $article->update($data);
         $article->refresh();
         return $this->getSingeArticle($article);
+    }
+
+    public function deleteArticle(Article $article): bool
+    {
+        UploadManager::init()->deleteFile($article->image);
+        return Article::where('id', $article->id)->delete();
     }
 }

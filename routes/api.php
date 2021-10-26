@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('news', [ArticlesController::class, 'store']);
     Route::get('news/{article}', [ArticlesController::class, 'show']);
     Route::patch('news/{article}', [ArticlesController::class, 'update']);
+    Route::delete('news/{article}', [ArticlesController::class, 'destroy']);
 
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
