@@ -19,7 +19,9 @@ class ProfileController extends Controller
 
     public function show(Request $request): JsonResponse
     {
-        return $this->success($request->user());
+        $user = $request->user();
+        $user->load(['permissions', 'roles', 'profile']);
+        return $this->success($user);
     }
 
     public function update(UpdateProfile $request): JsonResponse

@@ -152,6 +152,47 @@ namespace App\Models {
 namespace App\Models {
 
     /**
+     * App\Models\GmbSubmission
+     *
+     * @property int $id
+     * @property int $project_id
+     * @property int $user_id
+     * @property string $business_name
+     * @property string $business_owner
+     * @property string $business_email
+     * @property string|null $reject_reason
+     * @property string $owner_gender
+     * @property \App\Enums\GMBStatus $status
+     * @property int|null $approved_by
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\Roles\Corper $corper
+     * @property-read \App\Models\Project $project
+     * @method static \Database\Factories\GmbSubmissionFactory factory(...$parameters)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission query()
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereApprovedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereBusinessEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereBusinessName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereBusinessOwner($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereOwnerGender($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereProjectId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereRejectReason($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereUserId($value)
+     */
+    class GmbSubmission extends \Eloquent
+    {
+    }
+}
+
+namespace App\Models {
+
+    /**
      * App\Models\Lga
      *
      * @property int $id
@@ -308,6 +349,8 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\User $author
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GmbSubmission[] $businesses
+     * @property-read int|null $businesses_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProjectMember[] $excos
      * @property-read int|null $excos_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Resource[] $resources

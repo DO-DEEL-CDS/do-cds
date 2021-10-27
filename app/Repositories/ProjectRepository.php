@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Enums\GMBStatus;
+use App\Models\GmbSubmission;
 use App\Models\Project;
 
 class ProjectRepository extends BaseRepository
@@ -20,5 +22,12 @@ class ProjectRepository extends BaseRepository
     {
         return $project
             ->load(['excos', 'resources']);
+    }
+
+    public function submitBusiness(Project $project, array $data): GmbSubmission
+    {
+        return $project->businesses()->create(array_merge($data, [
+            'status' => GMBStatus::pending()
+        ]));
     }
 }

@@ -20,14 +20,15 @@ class ProspectRepository extends BaseRepository
         parent::__construct(new Prospect());
     }
 
-    public function create(array $data): void
+    public function create(array $data): Prospect
     {
-        if ($data['deployed_state']) {
+        if (!empty($data['deployed_state'])) {
             $data['state_code'] = $data['deployed_state'];
         }
 
         $prospect = Prospect::create($data);
         $prospect->notify(new ApplicationReceived());
+        return $prospect;
     }
 
     public function findByEmail(string $email)
@@ -84,5 +85,33 @@ class ProspectRepository extends BaseRepository
         }
 
         return Prospect::whereEmail($data[0])->firstOrFail();
+    }
+
+    public function getProspects(array $search)
+    {
+        return Prospect::query()->latest()->filter($search)->simplePaginate();
+    }
+
+    /**
+     * @todo Send Email to Prospect if Approve
+     */
+    public function updateProspect(Prospect $prospect, array $data): Prospect
+    {
+        if (!empty($data['deployed_state'])) {
+            $data['state_code'] = $data['deployed_state'];
+        }
+        $prospect->update($data);
+        return $prospect->refresh();
+    }
+
+    /**
+     * @todo Send Email to Prospect if Approve
+     */
+    public function updateProspectsStatuses(array $data)
+    {
+        $status = ProspectStatus::fromValue($data['status']);
+        return Prospect::query()->whereIn('id', $data['ids'])->update([
+            'status' => $status
+        ]);
     }
 }

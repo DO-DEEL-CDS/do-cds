@@ -21,4 +21,16 @@ final class Batch extends Enum
         return ucwords($this->description);
 //      return preg_replace('/(\d+)/', '20$0 Batch ', $this->value);
     }
+
+    public static function asArray()
+    {
+        $array = parent::asArray();
+        $selectArray = [];
+
+        foreach ($array as $key => $value) {
+            $selectArray[$value] = ucwords(static::getFriendlyKeyName($value));
+        }
+
+        return $selectArray;
+    }
 }

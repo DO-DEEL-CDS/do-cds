@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Enums\ArticleStatus;
+use App\Extensions\Utils\UploadManager;
 use App\Models\Article;
 use Illuminate\Contracts\Pagination\Paginator;
 
@@ -17,13 +19,33 @@ class ArticleRepository extends BaseRepository
         return Article::query()
             ->search($search)
             ->published()
-            ->withOnly(['author'])
+            ->with('author')
             ->latest()
             ->simplePaginate();
     }
 
-    public function getSingeArticle(Article $article)
+    public function getSingeArticle(Article $article): Article
     {
-        return $article;
+        return $article->load(['author']);
+    }
+
+    public function createArticle(array $data): Article
+    {
+        $data['status'] = ArticleStatus::Published();
+        $article = request()->user()->articles()->create($data);
+        return $this->getSingeArticle($article);
+    }
+
+    public function updateArticle(Article $article, array $data): Article
+    {
+        $article->update($data);
+        $article->refresh();
+        return $this->getSingeArticle($article);
+    }
+
+    public function deleteArticle(Article $article): bool
+    {
+        UploadManager::init()->deleteFile($article->image);
+        return Article::where('id', $article->id)->delete();
     }
 }

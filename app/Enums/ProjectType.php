@@ -17,7 +17,7 @@ final class ProjectType extends Enum
     public const mentorship = 3;
     public const schoolAdoption = 4;
 
-    public function toArray()
+    public function toArray(): string
     {
         return \Str::slug($this->description);
     }
