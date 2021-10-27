@@ -38,8 +38,8 @@ jobs:
             cd ${{ secrets.APP_PATH }}
             git add .
             git stash
-            git checkout master
-            git pull origin master
+            git checkout dev
+            git pull origin dev
             php artisan down
             composer install
             php artisan migrate:fresh --seed
