@@ -3,18 +3,28 @@
 namespace App\Models;
 
 use App\Enums\TrainingStatus;
+use App\Extensions\Traits\ModelDoesUploads;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Query\Builder;
 
 class Training extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, ModelDoesUploads;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'status',
+        'batch',
+        'title',
+        'overview',
+        'start_time',
+        'attendance_time',
+        'tutor',
+        'live_video',
+    ];
 
     protected $casts = [
         'status' => TrainingStatus::class
@@ -24,7 +34,8 @@ class Training extends Model
         'batch',
         'deleted_at',
         'attendance_time',
-        'created_by'
+        'created_by',
+        'start_time'
     ];
 
     public function attendance(): HasMany
@@ -39,11 +50,17 @@ class Training extends Model
 
     public function scopeSearch(Builder $query, array $search): void
     {
-    }
+        if (!empty($search['title'])) {
+            $query->where('title', 'like', $search['title'] . '%');
+        }
 
-    // Trainer should be just string
-//    public function trainer()
-//    {
-//        return $this->belongsTo(User::class);
-//    }
+        if (!empty($search['order']) && in_array($search['order'], ['asc', 'desc'])) {
+            $query->orderBy('created_at', $search['order']);
+        }
+
+        if (!empty($search['status'])) {
+            $status = TrainingStatus::fromValue($search['status']);
+            $query->where('status', '=', $status);
+        }
+    }
 }

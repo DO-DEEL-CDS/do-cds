@@ -20,8 +20,8 @@ class CreateTrainingsTable extends Migration
             $table->string('tutor');
             $table->text('overview');
             $table->timestamp('start_time')->index();
-            $table->timestamp('attendance_time');
-            $table->tinyInteger('status')->default(TrainingStatus::Pending);
+            $table->timestamp('attendance_time')->nullable();
+            $table->tinyInteger('status')->default(TrainingStatus::Pending)->index();
             $table->string('batch')->nullable()->index();
             $table->string('live_video')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

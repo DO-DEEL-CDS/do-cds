@@ -15,6 +15,7 @@ class CreateResourcesTable extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
+            $table->string('filename');
             $table->string('attachment');
             $table->morphs('resourceable');
             $table->timestamps();

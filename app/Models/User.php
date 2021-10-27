@@ -88,6 +88,11 @@ class User extends Authenticatable
         return $this->hasMany(Article::class, 'author');
     }
 
+    public function training(): HasMany
+    {
+        return $this->hasMany(Training::class, 'created_by', 'id');
+    }
+
     public function getPasswordResetCode()
     {
         $expires = config('auth.passwords.users.expire');

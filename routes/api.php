@@ -63,9 +63,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
 
-    Route::get('trainings', [TrainingController::class, 'index']);
-    Route::get('trainings/{training}', [TrainingController::class, 'show']);
     Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
+    Route::get('trainings', [TrainingController::class, 'index']);
+    Route::post('trainings', [TrainingController::class, 'store']);
+    Route::get('trainings/{training}', [TrainingController::class, 'show']);
+    Route::patch('trainings/{training}', [TrainingController::class, 'update']);
+    Route::delete('trainings/{training}', [TrainingController::class, 'destroy']);
 
     Route::get('projects', [ProjectController::class, 'index']);
     Route::get('projects/{project}', [ProjectController::class, 'show']);

@@ -15,12 +15,41 @@ class TrainingRepository extends BaseRepository
         parent::__construct(new Training());
     }
 
-    public function getUpcomingTraining(): \Illuminate\Contracts\Pagination\Paginator
+    public function getTrainings(array $search): \Illuminate\Contracts\Pagination\Paginator
     {
-        return Training::whereTitle('start_time', '>=', now())
-            ->orWhere('status', TrainingStatus::Started)
-            ->orWhere('status', TrainingStatus::AttendanceOpened)
-            ->latest()
+        return Training::query()
+            ->search($search)
             ->simplePaginate();
+    }
+
+    public function createTraining(array $data): Training
+    {
+        $data['status'] = TrainingStatus::Approved();
+        $user = request()->user();
+
+        $training = $user->training()->create($data);
+        $training->resources()->createMany($data['resources']);
+        return $this->getTraining($training);
+    }
+
+    public function getTraining(Training $training): Training
+    {
+        return $training->load('resources');
+    }
+
+    public function updateTraining(Training $training, array $data): Training
+    {
+        if (!empty($data['status'])) {
+            $data['status'] = TrainingStatus::fromValue($data['status']);
+        }
+        $training->update($data);
+        return $this->getTraining($training);
+    }
+
+    public function deleteTraining(Training $training): void
+    {
+        $training->delete();
+        $training->resources()->delete();
+        // $training->attendance()->delete(); // softDeletes so no need to delete attendance (for reference)
     }
 }
