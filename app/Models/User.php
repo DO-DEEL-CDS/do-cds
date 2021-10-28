@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -26,7 +27,7 @@ class User extends Authenticatable
         'device_id',
         'status',
         'password',
-        'email_verified_at'
+        'email_verified_at',
     ];
 
     /**
@@ -39,7 +40,6 @@ class User extends Authenticatable
         'remember_token',
         'created_at',
         'email_verified_at',
-        'status'
     ];
 
     /**
@@ -51,17 +51,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'status' => UserStatus::class
     ];
-
-    /**
-     * The attributes that should be retrieved always.
-     *
-     * @var array
-     */
-//    protected $with = [
-//        'profile',
-//        'permissions',
-//        'roles'
-//    ];
 
     public function profile(): HasOne
     {
@@ -109,5 +98,9 @@ class User extends Authenticatable
     private function passwordReset(): HasOne
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
+    }
+
+    public function scopeSearch(Builder $builder, array $search)
+    {
     }
 }

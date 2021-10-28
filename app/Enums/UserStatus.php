@@ -5,13 +5,18 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
+ * @method static static Inactive()
+ * @method static static InTraining()
+ * @method static static Active()
  */
 final class UserStatus extends Enum
 {
-    public const inactive = 0;
-    public const inTraining = 1;
-    public const active = 2;
+    public const Inactive = 0;
+    public const InTraining = 1;
+    public const Active = 2;
+
+    public function toArray(): string
+    {
+        return \Str::snake($this->description);
+    }
 }

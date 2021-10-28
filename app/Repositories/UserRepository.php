@@ -33,8 +33,15 @@ class UserRepository extends BaseRepository
      * @return User|Model
      * @throws Throwable
      */
-    public function creteAccount(array $data)
+    public function createAccount(array $data)
     {
+        if (empty($data['password'])) {
+            $data['password'] = \Str::random();
+        }
+        if (!empty($data['deployed_state'])) {
+            $data['state_code'] = $data['deployed_state'];
+        }
+
         try {
             DB::beginTransaction();
             $user = $this->addUser($data);
@@ -96,7 +103,7 @@ class UserRepository extends BaseRepository
 
     public function getCurrentUser(string $deviceId, bool $withNewToken = false): User
     {
-        $user = request()->user('sanctum')->load(['profile', 'permissions']);
+        $user = $this->getUserData(request()->user(), true);
 
         if ($deviceId) {
             $user->device_id = $deviceId;
@@ -109,11 +116,38 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function updateProfile(User $user, ValidatedInput $data)
+    public function getUserData(User $user, bool $withAuth = false): User
     {
-        $user->update($data->only('name', 'email', 'device_id'));
+        $user->load(['profile']);
+
+        if ($withAuth) {
+            $user->load(['permissions', 'roles']);
+        }
+
+        return $user;
+    }
+
+    public function updateUser(User $user, ValidatedInput $data): User
+    {
+        $user->update($data->all());
 
         $user->profile()->update($data->only('photo', 'deployed_state', 'nysc_call_up_number', 'nysc_state_code', 'phone_number'));
-        return $user->refresh();
+        $user->refresh();
+        return $this->getUserData($user);
     }
+
+    public function getUsers(array $search)
+    {
+        return User::query()
+            ->with('profile')
+            ->role('corper')
+            ->search($search)
+            ->simplePaginate();
+    }
+
+    public function adminGetUser(User $user): User
+    {
+        return $user->load(['profile', 'businesses', 'permissions', 'roles', 'attendance']);
+    }
+
 }
