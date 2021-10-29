@@ -11,10 +11,12 @@ use App\Http\Controllers\Misc\EnumsController;
 use App\Http\Controllers\Misc\InfoController;
 use App\Http\Controllers\Misc\LocationController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectMemberController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\StateMemberController;
 use App\Http\Controllers\TrainingAttendanceController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,25 +56,30 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('auth/profile', [ProfileController::class, 'show']);
     Route::patch('auth/profile', [ProfileController::class, 'update']);
 
-    Route::get('news', [ArticlesController::class, 'index']);
-    Route::post('news', [ArticlesController::class, 'store']);
-    Route::get('news/{article}', [ArticlesController::class, 'show']);
-    Route::patch('news/{article}', [ArticlesController::class, 'update']);
-    Route::delete('news/{article}', [ArticlesController::class, 'destroy']);
+    Route::resource('users', UserController::class)->except('destroy');
+    Route::post('users/{user}/trainings/{training}', [UserController::class, 'recordAttendance']);
+
+    Route::resource('news', ArticlesController::class)->parameters(['news' => 'article']);
 
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
 
-    Route::get('trainings', [TrainingController::class, 'index']);
-    Route::get('trainings/{training}', [TrainingController::class, 'show']);
     Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
+    Route::resource('trainings', TrainingController::class);
 
     Route::get('projects', [ProjectController::class, 'index']);
     Route::get('projects/{project}', [ProjectController::class, 'show']);
+    Route::patch('projects/{project}', [ProjectController::class, 'update']);
     Route::post('projects/{project}/business', [ProjectController::class, 'gmbSubmission']);
+    Route::post('projects/{project}/members', [ProjectMemberController::class, 'store']);
 
+    Route::patch('project-members/{member}', [ProjectMemberController::class, 'update']);
+    Route::delete('project-members/{member}', [ProjectMemberController::class, 'destroy']);
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);
+    Route::post('states/{state}/members', [StateMemberController::class, 'store']);
+    Route::patch('state-members/{member}', [StateMemberController::class, 'update']);
+    Route::delete('state-members/{member}', [StateMemberController::class, 'destroy']);
 
     Route::get('prospects', [ProspectController::class, 'index']);
     Route::patch('prospects', [ProspectController::class, 'updateProspectsStatus']);

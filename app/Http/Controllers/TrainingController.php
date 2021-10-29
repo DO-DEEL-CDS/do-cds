@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTrainingRequest;
+use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
+use App\Models\User;
 use App\Repositories\TrainingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class TrainingController extends Controller
 {
@@ -17,60 +19,40 @@ class TrainingController extends Controller
         $this->trainingRepository = $trainingRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $trainings = $this->trainingRepository->getUpcomingTraining();
+        $trainings = $this->trainingRepository->getTrainings($request->all());
         return $this->success($trainings);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
+    public function userTrainings(User $user): JsonResponse
     {
-        //
+        $trainings = $this->trainingRepository->getTrainingsWithAttendanceStatus($user);
+        return $this->success($trainings);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Training  $training
-     * @return JsonResponse
-     */
+    public function store(CreateTrainingRequest $request): JsonResponse
+    {
+        $training = $this->trainingRepository->createTraining($request->validated());
+        return $this->success($training, 'Training Created', 201);
+    }
+
     public function show(Training $training): JsonResponse
     {
-        $training->load('resources');
+        $training = $this->trainingRepository->getTraining($training);
+
         return $this->success($training);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  Training  $training
-     * @return Response
-     */
-    public function update(Request $request, Training $training)
+    public function update(UpdateTrainingRequest $request, Training $training): JsonResponse
     {
-        //
+        $training = $this->trainingRepository->updateTraining($training, $request->validated());
+        return $this->success($training);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Training  $training
-     * @return Response
-     */
-    public function destroy(Training $training)
+    public function destroy(Training $training): JsonResponse
     {
-        //
+        $this->trainingRepository->deleteTraining($training);
+        return $this->success();
     }
 }

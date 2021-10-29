@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
     public function update(UpdateProfile $request): JsonResponse
     {
-        $user = $this->userRepository->updateProfile($request->user(), $request->safe());
+        $user = $this->userRepository->updateUser($request->user(), $request->safe());
         return $this->success($user, 'Profile Updated');
     }
 }

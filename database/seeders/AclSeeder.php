@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -21,7 +22,7 @@ class AclSeeder extends Seeder
         $admin = Role::create([
             'name' => 'admin'
         ]);
-        $admin->syncPermissions()->syncPermissions();
+        $admin->syncPermissions($this->permissions());
 
         $corper = Role::create([
             'name' => 'corper'
@@ -29,15 +30,23 @@ class AclSeeder extends Seeder
         $corper->syncPermissions($this->corperPermissions());
     }
 
-    public function corperPermissions()
+    public function permissions(): array
     {
+        $permissions[] = Permission::create(['name' => 'manage-prospects']);
+        $permissions[] = Permission::create(['name' => 'manage-users']);
+        $permissions[] = Permission::create(['name' => 'manage-training']);
+        $permissions[] = Permission::create(['name' => 'manage-attendance']);
+        $permissions[] = Permission::create(['name' => 'manage-project']);
+        $permissions[] = Permission::create(['name' => 'manage-article']);
+        $permissions[] = Permission::create(['name' => 'manage-job']);
+        $permissions[] = Permission::create(['name' => 'manage-state']);
+        return $permissions;
     }
 
-    public function adminPermissions()
+    public function corperPermissions(): array
     {
-    }
-
-    public function permissions()
-    {
+        $permissions[] = Permission::create(['name' => 'access-projects']);
+        $permissions[] = Permission::create(['name' => 'access-jobs']);
+        return $permissions;
     }
 }

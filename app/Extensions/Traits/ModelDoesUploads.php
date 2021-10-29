@@ -28,12 +28,21 @@ trait ModelDoesUploads
         if (!empty($model->uploadable)) {
             foreach ($model->uploadable as $uploadable_field) {
                 if (request()->hasFile($uploadable_field)) {
-                    $upload_path = UploadManager::init()->saveFile(request()->file($uploadable_field));
-
+                    $file = request()->file($uploadable_field);
+                    $upload_path = UploadManager::init()->saveFile($file);
                     $model->setAttribute($uploadable_field, $upload_path);
+
+                    if (\Schema::hasColumn($model->getTable(), 'filename')) {
+                        $filename = $file->getClientOriginalName();
+                        $model->setAttribute('filename', $filename);
+                    }
                 } elseif ($model->$uploadable_field instanceof UploadedFile) {
                     $upload_path = UploadManager::init()->saveFile($model->$uploadable_field);
 
+                    if (\Schema::hasColumn($model->getTable(), 'filename')) {
+                        $filename = $model->$uploadable_field->getClientOriginalName();
+                        $model->setAttribute('filename', $filename);
+                    }
                     $model->setAttribute($uploadable_field, $upload_path);
                 }
             }

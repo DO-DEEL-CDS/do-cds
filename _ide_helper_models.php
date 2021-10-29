@@ -26,6 +26,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Category $category
+     * @property-read mixed $image_url
      * @method static \Database\Factories\ArticleFactory factory(...$parameters)
      * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Article newQuery()
@@ -353,6 +354,8 @@ namespace App\Models {
      * @property-read int|null $businesses_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProjectMember[] $excos
      * @property-read int|null $excos_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProjectMember[] $members
+     * @property-read int|null $members_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Resource[] $resources
      * @property-read int|null $resources_count
      * @method static \Illuminate\Database\Eloquent\Builder|Project active()
@@ -440,6 +443,7 @@ namespace App\Models {
      * @property-read int|null $notifications_count
      * @property-read \App\Models\User $user
      * @method static \Database\Factories\ProspectFactory factory(...$parameters)
+     * @method static \Illuminate\Database\Eloquent\Builder|Prospect filter(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|Prospect newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Prospect newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Prospect query()
@@ -465,11 +469,13 @@ namespace App\Models {
      * App\Models\Resource
      *
      * @property int $id
+     * @property string $filename
      * @property string $attachment
      * @property string $resourceable_type
      * @property int $resourceable_id
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read mixed $attachment_url
      * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $resourceable
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Profile[] $users
      * @property-read int|null $users_count
@@ -479,6 +485,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|Resource query()
      * @method static \Illuminate\Database\Eloquent\Builder|Resource whereAttachment($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Resource whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Resource whereFilename($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Resource whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Resource whereResourceableId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Resource whereResourceableType($value)
@@ -534,8 +541,12 @@ namespace App\Models\Roles {
      * @property string|null $remember_token
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
+     * @property-read int|null $articles_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TrainingAttendance[] $attendance
      * @property-read int|null $attendance_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GmbSubmission[] $businesses
+     * @property-read int|null $businesses_count
      * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
      * @property-read int|null $notifications_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Permission[] $permissions
@@ -546,11 +557,14 @@ namespace App\Models\Roles {
      * @property-read \App\Models\Ticket|null $ticket
      * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
      * @property-read int|null $tokens_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Training[] $training
+     * @property-read int|null $training_count
      * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin whereEmail($value)
@@ -583,8 +597,12 @@ namespace App\Models\Roles {
      * @property string|null $remember_token
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
+     * @property-read int|null $articles_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TrainingAttendance[] $attendance
      * @property-read int|null $attendance_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GmbSubmission[] $businesses
+     * @property-read int|null $businesses_count
      * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
      * @property-read int|null $notifications_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Permission[] $permissions
@@ -595,11 +613,14 @@ namespace App\Models\Roles {
      * @property-read \App\Models\Ticket|null $ticket
      * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
      * @property-read int|null $tokens_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Training[] $training
+     * @property-read int|null $training_count
      * @method static \Illuminate\Database\Eloquent\Builder|Corper newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Corper newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereEmail($value)
@@ -785,7 +806,7 @@ namespace App\Models {
      * @property string $tutor
      * @property string $overview
      * @property string $start_time
-     * @property string $attendance_time
+     * @property string|null $attendance_time
      * @property \App\Enums\TrainingStatus $status
      * @property string|null $batch
      * @property string|null $live_video
@@ -864,8 +885,12 @@ namespace App\Models {
      * @property string|null $remember_token
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Article[] $articles
+     * @property-read int|null $articles_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TrainingAttendance[] $attendance
      * @property-read int|null $attendance_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GmbSubmission[] $businesses
+     * @property-read int|null $businesses_count
      * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
      * @property-read int|null $notifications_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Permission[] $permissions
@@ -876,12 +901,15 @@ namespace App\Models {
      * @property-read \App\Models\Ticket|null $ticket
      * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
      * @property-read int|null $tokens_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Training[] $training
+     * @property-read int|null $training_count
      * @method static \Database\Factories\UserFactory factory(...$parameters)
      * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|User query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)

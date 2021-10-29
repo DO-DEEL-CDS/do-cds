@@ -12,18 +12,24 @@ class Resource extends Model
 {
     use HasFactory, ModelDoesUploads;
 
-    public $uploadable = [
+    public array $uploadable = [
         'attachment'
     ];
 
     protected $fillable = [
         'attachment',
+        'filename'
     ];
 
     protected $hidden = [
         'resourceable_id',
         'resourceable_type',
         'updated_at',
+        'attachment',
+    ];
+
+    protected $appends = [
+        'attachment_url'
     ];
 
     public function resourceable(): MorphTo
@@ -34,5 +40,10 @@ class Resource extends Model
     public function users(): HasMany
     {
         return $this->hasMany(Profile::class)->with('user');
+    }
+
+    public function getAttachmentUrlAttribute()
+    {
+        return url($this->attachment);
     }
 }

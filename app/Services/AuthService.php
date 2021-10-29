@@ -41,7 +41,7 @@ class AuthService extends BaseService
         $userData['nysc_call_up_number'] = $userData['call_up_number'];
         $userData['state_code'] = $userData['deployed_state'];
 
-        return $this->userRepository->creteAccount($userData);
+        return $this->userRepository->createAccount($userData);
     }
 
     public function loginUser(string $deviceId): User

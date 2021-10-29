@@ -27,7 +27,8 @@ class Article extends Model
     protected $hidden = [
         'updated_at',
         'state_code',
-        'category_id'
+        'category_id',
+        'image'
     ];
 
     protected $with = [
@@ -39,7 +40,11 @@ class Article extends Model
         'status' => ArticleStatus::class
     ];
 
-    private $uploadable = ['image'];
+    protected $appends = [
+        'image_url'
+    ];
+
+    private array $uploadable = ['image'];
 
     public function author(): BelongsTo
     {
@@ -51,7 +56,7 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function getImageAttribute($value)
+    public function getImageUrlAttribute($value)
     {
         return url($value);
     }

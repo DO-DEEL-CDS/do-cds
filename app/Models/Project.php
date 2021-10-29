@@ -45,6 +45,11 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function members(): HasMany
+    {
+        return $this->hasMany(ProjectMember::class);
+    }
+
     public function excos(): HasMany
     {
         return $this->hasMany(ProjectMember::class)->where('type', ProjectMemberType::Exco());

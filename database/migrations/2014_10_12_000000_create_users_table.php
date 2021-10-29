@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique()->index();
             $table->string('device_id')->nullable()->index();
-            $table->tinyInteger('status')->default(UserStatus::inTraining)->index();
+            $table->tinyInteger('status')->default(UserStatus::Active)->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
