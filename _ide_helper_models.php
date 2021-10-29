@@ -354,6 +354,8 @@ namespace App\Models {
      * @property-read int|null $businesses_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProjectMember[] $excos
      * @property-read int|null $excos_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProjectMember[] $members
+     * @property-read int|null $members_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Resource[] $resources
      * @property-read int|null $resources_count
      * @method static \Illuminate\Database\Eloquent\Builder|Project active()
@@ -562,6 +564,7 @@ namespace App\Models\Roles {
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Admin whereEmail($value)
@@ -617,6 +620,7 @@ namespace App\Models\Roles {
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereEmail($value)
@@ -905,6 +909,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|User query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
