@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Enums\TrainingStatus;
 use App\Models\Training;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class TrainingRepository extends BaseRepository
 {
@@ -15,7 +16,7 @@ class TrainingRepository extends BaseRepository
         parent::__construct(new Training());
     }
 
-    public function getTrainings(array $search): \Illuminate\Contracts\Pagination\Paginator
+    public function getTrainings(array $search): Paginator
     {
         return Training::query()
             ->search($search)
@@ -41,6 +42,9 @@ class TrainingRepository extends BaseRepository
     {
         if (!empty($data['status'])) {
             $data['status'] = TrainingStatus::fromValue($data['status']);
+            if ($data['status']->is(TrainingStatus::AttendanceOpened())) {
+                $data['attendance_time'] = now();
+            }
         }
         $training->update($data);
         return $this->getTraining($training);

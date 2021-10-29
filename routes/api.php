@@ -11,6 +11,7 @@ use App\Http\Controllers\Misc\EnumsController;
 use App\Http\Controllers\Misc\InfoController;
 use App\Http\Controllers\Misc\LocationController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectMemberController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\StateMemberController;
 use App\Http\Controllers\TrainingAttendanceController;
@@ -56,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('auth/profile', [ProfileController::class, 'update']);
 
     Route::resource('users', UserController::class)->except('destroy');
+    Route::post('users/{user}/trainings/{training}', [UserController::class, 'recordAttendance']);
 
     Route::get('news', [ArticlesController::class, 'index']);
     Route::post('news', [ArticlesController::class, 'store']);
@@ -67,16 +69,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
 
     Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
-    Route::get('trainings', [TrainingController::class, 'index']);
-    Route::post('trainings', [TrainingController::class, 'store']);
-    Route::get('trainings/{training}', [TrainingController::class, 'show']);
-    Route::patch('trainings/{training}', [TrainingController::class, 'update']);
-    Route::delete('trainings/{training}', [TrainingController::class, 'destroy']);
+    Route::resource('trainings', TrainingController::class);
 
     Route::get('projects', [ProjectController::class, 'index']);
     Route::get('projects/{project}', [ProjectController::class, 'show']);
+    Route::patch('projects/{project}', [ProjectController::class, 'update']);
     Route::post('projects/{project}/business', [ProjectController::class, 'gmbSubmission']);
+    Route::post('projects/{project}/members', [ProjectMemberController::class, 'store']);
 
+    Route::patch('project-members/{member}', [ProjectMemberController::class, 'update']);
+    Route::delete('project-members/{member}', [ProjectMemberController::class, 'destroy']);
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);
 

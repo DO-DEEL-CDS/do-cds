@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Training;
 use App\Models\User;
+use App\Repositories\AttendanceRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -39,5 +41,12 @@ class UserController extends Controller
     {
         $user = $this->userRepository->updateUser($user, $request->safe());
         return $this->success($user);
+    }
+
+    public function recordAttendance(User $user, Training $training): JsonResponse
+    {
+        $attendanceRepository = new AttendanceRepository();
+        $attendanceRepository->recordAttendance($training, $user);
+        return $this->success();
     }
 }

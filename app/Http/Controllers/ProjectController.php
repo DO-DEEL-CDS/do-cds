@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storeGmbBusiness;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Repositories\ProjectRepository;
 use App\Services\ProjectService;
@@ -28,6 +29,12 @@ class ProjectController extends Controller
     public function show(Project $project): JsonResponse
     {
         return $this->success($this->projectRepository->getProjectData($project));
+    }
+
+    public function update(UpdateProjectRequest $request, Project $project): JsonResponse
+    {
+        $member = $this->projectRepository->updateProject($project, $request->validated());
+        return $this->success($member, 'Project Updated');
     }
 
     public function gmbSubmission(storeGmbBusiness $request, Project $project): JsonResponse

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Training;
+use App\Models\User;
 use App\Repositories\TrainingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,6 +22,12 @@ class TrainingController extends Controller
     public function index(Request $request): JsonResponse
     {
         $trainings = $this->trainingRepository->getTrainings($request->all());
+        return $this->success($trainings);
+    }
+
+    public function userTrainings(User $user): JsonResponse
+    {
+        $trainings = $this->trainingRepository->getTrainingsWithAttendanceStatus($user);
         return $this->success($trainings);
     }
 

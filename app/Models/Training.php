@@ -48,6 +48,7 @@ class Training extends Model
         return $this->morphMany(Resource::class, 'resourceable');
     }
 
+
     public function scopeSearch(Builder $query, array $search): void
     {
         if (!empty($search['title'])) {

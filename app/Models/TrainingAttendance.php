@@ -12,6 +12,14 @@ class TrainingAttendance extends Model
 
     protected $guarded = ['id'];
 
+    protected $with = [
+        'training:id,title'
+    ];
+
+    protected $hidden = [
+        'training_id', // as training object is always returned, this is redundant in response
+    ];
+
     public const UPDATED_AT = null;
 
     public function user(): BelongsTo

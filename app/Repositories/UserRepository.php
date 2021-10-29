@@ -76,7 +76,7 @@ class UserRepository extends BaseRepository
 
     public function generateApiKey(User $user): string
     {
-        $this->deleteAPiIKeys($user);
+//        $this->deleteAPiIKeys($user);
         $token = $user->createToken($user->name);
         return explode('|', $token->plainTextToken)[1];
     }
@@ -142,12 +142,19 @@ class UserRepository extends BaseRepository
             ->with('profile')
             ->role('corper')
             ->search($search)
+            ->latest()
             ->simplePaginate();
     }
 
     public function adminGetUser(User $user): User
     {
-        return $user->load(['profile', 'businesses', 'permissions', 'roles', 'attendance']);
+        return $user->load([
+            'profile',
+            'businesses',
+            'permissions',
+            'roles',
+            'attendance'
+        ]);
     }
 
 }

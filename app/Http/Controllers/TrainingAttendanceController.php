@@ -19,16 +19,6 @@ class TrainingAttendanceController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -38,29 +28,6 @@ class TrainingAttendanceController extends Controller
     {
         $this->attendanceRepository->recordAttendance($training, $request->user());
         return $this->success();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  TrainingAttendance  $trainingAttendance
-     * @return Response
-     */
-    public function show(TrainingAttendance $trainingAttendance)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  TrainingAttendance  $trainingAttendance
-     * @return Response
-     */
-    public function update(Request $request, TrainingAttendance $trainingAttendance)
-    {
-        //
     }
 
     /**

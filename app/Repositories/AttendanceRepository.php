@@ -6,6 +6,7 @@ use App\Enums\TrainingStatus;
 use App\Models\Training;
 use App\Models\TrainingAttendance;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class AttendanceRepository extends BaseRepository
 {
@@ -18,10 +19,14 @@ class AttendanceRepository extends BaseRepository
         parent::__construct(new TrainingAttendance());
     }
 
-    // Your methods for repository
-    public function recordAttendance(Training $training, User $user)
+    public function recordAttendance(Training $training, User $user): Model
     {
-        abort_if($training->status->isNot(TrainingStatus::AttendanceOpened), 400, 'Training attendance is not Open');
+        abort_if(
+            $training->status->isNot(TrainingStatus::AttendanceOpened) && !$user->hasPermissionTo('add-attendance'),
+            400,
+            'Training attendance is not Open'
+        );
+
         return $training->attendance()->updateOrCreate([
             'user_id' => $user->id
         ]);
