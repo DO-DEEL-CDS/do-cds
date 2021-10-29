@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateStateMemberRequest;
+use App\Http\Requests\UpdateStateMemberRequest;
 use App\Models\State;
 use App\Models\StateMember;
 use App\Repositories\StateRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class StateMemberController extends Controller
 {
@@ -33,48 +33,21 @@ class StateMemberController extends Controller
         return $this->success($state);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
+    public function store(CreateStateMemberRequest $request, State $state): JsonResponse
     {
-        //
+        $member = $this->stateRepository->addMember($state, $request->validated());
+        return $this->success($member, 'State Member Created', 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  StateMember  $stateMember
-     * @return Response
-     */
-    public function show(StateMember $stateMember)
+    public function update(UpdateStateMemberRequest $request, StateMember $member): JsonResponse
     {
-        //
+        $member = $this->stateRepository->updateMember($member, $request->validated());
+        return $this->success($member->toArray());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  StateMember  $stateMember
-     * @return Response
-     */
-    public function update(Request $request, StateMember $stateMember)
+    public function destroy(StateMember $member): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  StateMember  $stateMember
-     * @return Response
-     */
-    public function destroy(StateMember $stateMember)
-    {
-        //
+        $this->stateRepository->deleteMember($member);
+        return $this->success();
     }
 }

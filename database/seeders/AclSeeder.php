@@ -32,13 +32,14 @@ class AclSeeder extends Seeder
 
     public function permissions(): array
     {
-        $permissions[] = Permission::create(['name' => 'manage-attendance']);
-        $permissions[] = Permission::create(['name' => 'manage-post']);
-        $permissions[] = Permission::create(['name' => 'manage-training']);
-        $permissions[] = Permission::create(['name' => 'manage-article']);
-        $permissions[] = Permission::create(['name' => 'manage-project']);
-        $permissions[] = Permission::create(['name' => 'manage-users']);
         $permissions[] = Permission::create(['name' => 'manage-prospects']);
+        $permissions[] = Permission::create(['name' => 'manage-users']);
+        $permissions[] = Permission::create(['name' => 'manage-training']);
+        $permissions[] = Permission::create(['name' => 'manage-attendance']);
+        $permissions[] = Permission::create(['name' => 'manage-project']);
+        $permissions[] = Permission::create(['name' => 'manage-article']);
+        $permissions[] = Permission::create(['name' => 'manage-job']);
+        $permissions[] = Permission::create(['name' => 'manage-state']);
         return $permissions;
     }
 

@@ -59,11 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', UserController::class)->except('destroy');
     Route::post('users/{user}/trainings/{training}', [UserController::class, 'recordAttendance']);
 
-    Route::get('news', [ArticlesController::class, 'index']);
-    Route::post('news', [ArticlesController::class, 'store']);
-    Route::get('news/{article}', [ArticlesController::class, 'show']);
-    Route::patch('news/{article}', [ArticlesController::class, 'update']);
-    Route::delete('news/{article}', [ArticlesController::class, 'destroy']);
+    Route::resource('news', ArticlesController::class)->parameters(['news' => 'article']);
 
     Route::get('jobs', [EmploymentsController::class, 'index']);
     Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
@@ -81,6 +77,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('project-members/{member}', [ProjectMemberController::class, 'destroy']);
 
     Route::get('states/{state}/members', [StateMemberController::class, 'index']);
+    Route::post('states/{state}/members', [StateMemberController::class, 'store']);
+    Route::patch('state-members/{member}', [StateMemberController::class, 'update']);
+    Route::delete('state-members/{member}', [StateMemberController::class, 'destroy']);
 
     Route::get('prospects', [ProspectController::class, 'index']);
     Route::patch('prospects', [ProspectController::class, 'updateProspectsStatus']);
