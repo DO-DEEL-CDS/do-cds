@@ -27,13 +27,17 @@ class Training extends Model
     ];
 
     protected $casts = [
-        'status' => TrainingStatus::class
+        'status' => TrainingStatus::class,
+    ];
+
+    protected $dates = [
+        'start_time' => 'datetime',
+        'attendance_time' => 'datetime',
     ];
 
     protected $hidden = [
         'batch',
         'deleted_at',
-        'attendance_time',
         'created_by',
         'start_time'
     ];
@@ -58,6 +62,13 @@ class Training extends Model
         if (!empty($search['order']) && in_array($search['order'], ['asc', 'desc'])) {
             $query->orderBy('created_at', $search['order']);
         }
+
+        if (!empty($search['upcoming'])) {
+            $query->orderBy('start_time', 'desc');
+            $query->where('start_time', '>=', now());
+            $query->orWhere('status', '!=', TrainingStatus::Closed);
+        }
+
 
         if (!empty($search['status'])) {
             $status = TrainingStatus::fromValue($search['status']);

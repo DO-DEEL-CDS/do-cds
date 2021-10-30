@@ -22,6 +22,6 @@ class EmploymentRepository extends BaseRepository
         return Employment::latest()
             ->search($search)
             ->open()
-            ->simplePaginate();
+            ->paginate($search['per_page'] ?? 15);
     }
 }

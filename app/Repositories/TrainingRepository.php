@@ -20,7 +20,7 @@ class TrainingRepository extends BaseRepository
     {
         return Training::query()
             ->search($search)
-            ->simplePaginate();
+            ->paginate();
     }
 
     public function createTraining(array $data): Training

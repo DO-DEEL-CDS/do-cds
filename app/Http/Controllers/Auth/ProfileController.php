@@ -29,4 +29,9 @@ class ProfileController extends Controller
         $user = $this->userRepository->updateUser($request->user(), $request->safe());
         return $this->success($user, 'Profile Updated');
     }
+
+    public function projectProgress(): array
+    {
+        return $this->userRepository->getUserGmbProgress(auth()->user());
+    }
 }

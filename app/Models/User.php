@@ -89,17 +89,24 @@ class User extends Authenticatable
             ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
     }
 
-    public function deletePasswordResetCode(): void
-    {
-        $this->passwordReset()->delete();
-    }
-
     private function passwordReset(): HasOne
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
     }
 
-    public function scopeSearch(Builder $builder, array $search)
+    public function deletePasswordResetCode(): void
     {
+        $this->passwordReset()->delete();
+    }
+
+    public function scopeSearch(Builder $builder, array $search): void
+    {
+        if (!empty($search['search'])) {
+            $builder->where('name', 'like', $search['search'] . '%');
+            $builder->orWhere('email', 'like', $search['search'] . '%');
+            $builder->orWhereHas('profile', function ($q) use ($search) {
+                $q->where('nysc_state_code', 'like', $search['search'] . '%');
+            });
+        }
     }
 }

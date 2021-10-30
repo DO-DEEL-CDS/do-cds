@@ -17,9 +17,9 @@ class ProjectRepository extends BaseRepository
         parent::__construct(new Project());
     }
 
-    public function getProjects()
+    public function getProjects(array $search): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        return Project::query()->active()->simplePaginate(15, ['id', 'title', 'type', 'status', 'created_at', 'updated_at']);
+        return Project::query()->active()->paginate($search['per_page'] ?? 15, ['id', 'title', 'type', 'status', 'created_at', 'updated_at']);
     }
 
     public function submitBusiness(Project $project, array $data): GmbSubmission

@@ -58,13 +58,21 @@ class Article extends Model
 
     public function getImageUrlAttribute($value)
     {
-        return url($value);
+        return url($this->image);
     }
 
     public function scopeSearch($query, array $search): void
     {
         if (!empty($search['category'])) {
             $query->where('category_id', $search['category']);
+        }
+
+        if (!empty($search['title'])) {
+            $query->where('title', 'like', "{$search['title']}%");
+        }
+
+        if (!empty($search['state_code'])) {
+            $query->where('state_code', $search['state_code']);
         }
     }
 

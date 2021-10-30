@@ -21,7 +21,7 @@ class ArticleRepository extends BaseRepository
             ->published()
             ->with('author')
             ->latest()
-            ->simplePaginate();
+            ->paginate($search['per_page'] ?? 15);
     }
 
     public function getSingeArticle(Article $article): Article
