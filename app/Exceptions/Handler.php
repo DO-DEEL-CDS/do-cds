@@ -108,7 +108,7 @@ class Handler extends ExceptionHandler
             if ($e instanceof ValidationException) {
                 return response()->json([
                     'error' => [
-                        'message' => $e->getMessage(),
+                        'message' => $e->validator->errors()->first(),
                         'errors' => $e->errors()
                     ]
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);

@@ -55,6 +55,7 @@ Route::prefix('misc')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('auth/profile', [ProfileController::class, 'show']);
     Route::patch('auth/profile', [ProfileController::class, 'update']);
+    Route::get('auth/profile/gmb-progress', [ProfileController::class, 'projectProgress']);
 
     Route::resource('users', UserController::class)->except('destroy');
     Route::post('users/{user}/trainings/{training}', [UserController::class, 'recordAttendance']);

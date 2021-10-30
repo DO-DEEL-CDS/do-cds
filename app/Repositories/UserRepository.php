@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\GMBStatus;
 use App\Models\User;
 use DB;
 use Exception;
@@ -48,6 +49,8 @@ class UserRepository extends BaseRepository
             $user->markEmailAsVerified();
             $this->createProfile($user, $data);
             $user->api_token = $this->generateApiKey($user);
+
+            $user->assignRole('corper');
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
@@ -140,10 +143,11 @@ class UserRepository extends BaseRepository
     {
         return User::query()
             ->with('profile')
+            ->withCount(['attendance', 'businesses'])
             ->role('corper')
             ->search($search)
-            ->latest()
-            ->simplePaginate();
+            ->orderBy('id', 'desc')
+            ->paginate($search['per_page'] ?? 15);
     }
 
     public function adminGetUser(User $user): User
@@ -155,6 +159,16 @@ class UserRepository extends BaseRepository
             'roles',
             'attendance'
         ]);
+    }
+
+    public function getUserGmbProgress(User $user, int $max = 10): array
+    {
+        $userBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
+        return [
+            'onboarded' => $userBusinessCount,
+            'recommended_max' => $max,
+            'percentage' => $max <= 0 ? 0 : round($userBusinessCount / $max)
+        ];
     }
 
 }

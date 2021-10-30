@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Repositories\ProjectRepository;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -20,9 +21,9 @@ class ProjectController extends Controller
         $this->projectService = $projectService;
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $projects = $this->projectRepository->getProjects();
+        $projects = $this->projectRepository->getProjects($request->all());
         return $this->success($projects);
     }
 
