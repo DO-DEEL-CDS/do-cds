@@ -26,11 +26,12 @@ class UserSeeder extends Seeder
             ->hasProfile()
             ->create();
 
-        User::factory(50)
-            ->hasAttached($corperRole)
-            ->hasProfile()
-            ->create();
-
+        if (!app()->environment('production')) {
+            User::factory(50)
+                ->hasAttached($corperRole)
+                ->hasProfile()
+                ->create();
+        }
 
         $admin = Role::findByName('admin');
         User::factory(1)

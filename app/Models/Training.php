@@ -31,15 +31,14 @@ class Training extends Model
     ];
 
     protected $dates = [
-        'start_time' => 'datetime',
-        'attendance_time' => 'datetime',
+        'start_time',
+        'attendance_time',
     ];
 
     protected $hidden = [
         'batch',
         'deleted_at',
         'created_by',
-        'start_time'
     ];
 
     public function attendance(): HasMany

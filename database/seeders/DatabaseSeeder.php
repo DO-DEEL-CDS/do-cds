@@ -18,15 +18,18 @@ class DatabaseSeeder extends Seeder
         $this->call(AclSeeder::class);
         $this->call(ProspectSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(StateMemberSeeder::class);
         $this->call(CategorySeeder::class);
-        $this->call(ArticleSeeder::class);
-        $this->call(EmployerSeeder::class);
-        $this->call(EmploymentSeeder::class);
-        $this->call(TrainingSeeder::class);
-        $this->call(TrainingAttendanceSeeder::class);
-        $this->call(TicketSeeder::class);
         $this->call(ProjectSeeder::class);
-        $this->call(ProjectMemberSeeder::class);
+
+        if (!app()->environment('production')) {
+            $this->call(StateMemberSeeder::class);
+            $this->call(ArticleSeeder::class);
+            $this->call(EmployerSeeder::class);
+            $this->call(EmploymentSeeder::class);
+            $this->call(TrainingSeeder::class);
+            $this->call(TrainingAttendanceSeeder::class);
+            $this->call(TicketSeeder::class);
+            $this->call(ProjectMemberSeeder::class);
+        }
     }
 }
