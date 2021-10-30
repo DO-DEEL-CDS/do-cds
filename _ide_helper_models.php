@@ -805,8 +805,8 @@ namespace App\Models {
      * @property string $title
      * @property string $tutor
      * @property string $overview
-     * @property string $start_time
-     * @property string|null $attendance_time
+     * @property \Illuminate\Support\Carbon $start_time
+     * @property \Illuminate\Support\Carbon|null $attendance_time
      * @property \App\Enums\TrainingStatus $status
      * @property string|null $batch
      * @property string|null $live_video

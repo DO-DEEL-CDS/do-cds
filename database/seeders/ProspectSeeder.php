@@ -21,6 +21,9 @@ class ProspectSeeder extends Seeder
             'nysc_state_code' => 'FC/21A/0000',
             'status' => ProspectStatus::Approved(),
         ]);
-        Prospect::factory(5)->create();
+
+        if (!app()->environment('production')) {
+            Prospect::factory(5)->create();
+        }
     }
 }

@@ -21,10 +21,9 @@ class AttendanceRepository extends BaseRepository
 
     public function recordAttendance(Training $training, User $user): Model
     {
-        abort_if(
-            $training->status->isNot(TrainingStatus::Closed) &&
-            $training->status->isNot(TrainingStatus::Closed) &&
-            !$user->hasPermissionTo('manage-attendance'),
+        abort_unless(
+            ($training->status->isNot(TrainingStatus::Closed) && $training->attendance_time->isPast()) ||
+            $user->hasPermissionTo('manage-attendance'),
             400,
             'Training attendance is not Open'
         );

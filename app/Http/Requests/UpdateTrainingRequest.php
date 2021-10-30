@@ -21,12 +21,13 @@ class UpdateTrainingRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => ['sometimes', 'string', 'min:3'],
             'overview' => ['sometimes', 'string', 'min:5'],
             'start_time' => ['sometimes', 'date_format:Y-m-d H:i:s'],
+            'attendance_time' => ['sometimes', 'date_format:Y-m-d H:i:s'],
             'tutor' => ['sometimes', 'string'],
             'live_video' => ['sometimes', 'active_url'],
             'resources.' => ['sometimes', 'array'],

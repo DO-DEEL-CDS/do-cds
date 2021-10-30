@@ -28,6 +28,7 @@ class TrainingFactory extends Factory
             'status' => TrainingStatus::getRandomInstance(),
             'live_video' => 'https://www.youtube.com/watch?v=x7UZyRmDO-Y',
             'start_time' => $this->faker->dateTimeThisMonth(now()->add('20 days')),
+            'attendance_time' => $this->faker->dateTimeThisMonth(now()->add('20 days')),
             'tutor' => $this->faker->name,
             'created_by' => User::first()->id,
             'overview' => $this->faker->paragraph
