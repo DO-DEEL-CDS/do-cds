@@ -70,7 +70,7 @@ class Training extends Model
 
 
         if (!empty($search['status'])) {
-            $status = TrainingStatus::fromValue($search['status']);
+            $status = TrainingStatus::fromValue((int) $search['status']);
             $query->where('status', '=', $status);
         }
     }

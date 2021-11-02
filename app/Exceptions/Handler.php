@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use BenSampo\Enum\Exceptions\InvalidEnumMemberException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
@@ -103,6 +104,15 @@ class Handler extends ExceptionHandler
                         'code' => $e->getStatusCode()
                     ]
                 ], $e->getStatusCode());
+            }
+
+            if ($e instanceof InvalidEnumMemberException) {
+                return response()->json([
+                    'error' => [
+                        'message' => $e->getMessage(),
+                        'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    ]
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             if ($e instanceof ValidationException) {
