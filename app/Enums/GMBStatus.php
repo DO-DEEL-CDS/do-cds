@@ -14,4 +14,9 @@ final class GMBStatus extends Enum
     public const pending = 0;
     public const approved = 1;
     public const rejected = 2;
+
+    public function toArray(): string
+    {
+        return \Str::snake($this->description);
+    }
 }

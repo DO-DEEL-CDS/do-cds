@@ -8,6 +8,7 @@ use App\Enums\ProjectStatus;
 use App\Models\GmbSubmission;
 use App\Models\Project;
 use App\Models\ProjectMember;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectRepository extends BaseRepository
@@ -17,7 +18,7 @@ class ProjectRepository extends BaseRepository
         parent::__construct(new Project());
     }
 
-    public function getProjects(array $search): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function getProjects(array $search): LengthAwarePaginator
     {
         return Project::query()->active()->paginate($search['per_page'] ?? 15, ['id', 'title', 'type', 'status', 'created_at', 'updated_at']);
     }
@@ -63,5 +64,17 @@ class ProjectRepository extends BaseRepository
     public function deleteMember(ProjectMember $projectMember): ?bool
     {
         return $projectMember->delete();
+    }
+
+    public function updateBusiness(GmbSubmission $business, array $data): GmbSubmission
+    {
+        $business->update($data);
+        $business->refresh();
+        return $business;
+    }
+
+    public function getAllBusinesses(array $search): LengthAwarePaginator
+    {
+        return GmbSubmission::query()->search($search)->paginate($search['per_page'] ?? 15);
     }
 }

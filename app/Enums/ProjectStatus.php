@@ -17,6 +17,6 @@ final class ProjectStatus extends Enum
 
     public function toArray()
     {
-        return \Str::lower($this->description);
+        return \Str::snake($this->description);
     }
 }

@@ -29,4 +29,20 @@ class ProfileController extends Controller
         $user = $this->userRepository->updateUser($request->user(), $request->safe());
         return $this->success($user, 'Profile Updated');
     }
+
+    public function updateNotificationsRead(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ids' => ['required', 'array'],
+            'ids.*' => ['required', 'exists:notifications,id'],
+        ]);
+        $this->userRepository->markNotificationsRead(auth()->user(), $validated['ids']);
+        return $this->success();
+    }
+
+    public function getNotifications(Request $request): JsonResponse
+    {
+        $notifications = $this->userRepository->getNotifications(auth()->user(), $request->all());
+        return $this->success($notifications);
+    }
 }

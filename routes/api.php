@@ -55,7 +55,8 @@ Route::prefix('misc')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('auth/profile', [ProfileController::class, 'show']);
     Route::patch('auth/profile', [ProfileController::class, 'update']);
-    Route::get('auth/profile/gmb-progress', [ProfileController::class, 'projectProgress']);
+    Route::get('auth/notifications', [ProfileController::class, 'getNotifications']);
+    Route::patch('auth/notifications', [ProfileController::class, 'updateNotificationsRead']);
 
     Route::resource('users', UserController::class)->except('destroy');
     Route::post('users/{user}/trainings/{training}', [UserController::class, 'recordAttendance']);
@@ -71,8 +72,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('projects', [ProjectController::class, 'index']);
     Route::get('projects/{project}', [ProjectController::class, 'show']);
     Route::patch('projects/{project}', [ProjectController::class, 'update']);
-    Route::post('projects/{project}/business', [ProjectController::class, 'gmbSubmission']);
+    Route::post('projects/{project}/business', [ProjectController::class, 'storeGmbSubmission']);
     Route::post('projects/{project}/members', [ProjectMemberController::class, 'store']);
+
+    Route::get('businesses', [ProjectController::class, 'getAllGmbSubmissions']);
+    Route::get('businesses/{business}', [ProjectController::class, 'getGmbSubmission']);
+    Route::patch('businesses/{business}', [ProjectController::class, 'UpdateGmbSubmission']);
 
     Route::patch('project-members/{member}', [ProjectMemberController::class, 'update']);
     Route::delete('project-members/{member}', [ProjectMemberController::class, 'destroy']);

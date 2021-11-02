@@ -139,7 +139,7 @@ class UserRepository extends BaseRepository
         return $this->getUserData($user);
     }
 
-    public function getUsers(array $search)
+    public function getUsers(array $search): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return User::query()
             ->with('profile')
@@ -159,18 +159,6 @@ class UserRepository extends BaseRepository
             'roles',
             'attendance'
         ]);
-    }
-
-    public function getUserGmbProgress(User $user, int $max = 10): array
-    {
-        $userBusinessCount = $user->businesses()->where('gmb_submissions.status')->count();
-        $userApprovedBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
-        return [
-            'submitted' => $userBusinessCount,
-            'approved' => $userApprovedBusinessCount,
-            'recommended_max' => $max,
-            'percentage' => $max > 0 ? round(($userApprovedBusinessCount / $max) * 100) : 0,
-        ];
     }
 
     public function getFUllUserProfile(User $user): User
@@ -195,4 +183,37 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
+    public function getUserGmbProgress(User $user, int $max = 10): array
+    {
+        $userBusinessCount = $user->businesses()->where('gmb_submissions.status')->count();
+        $userApprovedBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
+        return [
+            'submitted' => $userBusinessCount,
+            'approved' => $userApprovedBusinessCount,
+            'recommended_max' => $max,
+            'percentage' => $max > 0 ? round(($userApprovedBusinessCount / $max) * 100) : 0,
+        ];
+    }
+
+    public function getNotifications(User $user, array $data): \Illuminate\Contracts\Pagination\Paginator
+    {
+        switch ($data['status'] ?? '') {
+            case 'read':
+                $notifications = $user->readNotifications();
+                break;
+            case 'unread':
+                $notifications = $user->unreadNotifications();
+                break;
+            default:
+                $notifications = $user->notifications();
+        }
+
+        $notifications = $notifications->simplePaginate(50);
+        return $notifications;
+    }
+
+    public function markNotificationsRead(User $user, array $ids): int
+    {
+        return $user->notifications()->whereIn('notifications.id', $ids)->update(['read_at', now()]);
+    }
 }

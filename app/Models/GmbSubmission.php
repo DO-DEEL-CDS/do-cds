@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\GMBStatus;
 use App\Models\Roles\Corper;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,5 +39,24 @@ class GmbSubmission extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function scopeSearch(Builder $builder, array $search): void
+    {
+        if (!empty($search['business_name'])) {
+            $builder->where('business_name', 'like', $search['business_name'] . '%s');
+        }
+
+        if (!empty($search['business_owner'])) {
+            $builder->where('business_name', 'like', $search['business_name'] . '%s');
+        }
+
+        if (!empty($search['owner_gender'])) {
+            $builder->where('business_name', 'like', $search['business_name'] . '%s');
+        }
+
+        if (!empty($search['user_id'])) {
+            $builder->where('user_id', '=', $search['user_id']);
+        }
     }
 }
