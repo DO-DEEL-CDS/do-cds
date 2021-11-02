@@ -40,7 +40,7 @@ jobs:
             git pull origin master
             php artisan down
             composer install
-            php artisan migrate:fresh --seed
+            php artisan migrate
             php artisan up
             echo "End"
 
