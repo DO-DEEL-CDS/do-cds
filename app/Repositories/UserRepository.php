@@ -163,12 +163,36 @@ class UserRepository extends BaseRepository
 
     public function getUserGmbProgress(User $user, int $max = 10): array
     {
-        $userBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
+        $userBusinessCount = $user->businesses()->where('gmb_submissions.status')->count();
+        $userApprovedBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
         return [
-            'onboarded' => $userBusinessCount,
+            'submitted' => $userBusinessCount,
+            'approved' => $userApprovedBusinessCount,
             'recommended_max' => $max,
-            'percentage' => $max <= 0 ? 0 : round($userBusinessCount / $max)
+            'percentage' => $max > 0 ? round(($userApprovedBusinessCount / $max) * 100) : 0,
         ];
+    }
+
+    public function getFUllUserProfile(User $user): User
+    {
+        $user->load([
+            'permissions',
+            'roles',
+            'profile',
+            'unreadNotifications',
+            'businesses' => function ($q) {
+                $q->where('status', GMBStatus::approved);
+            }
+        ]);
+        $user->loadCount([
+            'attendance',
+            'businesses' => function ($q) {
+                $q->where('status', GMBStatus::approved);
+            }
+        ]);
+        $user->gmb_project_status = $this->getUserGmbProgress($user);
+
+        return $user;
     }
 
 }

@@ -20,18 +20,13 @@ class ProfileController extends Controller
     public function show(Request $request): JsonResponse
     {
         $user = $request->user();
-        $user->load(['permissions', 'roles', 'profile']);
-        return $this->success($user);
+        $fullProfile = $this->userRepository->getFUllUserProfile($user);
+        return $this->success($fullProfile);
     }
 
     public function update(UpdateProfile $request): JsonResponse
     {
         $user = $this->userRepository->updateUser($request->user(), $request->safe());
         return $this->success($user, 'Profile Updated');
-    }
-
-    public function projectProgress(): array
-    {
-        return $this->userRepository->getUserGmbProgress(auth()->user());
     }
 }
