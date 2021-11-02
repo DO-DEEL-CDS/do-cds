@@ -208,8 +208,7 @@ class UserRepository extends BaseRepository
                 $notifications = $user->notifications();
         }
 
-        $notifications = $notifications->simplePaginate(50);
-        return $notifications;
+        return $notifications->simplePaginate(50);
     }
 
     public function markNotificationsRead(User $user, array $ids): int

@@ -13,6 +13,7 @@ use App\Http\Controllers\Misc\LocationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectMemberController;
 use App\Http\Controllers\ProspectController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\StateMemberController;
 use App\Http\Controllers\TrainingAttendanceController;
 use App\Http\Controllers\TrainingController;
@@ -90,6 +91,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('prospects', [ProspectController::class, 'index']);
     Route::patch('prospects', [ProspectController::class, 'updateProspectsStatus']);
     Route::patch('prospects/{prospect}', [ProspectController::class, 'update']);
+
+    Route::resource('resources', ResourceController::class)->only(['update', 'destroy']);
 
     Route::prefix('enums')->group(function () {
         Route::get('batches', [EnumsController::class, 'batches']);
