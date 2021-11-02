@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Extensions\Traits\ModelDoesUploads;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Profile extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelDoesUploads;
+
+    public array $uploadable = ['photo'];
 
     protected $guarded = ['id'];
 
