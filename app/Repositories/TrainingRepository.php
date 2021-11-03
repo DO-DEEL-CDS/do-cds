@@ -54,6 +54,6 @@ class TrainingRepository extends BaseRepository
     {
         $training->delete();
         $training->resources()->delete();
-        // $training->attendance()->delete(); // softDeletes so no need to delete attendance (for reference)
+        $training->attendance()->delete();
     }
 }
