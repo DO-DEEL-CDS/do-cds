@@ -58,7 +58,7 @@ class Training extends Model
             $query->where('title', 'like', $search['title'] . '%');
         }
 
-        if (!empty($search['order'] ?? 'desc') && in_array($search['order'], ['asc', 'desc'])) {
+        if (!empty($search['order']) && in_array($search['order'], ['asc', 'desc'])) {
             $query->orderBy('created_at', $search['order']);
         }
 
@@ -67,7 +67,6 @@ class Training extends Model
             $query->where('start_time', '>=', now());
             $query->orWhere('status', '!=', TrainingStatus::Closed);
         }
-
 
         if (!empty($search['status'])) {
             $status = TrainingStatus::fromValue((int) $search['status']);
