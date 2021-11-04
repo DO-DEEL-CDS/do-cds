@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Misc;
 
 use App\Enums\Batch;
+use App\Enums\GMBStatus;
+use App\Enums\ProjectMemberType;
 use App\Enums\ProjectStatus;
 use App\Enums\ProjectType;
 use App\Enums\ProspectStatus;
+use App\Enums\StateMembershipType;
 use App\Enums\TrainingStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -35,5 +38,20 @@ class EnumsController extends Controller
     public function trainingStatuses(): JsonResponse
     {
         return $this->success(TrainingStatus::asArray());
+    }
+
+    public function stateMemberTypes(): JsonResponse
+    {
+        return $this->success(StateMembershipType::asArray());
+    }
+
+    public function projectMemberTypes(): JsonResponse
+    {
+        return $this->success(ProjectMemberType::asArray());
+    }
+
+    public function gMBStatuses(): JsonResponse
+    {
+        return $this->success(GMBStatus::asArray());
     }
 }

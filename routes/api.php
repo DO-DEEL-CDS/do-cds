@@ -100,5 +100,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('project-types', [EnumsController::class, 'projectTypes']);
         Route::get('prospect-statuses', [EnumsController::class, 'prospectStatuses']);
         Route::get('training-statuses', [EnumsController::class, 'trainingStatuses']);
+        Route::get('state-member-statuses', [EnumsController::class, 'stateMemberTypes']);
+        Route::get('project-member-statuses', [EnumsController::class, 'projectMemberTypes']);
+        Route::get('gmb-statuses', [EnumsController::class, 'gMBStatuses']);
     });
 });
