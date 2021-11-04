@@ -8,6 +8,7 @@ use App\Models\State;
 use App\Models\StateMember;
 use App\Repositories\StateRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class StateMemberController extends Controller
 {
@@ -24,11 +25,11 @@ class StateMemberController extends Controller
      * @param  State  $state
      * @return JsonResponse
      */
-    public function index(State $state): JsonResponse
+    public function index(Request $request, State $state): JsonResponse
     {
-        $state->schedule_officers = $this->stateRepository->getScheduleOfficers($state);
-        $state->community_managers = $this->stateRepository->getScheduleOfficers($state);
-        $state->executives = $this->stateRepository->getScheduleOfficers($state);
+        $state->schedule_officers = $this->stateRepository->getScheduleOfficers($state, $request->all());
+        $state->community_managers = $this->stateRepository->getScheduleOfficers($state, $request->all());
+        $state->executives = $this->stateRepository->getScheduleOfficers($state, $request->all());
 
         return $this->success($state);
     }

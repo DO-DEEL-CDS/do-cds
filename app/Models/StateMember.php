@@ -47,4 +47,21 @@ class StateMember extends Model
     {
         $builder->where('type', $type->key);
     }
+
+    public function scopeSearch(Builder $builder, array $search)
+    {
+        if (!empty($data['type'])) {
+            $type = StateMembershipType::fromValue((int) $data['type']);
+            $builder->where('state_members.type', $type);
+        }
+
+        if (!empty($data['batch'])) {
+            $batch = Batch::fromValue((int) $data['batch']);
+            $builder->where('state_members.batch', $batch);
+        }
+
+        if (!empty($data['year'])) {
+            $builder->where('state_members.year', $data['year']);
+        }
+    }
 }
