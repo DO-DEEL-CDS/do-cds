@@ -29,24 +29,32 @@ class ArticlesController extends Controller
 
     public function store(createArticleRequest $request): JsonResponse
     {
+        $this->authorize('create', Article::class);
+
         $article = $this->articleRepository->createArticle($request->all());
         return $this->success($article, 'News Created', 201);
     }
 
     public function show(Article $article): JsonResponse
     {
+        $this->authorize('view', $article);
+
         return $this->success($this->articleRepository->getSingeArticle($article));
     }
 
 
     public function update(UpdateArticleRequest $request, Article $article): JsonResponse
     {
+        $this->authorize('update', $article);
+
         $article = $this->articleRepository->updateArticle($article, $request->validated());
         return $this->success($article, 'Article Updated', 200);
     }
 
     public function destroy(Article $article): JsonResponse
     {
+        $this->authorize('delete', $article);
+
         $this->articleRepository->deleteArticle($article);
         return $this->success();
     }

@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class ArticlesPolicy
+class ArticlePolicy
 {
     use HandlesAuthorization;
 
@@ -20,7 +20,7 @@ class ArticlesPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        //
     }
 
     /**
@@ -32,7 +32,11 @@ class ArticlesPolicy
      */
     public function view(User $user, Article $article)
     {
-        return $user->hasPermissionTo('manage-article') || $article->status->is(ArticleStatus::Published);
+        if ($article->status->is(ArticleStatus::Published)) {
+            return true;
+        }
+
+        return $user->hasPermissionTo('manage-article');
     }
 
     /**

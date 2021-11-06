@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use BenSampo\Enum\Exceptions\InvalidEnumMemberException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
@@ -86,6 +87,15 @@ class Handler extends ExceptionHandler
                         'code' => Response::HTTP_NOT_FOUND
                     ]
                 ], Response::HTTP_NOT_FOUND);
+            }
+
+            if ($e instanceof AuthorizationException) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'You Do Not Have Permission to carry out this action',
+                        'code' => Response::HTTP_FORBIDDEN,
+                    ]
+                ], Response::HTTP_FORBIDDEN);
             }
 
             if ($e instanceof HttpResponseException) {
