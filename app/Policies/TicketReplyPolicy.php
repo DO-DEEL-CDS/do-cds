@@ -19,7 +19,7 @@ class TicketReplyPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -31,7 +31,7 @@ class TicketReplyPolicy
      */
     public function view(User $user, TicketReply $ticketReply)
     {
-        //
+        return $user->id === $ticketReply->id || $user->hasRole('admin');
     }
 
     /**
@@ -42,7 +42,7 @@ class TicketReplyPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -54,7 +54,7 @@ class TicketReplyPolicy
      */
     public function update(User $user, TicketReply $ticketReply)
     {
-        //
+        return $user->id === $ticketReply->id;
     }
 
     /**
@@ -66,7 +66,7 @@ class TicketReplyPolicy
      */
     public function delete(User $user, TicketReply $ticketReply)
     {
-        //
+        return $user->id === $ticketReply->id;
     }
 
     /**
@@ -78,7 +78,7 @@ class TicketReplyPolicy
      */
     public function restore(User $user, TicketReply $ticketReply)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -90,6 +90,6 @@ class TicketReplyPolicy
      */
     public function forceDelete(User $user, TicketReply $ticketReply)
     {
-        //
+        return $user->hasRole('super-admin');
     }
 }

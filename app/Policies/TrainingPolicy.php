@@ -19,7 +19,7 @@ class TrainingPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermissionTo('manage-training') || $user->hasRole('corper');
     }
 
     /**
@@ -31,7 +31,7 @@ class TrainingPolicy
      */
     public function view(User $user, Training $training)
     {
-        //
+        return $user->hasPermissionTo('manage-training') || $user->hasRole('corper');
     }
 
     /**
@@ -42,7 +42,7 @@ class TrainingPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermissionTo('manage-training');
     }
 
     /**
@@ -54,7 +54,7 @@ class TrainingPolicy
      */
     public function update(User $user, Training $training)
     {
-        //
+        return $user->hasPermissionTo('manage-training');
     }
 
     /**
@@ -66,7 +66,7 @@ class TrainingPolicy
      */
     public function delete(User $user, Training $training)
     {
-        //
+        return $user->hasPermissionTo('manage-training');
     }
 
     /**
@@ -78,7 +78,7 @@ class TrainingPolicy
      */
     public function restore(User $user, Training $training)
     {
-        //
+        return $user->hasPermissionTo('manage-training');
     }
 
     /**
@@ -90,6 +90,6 @@ class TrainingPolicy
      */
     public function forceDelete(User $user, Training $training)
     {
-        //
+        return $user->hasRole('super-admin');
     }
 }

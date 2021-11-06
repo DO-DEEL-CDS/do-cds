@@ -19,7 +19,7 @@ class ResourcePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -31,7 +31,7 @@ class ResourcePolicy
      */
     public function view(User $user, Resource $resource)
     {
-        //
+        return true;
     }
 
     /**
@@ -42,7 +42,7 @@ class ResourcePolicy
      */
     public function create(User $user)
     {
-        //
+        $user->hasRole('admin');
     }
 
     /**
@@ -54,7 +54,7 @@ class ResourcePolicy
      */
     public function update(User $user, Resource $resource)
     {
-        //
+        $user->hasRole('admin');
     }
 
     /**
@@ -66,7 +66,7 @@ class ResourcePolicy
      */
     public function delete(User $user, Resource $resource)
     {
-        //
+        $user->hasRole('admin');
     }
 
     /**
@@ -78,7 +78,7 @@ class ResourcePolicy
      */
     public function restore(User $user, Resource $resource)
     {
-        //
+        $user->hasRole('admin');
     }
 
     /**
@@ -90,6 +90,6 @@ class ResourcePolicy
      */
     public function forceDelete(User $user, Resource $resource)
     {
-        //
+        $user->hasRole('admin');
     }
 }

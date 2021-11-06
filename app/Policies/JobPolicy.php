@@ -19,7 +19,7 @@ class JobPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermissionTo('access-job') || $user->hasRole('admin');
     }
 
     /**
@@ -31,7 +31,7 @@ class JobPolicy
      */
     public function view(User $user, Employment $job)
     {
-        //
+        return $user->hasPermissionTo('access-job') || $user->hasRole('admin');
     }
 
     /**
@@ -42,7 +42,7 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -54,7 +54,7 @@ class JobPolicy
      */
     public function update(User $user, Employment $job)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -66,7 +66,7 @@ class JobPolicy
      */
     public function delete(User $user, Employment $job)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -78,7 +78,7 @@ class JobPolicy
      */
     public function restore(User $user, Employment $job)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -90,6 +90,6 @@ class JobPolicy
      */
     public function forceDelete(User $user, Employment $job)
     {
-        //
+        return $user->hasRole('admin');
     }
 }

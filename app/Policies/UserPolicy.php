@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Page;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class PagePolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +18,19 @@ class PagePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermissionTo('manage-user') || $user->hasRole('corper');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  User  $user
-     * @param  Page  $page
+     * @param  User  $userObject
      * @return Response|bool
      */
-    public function view(User $user, Page $page)
+    public function view(User $user, User $userObject)
     {
-        //
+        return $user->hasPermissionTo('manage-user') || $user->id === $userObject->id;
     }
 
     /**
@@ -42,54 +41,54 @@ class PagePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermissionTo('manage-user');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  User  $user
-     * @param  Page  $page
+     * @param  User  $userObject
      * @return Response|bool
      */
-    public function update(User $user, Page $page)
+    public function update(User $user, User $userObject)
     {
-        //
+        return $user->hasPermissionTo('manage-user') || $user->id === $userObject->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  User  $user
-     * @param  Page  $page
+     * @param  User  $userObject
      * @return Response|bool
      */
-    public function delete(User $user, Page $page)
+    public function delete(User $user, User $userObject)
     {
-        //
+        return $user->hasPermissionTo('manage-user');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  User  $user
-     * @param  Page  $page
+     * @param  User  $userObject
      * @return Response|bool
      */
-    public function restore(User $user, Page $page)
+    public function restore(User $user, User $userObject)
     {
-        //
+        return $user->hasPermissionTo('manage-user');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  User  $user
-     * @param  Page  $page
+     * @param  User  $userObject
      * @return Response|bool
      */
-    public function forceDelete(User $user, Page $page)
+    public function forceDelete(User $user, User $userObject)
     {
-        //
+        return $user->hasRole('super-admin');
     }
 }
