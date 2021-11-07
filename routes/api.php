@@ -98,10 +98,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('batches', [EnumsController::class, 'batches']);
         Route::get('project-statuses', [EnumsController::class, 'projectStatuses']);
         Route::get('project-types', [EnumsController::class, 'projectTypes']);
+        Route::get('project-member-types', [EnumsController::class, 'projectMemberTypes']);
         Route::get('prospect-statuses', [EnumsController::class, 'prospectStatuses']);
         Route::get('training-statuses', [EnumsController::class, 'trainingStatuses']);
-        Route::get('state-member-statuses', [EnumsController::class, 'stateMemberTypes']);
-        Route::get('project-member-statuses', [EnumsController::class, 'projectMemberTypes']);
+        Route::get('state-member-types', [EnumsController::class, 'stateMemberTypes']);
         Route::get('gmb-statuses', [EnumsController::class, 'gMBStatuses']);
     });
 });
