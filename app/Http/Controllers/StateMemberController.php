@@ -36,18 +36,23 @@ class StateMemberController extends Controller
 
     public function store(CreateStateMemberRequest $request, State $state): JsonResponse
     {
+        $this->authorize('create', $state);
         $member = $this->stateRepository->addMember($state, $request->validated());
         return $this->success($member, 'State Member Created', 201);
     }
 
     public function update(UpdateStateMemberRequest $request, StateMember $member): JsonResponse
     {
+        $member->load('state');
+        $this->authorize('create', $member->state);
         $member = $this->stateRepository->updateMember($member, $request->validated());
         return $this->success($member->toArray());
     }
 
     public function destroy(StateMember $member): JsonResponse
     {
+        $member->load('state');
+        $this->authorize('create', $member->state);
         $this->stateRepository->deleteMember($member);
         return $this->success();
     }
