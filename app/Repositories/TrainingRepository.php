@@ -29,7 +29,10 @@ class TrainingRepository extends BaseRepository
         $user = request()->user();
 
         $training = $user->training()->create($data);
-        $training->resources()->createMany($data['resources']);
+        if (!empty($data['resources'])) {
+            $training->resources()->createMany($data['resources']);
+        }
+
         return $this->getTraining($training);
     }
 
@@ -42,7 +45,7 @@ class TrainingRepository extends BaseRepository
     {
         if (!empty($data['status'])) {
             $data['status'] = TrainingStatus::fromValue($data['status']);
-            if ($data['status']->is(TrainingStatus::AttendanceOpened())) {
+            if ($data['status']->is(TrainingStatus::AttendanceOpened) && $training->status->isNot(TrainingStatus::AttendanceOpened)) {
                 $data['attendance_time'] = now();
             }
         }

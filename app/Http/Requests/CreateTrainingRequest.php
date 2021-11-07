@@ -32,8 +32,8 @@ class CreateTrainingRequest extends FormRequest
             'attendance_time' => ['required', 'date_format:Y-m-d H:i:s'],
             'tutor' => ['required', 'string'],
             'live_video' => ['required', 'active_url'],
-            'resources' => ['required', 'array'],
-            'resources.*.attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000'],
+            'resources' => ['sometimes', 'array'],
+            'resources.*.attachment' => ['file', 'mimes:jpg,png,jpeg,webp,pdf,xlsx,doc,docx,ppt,txt', 'max:10000'],
             'status' => ['sometimes', new EnumValue(TrainingStatus::class)],
         ];
     }

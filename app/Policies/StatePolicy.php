@@ -42,7 +42,7 @@ class StatePolicy
      */
     public function create(User $user)
     {
-        $user->hasPermissionTo('manage-state');
+        return $user->hasPermissionTo('manage-state');
     }
 
     /**
@@ -54,7 +54,7 @@ class StatePolicy
      */
     public function update(User $user, State $state)
     {
-        $user->hasPermissionTo('manage-state');
+        return $user->hasPermissionTo('manage-state');
     }
 
     /**
@@ -66,7 +66,7 @@ class StatePolicy
      */
     public function delete(User $user, State $state)
     {
-        $user->hasPermissionTo('manage-state');
+        return $user->hasPermissionTo('manage-state');
     }
 
     /**
@@ -78,7 +78,7 @@ class StatePolicy
      */
     public function restore(User $user, State $state)
     {
-        $user->hasPermissionTo('manage-state');
+        return $user->hasPermissionTo('manage-state');
     }
 
     /**
@@ -90,6 +90,6 @@ class StatePolicy
      */
     public function forceDelete(User $user, State $state)
     {
-        $user->hasPermissionTo('manage-state');
+        return $user->hasPermissionTo('manage-state');
     }
 }
