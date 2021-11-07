@@ -9,6 +9,10 @@ use Storage;
 
 class ResourceController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Resource::class);
+    }
 
     public function index()
     {
