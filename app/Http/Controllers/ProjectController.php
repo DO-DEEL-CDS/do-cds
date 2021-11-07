@@ -25,23 +25,27 @@ class ProjectController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $this->authorize('viewAny', Project::class);
         $projects = $this->projectRepository->getProjects($request->all());
         return $this->success($projects);
     }
 
     public function show(Project $project): JsonResponse
     {
+        $this->authorize('view', $project);
         return $this->success($this->projectRepository->getProjectData($project));
     }
 
     public function update(UpdateProjectRequest $request, Project $project): JsonResponse
     {
+        $this->authorize('update', $project);
         $member = $this->projectRepository->updateProject($project, $request->validated());
         return $this->success($member, 'Project Updated');
     }
 
     public function storeGmbSubmission(storeGmbBusiness $request, Project $project): JsonResponse
     {
+        $this->authorize('create', GmbSubmission::class);
         $payload = $request->validated();
         $payload['user_id'] = $request->user()->id;
         $submission = $this->projectService->createGmbSubmission($project, $payload);
@@ -51,18 +55,21 @@ class ProjectController extends Controller
 
     public function UpdateGmbSubmission(GmbSubmission $business, UpdateGmbBusiness $request): JsonResponse
     {
+        $this->authorize('update', $business);
         $business = $this->projectRepository->updateBusiness($business, $request->validated());
         return $this->success($business);
     }
 
     public function getAllGmbSubmissions(Request $request): JsonResponse
     {
+        $this->authorize('viewAny', GmbSubmission::class);
         $businesses = $this->projectRepository->getAllBusinesses($request->all());
         return $this->success($businesses);
     }
 
     public function getGmbSubmission(GmbSubmission $business): JsonResponse
     {
+        $this->authorize('view', $business);
         return $this->success($business);
     }
 }
