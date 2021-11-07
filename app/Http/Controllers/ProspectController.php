@@ -17,6 +17,7 @@ class ProspectController extends Controller
 
     public function __construct(ProspectRepository $prospectRepository)
     {
+        $this->authorizeResource(Prospect::class);
         $this->prospectRepository = $prospectRepository;
     }
 
