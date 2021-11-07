@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class JobPolicy
+class EmploymentPolicy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class JobPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('access-job') || $user->hasRole('admin');
+        return $user->hasPermissionTo('access-jobs') || $user->hasRole('admin');
     }
 
     /**
@@ -31,7 +31,7 @@ class JobPolicy
      */
     public function view(User $user, Employment $job)
     {
-        return $user->hasPermissionTo('access-job') || $user->hasRole('admin');
+        return $user->hasPermissionTo('access-jobs') || $user->hasRole('admin');
     }
 
     /**

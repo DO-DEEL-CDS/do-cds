@@ -15,6 +15,7 @@ class EmploymentsController extends Controller
     public function __construct(EmploymentRepository $employmentRepository)
     {
         $this->employmentRepository = $employmentRepository;
+        $this->authorizeResource(Employment::class, 'job');
     }
 
     /**
