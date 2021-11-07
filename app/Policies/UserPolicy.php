@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('manage-user') || $user->hasRole('corper');
+        return $user->hasPermissionTo('manage-users') || $user->hasRole('corper');
     }
 
     /**
@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function view(User $user, User $userObject)
     {
-        return $user->hasPermissionTo('manage-user') || $user->id === $userObject->id;
+        return $user->hasPermissionTo('manage-users') || $user->id === $userObject->id;
     }
 
     /**
@@ -41,7 +41,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('manage-user');
+        return $user->hasPermissionTo('manage-users');
     }
 
     /**
@@ -53,7 +53,7 @@ class UserPolicy
      */
     public function update(User $user, User $userObject)
     {
-        return $user->hasPermissionTo('manage-user') || $user->id === $userObject->id;
+        return $user->hasPermissionTo('manage-users') || $user->id === $userObject->id;
     }
 
     /**
@@ -65,7 +65,7 @@ class UserPolicy
      */
     public function delete(User $user, User $userObject)
     {
-        return $user->hasPermissionTo('manage-user');
+        return $user->hasPermissionTo('manage-users');
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function restore(User $user, User $userObject)
     {
-        return $user->hasPermissionTo('manage-user');
+        return $user->hasPermissionTo('manage-users');
     }
 
     /**

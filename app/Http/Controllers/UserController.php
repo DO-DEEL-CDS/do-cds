@@ -17,6 +17,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $userRepository)
     {
+        $this->authorizeResource(User::class);
         $this->userRepository = $userRepository;
     }
 
@@ -45,6 +46,9 @@ class UserController extends Controller
 
     public function recordAttendance(User $user, Training $training): JsonResponse
     {
+        $this->authorize('update', $user);
+        $this->authorize('update', $training);
+
         $attendanceRepository = new AttendanceRepository();
         $attendanceRepository->recordAttendance($training, $user);
         return $this->success();
