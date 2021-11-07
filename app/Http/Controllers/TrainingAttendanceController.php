@@ -26,6 +26,7 @@ class TrainingAttendanceController extends Controller
      */
     public function store(Request $request, Training $training): JsonResponse
     {
+        $this->authorize('view', $training);
         $this->attendanceRepository->recordAttendance($training, $request->user());
         return $this->success();
     }
