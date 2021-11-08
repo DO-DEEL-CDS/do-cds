@@ -64,8 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('news', ArticlesController::class)->parameters(['news' => 'article']);
 
-    Route::get('jobs', [EmploymentsController::class, 'index']);
-    Route::get('jobs/{job}', [EmploymentsController::class, 'show']);
+    Route::resource('jobs', EmploymentsController::class);
 
     Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
     Route::resource('trainings', TrainingController::class);
