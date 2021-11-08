@@ -2,27 +2,28 @@
 
 namespace App\Notifications;
 
-use App\Models\Training;
+use App\Models\Employment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\OneSignal\OneSignalChannel;
 use NotificationChannels\OneSignal\OneSignalMessage;
 
-class AttendanceOpened extends Notification
+class JobPublished extends Notification
 {
     use Queueable;
 
-    private Training $training;
+    private Employment $job;
 
     /**
      * Create a new notification instance.
      *
+     * @param  Employment  $job
      * @return void
      */
-    public function __construct(Training $training)
+    public function __construct(Employment $job)
     {
-        $this->training = $training;
+        $this->job = $job;
     }
 
     /**
@@ -31,7 +32,7 @@ class AttendanceOpened extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return [OneSignalChannel::class];
     }
@@ -63,17 +64,11 @@ class AttendanceOpened extends Notification
         ];
     }
 
-
-    public function routeNotificationForOneSignal(): string
-    {
-        return 'device_id';
-    }
-
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
             ->setSubject('Training Attendance Opened')
-            ->setBody($this->training->title)
-            ->setData('training', $this->training);
+            ->setBody($this->job->title)
+            ->setData('job', $this->job);
     }
 }

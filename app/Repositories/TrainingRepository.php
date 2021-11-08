@@ -59,14 +59,13 @@ class TrainingRepository extends BaseRepository
         }
         $training->update($data);
         $training->refresh();
-        Corper::notifyAll(new TrainingStarted($training));
 
         if ($sendStartedNotification) {
-            Corper::notifyAll(new TrainingStarted($training));
+            Corper::pushNotifyAll(new TrainingStarted($training));
         }
 
         if ($sendAttendanceNotification) {
-            Corper::notifyAll(new AttendanceOpened($training));
+            Corper::pushNotifyAll(new AttendanceOpened($training));
         }
 
         return $this->getTraining($training);

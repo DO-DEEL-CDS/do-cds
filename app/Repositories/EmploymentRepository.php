@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Employer;
 use App\Models\Employment;
+use App\Models\Roles\Corper;
+use App\Notifications\JobPublished;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class EmploymentRepository extends BaseRepository
@@ -39,6 +41,8 @@ class EmploymentRepository extends BaseRepository
 
         $job = $employer->employments()->create($data);
         $job->load('employer');
+
+        Corper::pushNotifyAll(new JobPublished($job));
 
         return $job;
     }

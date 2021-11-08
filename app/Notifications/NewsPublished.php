@@ -2,27 +2,27 @@
 
 namespace App\Notifications;
 
-use App\Models\Training;
+use App\Models\Article;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\OneSignal\OneSignalChannel;
 use NotificationChannels\OneSignal\OneSignalMessage;
 
-class AttendanceOpened extends Notification
+class NewsPublished extends Notification
 {
     use Queueable;
 
-    private Training $training;
+    private Article $article;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Training $training)
+    public function __construct(Article $article)
     {
-        $this->training = $training;
+        $this->article = $article;
     }
 
     /**
@@ -31,7 +31,7 @@ class AttendanceOpened extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return [OneSignalChannel::class];
     }
@@ -40,7 +40,7 @@ class AttendanceOpened extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
@@ -56,24 +56,18 @@ class AttendanceOpened extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //
         ];
     }
 
-
-    public function routeNotificationForOneSignal(): string
-    {
-        return 'device_id';
-    }
-
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
             ->setSubject('Training Attendance Opened')
-            ->setBody($this->training->title)
-            ->setData('training', $this->training);
+            ->setBody($this->article->title)
+            ->setData('news', $this->article);
     }
 }
