@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TrainingStatus;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTrainingRequest extends FormRequest
@@ -31,7 +33,8 @@ class UpdateTrainingRequest extends FormRequest
             'tutor' => ['sometimes', 'string'],
             'live_video' => ['sometimes', 'active_url'],
             'resources.' => ['sometimes', 'array'],
-            'resources.*.attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000']
+            'resources.*.attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000'],
+            'status' => ['sometimes', new EnumValue(TrainingStatus::class)],
         ];
     }
 }
