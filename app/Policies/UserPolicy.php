@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('manage-users') || $user->hasRole('corper');
+        return $user->hasPermissionTo('manage-users');
     }
 
     /**
