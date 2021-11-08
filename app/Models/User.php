@@ -109,4 +109,10 @@ class User extends Authenticatable
             });
         }
     }
+
+    public function routeNotificationForOneSignal()
+    {
+        return $this->device_id;
+    }
+
 }
