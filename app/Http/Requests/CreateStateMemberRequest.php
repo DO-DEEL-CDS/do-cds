@@ -36,7 +36,7 @@ class CreateStateMemberRequest extends FormRequest
             'state_code' => ['required', 'exists:states'],
             'phone_number' => ['required', 'max:16'],
             'instagram' => ['required', 'string'],
-            'type' => ['required', new EnumValue(StateMembershipType::class)],
+            'type' => ['required', new EnumValue(StateMembershipType::class, false)],
         ];
     }
 }

@@ -36,7 +36,7 @@ class UpdateStateMemberRequest extends FormRequest
             'state_code' => ['sometimes', 'exists:states'],
             'phone_number' => ['sometimes', 'max:16'],
             'instagram' => ['sometimes', 'string'],
-            'type' => ['sometimes', new EnumValue(StateMembershipType::class)],
+            'type' => ['sometimes', new EnumValue(StateMembershipType::class, false)],
         ];
     }
 }
