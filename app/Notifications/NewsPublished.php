@@ -33,7 +33,7 @@ class NewsPublished extends Notification
      */
     public function via($notifiable): array
     {
-        return [OneSignalChannel::class];
+        return ['database', OneSignalChannel::class];
     }
 
     /**
@@ -59,7 +59,8 @@ class NewsPublished extends Notification
     public function toArray($notifiable): array
     {
         return [
-            //
+            'type' => 'news',
+            'content' => $this->article
         ];
     }
 

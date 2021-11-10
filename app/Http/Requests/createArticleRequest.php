@@ -29,6 +29,7 @@ class createArticleRequest extends FormRequest
             'content' => ['required', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
             'state_code' => ['sometimes', 'exists:states,state_code'],
+            'is_featured' => ['required', 'boolean'],
         ];
     }
 }

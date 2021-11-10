@@ -20,9 +20,9 @@ class ProjectSeeder extends Seeder
                 'type' => ProjectType::gmb(),
                 'title' => 'Google My Business'
             ])
-            ->hasResources(5)
-            ->hasBusinesses(100)
-            ->hasExcos(20)
+            ->hasResources(2)
+            ->hasBusinesses(10)
+            ->hasExcos(5)
             ->create();
 
         Project::factory()

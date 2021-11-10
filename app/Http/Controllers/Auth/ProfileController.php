@@ -32,11 +32,7 @@ class ProfileController extends Controller
 
     public function updateNotificationsRead(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'ids' => ['required', 'array'],
-            'ids.*' => ['required', 'exists:notifications,id'],
-        ]);
-        $this->userRepository->markNotificationsRead(auth()->user(), $validated['ids']);
+        $this->userRepository->markNotificationsRead(auth()->user());
         return $this->success();
     }
 

@@ -28,7 +28,8 @@ class ArticleFactory extends Factory
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
             'author' => User::inRandomOrder()->first()->id,
-            'status' => ArticleStatus::getRandomValue()
+            'status' => ArticleStatus::getRandomValue(),
+            'is_featured' => $this->faker->boolean
         ];
     }
 }

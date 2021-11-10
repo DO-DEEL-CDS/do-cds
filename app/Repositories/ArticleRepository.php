@@ -31,7 +31,7 @@ class ArticleRepository extends BaseRepository
         $data['status'] = ArticleStatus::Published();
         $article = request()->user()->articles()->create($data);
 
-        Corper::pushNotifyAll(new NewsPublished($article));
+        Corper::notifyAll(new NewsPublished($article));
         return $this->getSingeArticle($article);
     }
 

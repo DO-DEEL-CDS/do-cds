@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Enums\GMBStatus;
+use App\Enums\UserStatus;
 use App\Models\User;
 use DB;
 use Exception;
@@ -135,6 +136,11 @@ class UserRepository extends BaseRepository
         $user->update($data->all());
         $user->profile->update($data->only('photo', 'deployed_state', 'nysc_call_up_number', 'nysc_state_code', 'phone_number'));
         $user->refresh();
+        if ($user->status->isNot(UserStatus::Active)) {
+            $user->tokens()->delete();
+            auth()->logout();
+        }
+
         return $this->getUserData($user);
     }
 
@@ -210,8 +216,8 @@ class UserRepository extends BaseRepository
         return $notifications->simplePaginate(50);
     }
 
-    public function markNotificationsRead(User $user, array $ids): int
+    public function markNotificationsRead(User $user): int
     {
-        return $user->notifications()->whereIn('notifications.id', $ids)->update(['read_at', now()]);
+        return $user->unreadNotifications()->update(['read_at' => now()]);
     }
 }

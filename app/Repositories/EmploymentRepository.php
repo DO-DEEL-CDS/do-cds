@@ -42,7 +42,7 @@ class EmploymentRepository extends BaseRepository
         $job = $employer->employments()->create($data);
         $job->load('employer');
 
-        Corper::pushNotifyAll(new JobPublished($job));
+        Corper::notifyAll(new JobPublished($job));
 
         return $job;
     }

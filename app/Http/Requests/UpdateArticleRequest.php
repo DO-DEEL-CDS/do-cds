@@ -29,6 +29,7 @@ class UpdateArticleRequest extends FormRequest
             'content' => ['sometimes', 'string'],
             'category_id' => ['sometimes', 'exists:categories,id'],
             'state_code' => ['sometimes', 'exists:states,state_code'],
+            'is_featured' => ['sometimes', 'boolean'],
         ];
     }
 }

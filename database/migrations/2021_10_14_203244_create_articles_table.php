@@ -20,6 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('image');
             $table->string('content');
+            $table->boolean('is_featured')->default(false);
             $table->tinyInteger('status')->default(ArticleStatus::Draft);
             $table->foreignId('author')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('category_id');

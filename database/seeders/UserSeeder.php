@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             ->create();
 
         if (!app()->environment('production')) {
-            User::factory(50)
+            User::factory(5)
                 ->hasAttached($corperRole)
                 ->hasProfile()
                 ->create();

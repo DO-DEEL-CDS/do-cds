@@ -60,7 +60,8 @@ class JobPublished extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'type' => 'job',
+            'content' => $this->job
         ];
     }
 

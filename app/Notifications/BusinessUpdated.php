@@ -2,28 +2,27 @@
 
 namespace App\Notifications;
 
-use App\Models\Training;
+use App\Models\GmbSubmission;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\OneSignal\OneSignalChannel;
 use NotificationChannels\OneSignal\OneSignalMessage;
 
-class TrainingStarted extends Notification implements ShouldQueue
+class BusinessUpdated extends Notification
 {
     use Queueable;
 
-    private Training $training;
+    private GmbSubmission $business;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Training $training)
+    public function __construct(GmbSubmission $business)
     {
-        $this->training = $training;
+        $this->business = $business;
     }
 
     /**
@@ -32,18 +31,18 @@ class TrainingStarted extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
-        return [OneSignalChannel::class];
+        return ['database', OneSignalChannel::class];
     }
 
     /**
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->line('The introduction to the notification.')
@@ -57,19 +56,19 @@ class TrainingStarted extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
-            'type' => 'news',
-            'content' => $this->training
+            'type' => 'business',
+            'content' => $this->business
         ];
     }
 
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
-            ->setSubject('Training started')
-            ->setBody($this->training->title)
-            ->setData('training', $this->training);
+            ->setSubject('Update on GMB Business')
+            ->setBody($this->business->business_name)
+            ->setData('job', $this->business);
     }
 }

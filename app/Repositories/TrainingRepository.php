@@ -61,7 +61,7 @@ class TrainingRepository extends BaseRepository
         $training->refresh();
 
         if ($sendStartedNotification) {
-            Corper::pushNotifyAll(new TrainingStarted($training));
+            Corper::notifyAll(new TrainingStarted($training));
         }
 
         if ($sendAttendanceNotification) {

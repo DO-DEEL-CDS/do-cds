@@ -8,6 +8,7 @@ use App\Enums\ProjectStatus;
 use App\Models\GmbSubmission;
 use App\Models\Project;
 use App\Models\ProjectMember;
+use App\Notifications\BusinessUpdated;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
@@ -68,8 +69,15 @@ class ProjectRepository extends BaseRepository
 
     public function updateBusiness(GmbSubmission $business, array $data): GmbSubmission
     {
+        $notify = isset($data['status']) && $data['status'] !== $business->status->key;
+
         $business->update($data);
         $business->refresh();
+
+        if ($notify) {
+            $business->corper->notify(new BusinessUpdated($business));
+        }
+
         return $business;
     }
 

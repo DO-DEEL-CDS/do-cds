@@ -19,6 +19,7 @@ namespace App\Models {
      * @property string $title
      * @property string $image
      * @property string $content
+     * @property bool $is_featured
      * @property \App\Enums\ArticleStatus $status
      * @property \App\Models\User $author
      * @property int $category_id
@@ -39,6 +40,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereImage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Article whereIsFeatured($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereStateCode($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereTitle($value)
@@ -677,7 +679,7 @@ namespace App\Models {
      * @property string|null $facebook
      * @property string|null $position
      * @property \App\Enums\StateMembershipType $type
-     * @property mixed $year
+     * @property string $year
      * @property \App\Enums\Batch $batch
      * @property string $state_code
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -705,20 +707,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereYear($value)
      */
     class StateMember extends \Eloquent
-    {
-    }
-}
-
-namespace App\Models {
-
-    /**
-     * App\Models\StateMembershipType
-     *
-     * @method static \Illuminate\Database\Eloquent\Builder|StateMembershipType newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|StateMembershipType newQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|StateMembershipType query()
-     */
-    class StateMembershipType extends \Eloquent
     {
     }
 }
