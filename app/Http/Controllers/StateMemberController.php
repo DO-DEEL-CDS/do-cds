@@ -28,8 +28,8 @@ class StateMemberController extends Controller
     public function index(Request $request, State $state): JsonResponse
     {
         $state->schedule_officers = $this->stateRepository->getScheduleOfficers($state, $request->all());
-        $state->community_managers = $this->stateRepository->getScheduleOfficers($state, $request->all());
-        $state->executives = $this->stateRepository->getScheduleOfficers($state, $request->all());
+        $state->community_managers = $this->stateRepository->getCommunityManagers($state, $request->all());
+        $state->executives = $this->stateRepository->getExecutives($state, $request->all());
 
         return $this->success($state);
     }

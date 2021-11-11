@@ -42,9 +42,9 @@ class StateRepository extends BaseRepository
             ->get();
     }
 
-    public function addMember(State $project, array $data): StateMember
+    public function addMember(State $state, array $data): StateMember
     {
-        return $project->members()->create($data);
+        return $state->members()->create($data);
     }
 
     public function updateMember(StateMember $stateMember, array $data): StateMember

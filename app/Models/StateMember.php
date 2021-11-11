@@ -44,7 +44,7 @@ class StateMember extends Model
 
     public function scopeType(Builder $builder, StateMembershipType $type): void
     {
-        $builder->where('type', $type->key);
+        $builder->where('type', $type);
     }
 
     public function scopeSearch(Builder $builder, array $search)
