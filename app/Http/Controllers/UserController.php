@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Imports\UsersImport;
+use App\Models\State;
 use App\Models\Training;
 use App\Models\User;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -52,5 +55,13 @@ class UserController extends Controller
         $attendanceRepository = new AttendanceRepository();
         $attendanceRepository->recordAttendance($training, $user);
         return $this->success();
+    }
+
+    public function import(State $state, Request $request): JsonResponse
+    {
+        $request->validate(['file' => ['file', 'max:50000', 'mimes:csv']]);
+        Excel::import(new UsersImport($state), $request->file('file'));
+
+        return $this->success([], 'Import Queued');
     }
 }

@@ -25,7 +25,7 @@ class NyscStateCode implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match("/^[a-zA-Z]{2}\/\d{2}[abcdABCD]\/\d{4}$/", $value);
+        return preg_match("/^[a-zA-Z]{2}\/\d{2}[abcABC]\/\d{4}$/", $value);
     }
 
     /**

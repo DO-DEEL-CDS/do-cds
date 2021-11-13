@@ -86,6 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('states/{state}/members', [StateMemberController::class, 'store']);
     Route::patch('state-members/{member}', [StateMemberController::class, 'update']);
     Route::delete('state-members/{member}', [StateMemberController::class, 'destroy']);
+    Route::post('states/{state}/import/users', [UserController::class, 'import']);
 
     Route::get('prospects', [ProspectController::class, 'index']);
     Route::patch('prospects', [ProspectController::class, 'updateProspectsStatus']);
