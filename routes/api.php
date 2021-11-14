@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('jobs', EmploymentsController::class);
 
     Route::post('trainings/{training}/attendance', [TrainingAttendanceController::class, 'store']);
+    Route::post('trainings/{training}/attendance/import', [TrainingAttendanceController::class, 'import']);
     Route::resource('trainings', TrainingController::class);
 
     Route::get('projects', [ProjectController::class, 'index']);

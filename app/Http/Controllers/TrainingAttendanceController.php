@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Training;
 use App\Models\TrainingAttendance;
 use App\Repositories\AttendanceRepository;
+use App\Services\ImportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -40,5 +41,15 @@ class TrainingAttendanceController extends Controller
     public function destroy(TrainingAttendance $trainingAttendance)
     {
         //
+    }
+
+    public function import(Request $request, Training $training): JsonResponse
+    {
+        $this->authorize('import', TrainingAttendance::class);
+
+        $request->validate(['file' => ['file', 'max:50000', 'mimes:csv,txt']]);
+        ImportService::importTrainingAttendance($training, $request);
+
+        return $this->success([], 'Import Queued');
     }
 }

@@ -35,8 +35,12 @@ class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBa
     public function model(array $row)
     {
         $user = User::whereEmail($row['corper_email'])->orWhereHas('profile', function ($query) use ($row) {
-            $query->where('nysc_state_code', $row['corper_email'])->orWhere('phone_number', $row['corper_phone_number']);
-        })->firstOrFail(['id']);
+            $query->where('nysc_state_code', $row['nysc_state_code'])->orWhere('phone_number', $row['corper_phone_number']);
+        })->first(['id']);
+
+        if ($user === null) {
+            return null;
+        }
 
         $status = GMBStatus::fromValue((int ) $row['status']);
         return new GmbSubmission([
@@ -54,12 +58,12 @@ class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBa
 
     public function batchSize(): int
     {
-        return 1000;
+        return 200;
     }
 
     public function chunkSize(): int
     {
-        return 5000;
+        return 1000;
     }
 
     public function registerEvents(): array

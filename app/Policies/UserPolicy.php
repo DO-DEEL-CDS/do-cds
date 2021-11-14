@@ -91,4 +91,9 @@ class UserPolicy
     {
         return $user->hasRole('super-admin');
     }
+
+    public function importUsers(User $user): bool
+    {
+        return $user->hasPermissionTo('manage-users');
+    }
 }

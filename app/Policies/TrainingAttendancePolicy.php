@@ -92,4 +92,9 @@ class TrainingAttendancePolicy
     {
         return $user->hasRole('super-admin');
     }
+
+    public function import(User $user): bool
+    {
+        return $user->hasPermissionTo('manage-attendance');
+    }
 }
