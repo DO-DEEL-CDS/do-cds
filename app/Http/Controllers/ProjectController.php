@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGmbBusiness;
 use App\Http\Requests\UpdateGmbBusiness;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Imports\GMBSubmissionImport;
 use App\Models\GmbSubmission;
 use App\Models\Project;
 use App\Repositories\ProjectRepository;
@@ -71,5 +72,15 @@ class ProjectController extends Controller
     {
         $this->authorize('view', $business);
         return $this->success($business);
+    }
+
+    public function import(Request $request): JsonResponse
+    {
+        $this->authorize('import', GmbSubmission::class);
+
+        $request->validate(['file' => ['file', 'max:50000', 'mimes:csv']]);
+        \Excel::import(new GMBSubmissionImport(), $request->file('file'));
+
+        return $this->success([], 'Import Queued');
     }
 }

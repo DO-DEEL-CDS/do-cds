@@ -45,6 +45,17 @@ class GmbSubmissionPolicy
     }
 
     /**
+     * Determine whether the user can import models.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function import(User $user)
+    {
+        return $user->hasRole('admin');
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user

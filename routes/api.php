@@ -78,6 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('businesses', [ProjectController::class, 'getAllGmbSubmissions']);
     Route::get('businesses/{business}', [ProjectController::class, 'getGmbSubmission']);
     Route::patch('businesses/{business}', [ProjectController::class, 'UpdateGmbSubmission']);
+    Route::post('businesses', [ProjectController::class, 'getAllGmbSubmissions']);
 
     Route::patch('project-members/{member}', [ProjectMemberController::class, 'update']);
     Route::delete('project-members/{member}', [ProjectMemberController::class, 'destroy']);

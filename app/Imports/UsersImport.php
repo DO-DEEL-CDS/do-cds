@@ -64,7 +64,7 @@ class UsersImport implements OnEachRow, WithValidation, WithHeadingRow, WithChun
 
     public function chunkSize(): int
     {
-        return 3;
+        return 1000;
     }
 
     public function registerEvents(): array
