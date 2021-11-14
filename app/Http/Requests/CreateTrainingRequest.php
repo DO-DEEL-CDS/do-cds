@@ -13,7 +13,7 @@ class CreateTrainingRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return auth()->check();
     }
@@ -23,13 +23,13 @@ class CreateTrainingRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => ['required', 'string', 'min:3'],
             'overview' => ['required', 'string', 'min:5'],
-            'start_time' => ['required', 'date_format:Y-m-d H:i:s'],
-            'attendance_time' => ['required', 'date_format:Y-m-d H:i:s'],
+            'start_time' => ['required', 'date_format:Y-m-d H:i:s', 'after_or_equal:now'],
+            'attendance_time' => ['required', 'date_format:Y-m-d H:i:s', 'after:start_time'],
             'tutor' => ['required', 'string'],
             'live_video' => ['required', 'active_url'],
             'resources' => ['sometimes', 'array'],

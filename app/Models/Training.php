@@ -64,8 +64,9 @@ class Training extends Model
 
         if (!empty($search['upcoming'])) {
             $query->where('start_time', '>=', now());
-            $query->orWhere('status', '!=', TrainingStatus::Closed);
-            $query->orderBy('start_time', 'asc');
+            $query->orWhereIn('status', [TrainingStatus::Approved, TrainingStatus::Started, TrainingStatus::AttendanceOpened]);
+            $query->orderBy('start_time');
+            $query->orderBy('status', 'desc');
         }
 
         if (!empty($search['status'])) {
