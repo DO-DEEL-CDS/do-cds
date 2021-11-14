@@ -18,8 +18,14 @@ class ArticleRepository extends BaseRepository
 
     public function getArticles(array $search): Paginator
     {
-        return Article::query()
-            ->search($search)
+        $q = Article::query();
+
+        if (auth()->check() && auth()->user()->hasRole('corper')) {
+            $q->where('state_code', $this->user->profile->state_code)
+                ->orWhereNull('state_code');
+        }
+
+        return $q->search($search)
             ->published()
             ->with('author')
             ->latest()

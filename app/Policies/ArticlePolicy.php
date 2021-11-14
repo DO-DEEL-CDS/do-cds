@@ -33,8 +33,15 @@ class ArticlePolicy
     public function view(User $user, Article $article)
     {
         if ($article->status->is(ArticleStatus::Published)) {
-            return true;
+            if ($article->state_code === null) {
+                return true;
+            }
+
+            if ($article->state_code === $user->profile->state_code) {
+                return true;
+            }
         }
+
 
         return $user->hasPermissionTo('manage-article');
     }
