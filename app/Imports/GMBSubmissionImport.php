@@ -12,6 +12,8 @@ use App\Notifications\ImportSuccessNotification;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -20,8 +22,11 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Events\AfterImport;
 
-class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBatchInserts, WithChunkReading, WithValidation, ShouldQueue
+class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBatchInserts, WithChunkReading, WithValidation, SkipsOnFailure,
+                                     ShouldQueue
 {
+    use SkipsFailures;
+
     /**
      * @param  array  $row
      *
