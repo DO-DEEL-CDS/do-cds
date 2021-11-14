@@ -16,11 +16,11 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithUpserts;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Events\AfterImport;
 
-class GMBSubmissionImport implements ToModel, WithUpserts, WithEvents, WithBatchInserts, WithChunkReading, WithValidation, ShouldQueue
+class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBatchInserts, WithChunkReading, WithValidation, ShouldQueue
 {
     /**
      * @param  array  $row
@@ -40,10 +40,10 @@ class GMBSubmissionImport implements ToModel, WithUpserts, WithEvents, WithBatch
             'business_email' => $row['business_email'],
             'owner_gender' => $row['owner_gender'],
             'status' => $status,
-            'project_id' => Project::whereType(ProjectType::gmb)->first()->id,
-            'approved_by' => Admin::first()->id,
+            'project_id' => Project::whereType(ProjectType::gmb)->firstOrFail()->id,
+            'approved_by' => $status->is(GMBStatus::approved) ? Admin::first()->id : null,
             'user_id' => $user->id,
-            'reject_reason' => $row['reject_reason']
+            'reject_reason' => $row['reject_reason'] ?? ''
         ]);
     }
 
@@ -66,11 +66,6 @@ class GMBSubmissionImport implements ToModel, WithUpserts, WithEvents, WithBatch
         ];
     }
 
-    public function uniqueBy(): string
-    {
-        return 'business_name';
-    }
-
     public function rules(): array
     {
         return [
@@ -79,6 +74,10 @@ class GMBSubmissionImport implements ToModel, WithUpserts, WithEvents, WithBatch
             'business_email' => ['required', 'email:dns'],
             'owner_gender' => ['required', 'string', 'in:,male,female'],
             'status' => ['required', new EnumValue(GMBStatus::class)],
+            'corper_email' => ['required', 'email:dns', 'exists:users,email'],
+            'nysc_state_code' => ['required', 'string', 'min:3'],
+            'corper_phone_number' => ['nullable', 'string', 'max:16'],
+            'reject_reason' => ['sometimes', 'nullable', 'string'],
         ];
     }
 }

@@ -20,7 +20,8 @@ class GmbSubmission extends Model
         'business_owner',
         'owner_gender',
         'reject_reason',
-        'user_id'
+        'user_id',
+        'project_id',
     ];
 
     protected $hidden = [

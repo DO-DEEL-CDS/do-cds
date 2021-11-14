@@ -78,7 +78,7 @@ class ProjectController extends Controller
     {
         $this->authorize('import', GmbSubmission::class);
 
-        $request->validate(['file' => ['file', 'max:50000', 'mimes:csv']]);
+        $request->validate(['file' => ['file', 'max:50000', 'mimes:csv,txt']]);
         \Excel::import(new GMBSubmissionImport(), $request->file('file'));
 
         return $this->success([], 'Import Queued');
