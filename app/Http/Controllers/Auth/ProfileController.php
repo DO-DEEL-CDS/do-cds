@@ -41,4 +41,9 @@ class ProfileController extends Controller
         $notifications = $this->userRepository->getNotifications(auth()->user(), $request->all());
         return $this->success($notifications);
     }
+
+    public function projectProgress(): array
+    {
+        return $this->userRepository->getUserGmbProgress(auth()->user());
+    }
 }
