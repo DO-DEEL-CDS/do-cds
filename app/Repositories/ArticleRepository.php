@@ -21,7 +21,7 @@ class ArticleRepository extends BaseRepository
         $q = Article::query();
 
         if (auth()->check() && auth()->user()->hasRole('corper')) {
-            $q->where('state_code', $this->user->profile->state_code)
+            $q->where('state_code', auth()->user()->profile->state_code)
                 ->orWhereNull('state_code');
         }
 
