@@ -34,7 +34,7 @@ class UpdateTrainingRequest extends FormRequest
             'live_video' => ['sometimes', 'active_url'],
             'resources.' => ['sometimes', 'array'],
             'resources.*.attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000'],
-            'status' => ['sometimes', new EnumValue(TrainingStatus::class)],
+            'status' => ['sometimes', new EnumValue(TrainingStatus::class, false)],
         ];
     }
 }
