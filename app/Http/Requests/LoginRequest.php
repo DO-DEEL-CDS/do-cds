@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'device_id' => ['nullable', 'string']
+            'device_id' => ['nullable', 'string', 'uuid']
         ];
     }
 
