@@ -48,7 +48,7 @@ class TrainingRepository extends BaseRepository
     {
         $sendStartedNotification = $sendAttendanceNotification = false;
         if (!empty($data['status'])) {
-            $data['status'] = TrainingStatus::fromValue($data['status']);
+            $data['status'] = TrainingStatus::fromValue((int) $data['status']);
 
             if ($data['status']->is(TrainingStatus::Started) && $training->status->isNot(TrainingStatus::Started)) {
                 $sendStartedNotification = true;
