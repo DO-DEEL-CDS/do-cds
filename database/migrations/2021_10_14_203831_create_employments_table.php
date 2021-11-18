@@ -16,7 +16,7 @@ class CreateEmploymentsTable extends Migration
         Schema::create('employments', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->string('role')->index();
             $table->timestamp('closing_date');
             $table->string('location')->nullable();
