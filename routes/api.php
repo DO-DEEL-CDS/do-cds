@@ -95,7 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('prospects', [ProspectController::class, 'updateProspectsStatus']);
     Route::patch('prospects/{prospect}', [ProspectController::class, 'update']);
 
-    Route::resource('resources', ResourceController::class)->only(['update', 'destroy']);
+    Route::resource('resources', ResourceController::class)->only(['store', 'update', 'destroy']);
 
     Route::prefix('enums')->group(function () {
         Route::get('batches', [EnumsController::class, 'batches']);

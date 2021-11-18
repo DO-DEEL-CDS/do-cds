@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Resource;
+use App\Rules\ResourceEntityExist;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Storage;
@@ -19,21 +20,33 @@ class ResourceController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        $valid = $request->validate([
+            'attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000'],
+            'entity_type' => ['required', 'in:project,training'],
+            'entity_id' => ['required', new ResourceEntityExist($request)]
+        ]);
+
+        $resource = new Resource();
+        $resource->attachment = $valid['attachment'];
+        $resource->resourceable_id = $valid['entity_id'];
+        $resource->resourceable_type = $valid['entity_type'];
+        $resource->save();
+
+        return $this->success($resource);
     }
 
-    public function show(Resource $resource)
+    public function show(Resource $resource): JsonResponse
     {
-        //
+        return $this->success($resource);
     }
 
     public function update(Request $request, Resource $resource): JsonResponse
     {
         $validated = $request->validate([
             'filename' => ['string', 'max:10'],
-            'attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000']
+            'attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000']
         ]);
 
         $deletable = $resource->attachment;
