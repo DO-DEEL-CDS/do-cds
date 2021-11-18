@@ -33,6 +33,10 @@ class RegistrationController extends Controller
             'email' => ['required', 'exists:prospects,email']
         ]);
 
+        $this->validate($request, ['email' => ['required', 'exists:prospects,email']], [
+            'email.exists' => 'The provided email does not exist in our record. Kindly ensure you already enrolled on the website'
+        ]);
+
         $prospect = $this->prospectRepository->findByEmail($validated['email']);
 
         abort_if(!$this->prospectRepository->isApproved($prospect), Response::HTTP_BAD_REQUEST, 'Your Application Has not been Approved');
