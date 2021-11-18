@@ -67,8 +67,8 @@ class NewsPublished extends Notification
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
-            ->setSubject('Training Attendance Opened')
-            ->setBody($this->article->title)
+            ->setSubject('Update: '. $this->article->title)
+            ->setBody(\Str::limit($this->article->content,120))
             ->setData('news', $this->article);
     }
 }
