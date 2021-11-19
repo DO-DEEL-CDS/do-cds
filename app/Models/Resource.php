@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FileNotFoundException;
 
 class Resource extends Model
 {
@@ -51,7 +52,12 @@ class Resource extends Model
 
     public function getSizeAttribute(): int
     {
-        return Storage::size($this->path);
+        try {
+            return Storage::size($this->path);
+        } catch (FileNotFoundException $exception) {
+            \Log::warning('File_not_found: ' . $exception->getMessage());
+            return 0;
+        }
     }
 
     public function getAttachmentUrlAttribute()
