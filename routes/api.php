@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -96,6 +97,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('prospects/{prospect}', [ProspectController::class, 'update']);
 
     Route::resource('resources', ResourceController::class)->only(['store', 'update', 'destroy']);
+
+    Route::resource('announcements', AnnouncementController::class)->except('destroy');
 
     Route::prefix('enums')->group(function () {
         Route::get('batches', [EnumsController::class, 'batches']);

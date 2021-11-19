@@ -2,6 +2,7 @@
 
 namespace App\Extensions\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Notification;
 
 /**
@@ -17,6 +18,11 @@ trait AuthenticatableRoles
     public static function pushNotifyAll($notification): void
     {
         \Notification::send(self::query()->whereNotNull('device_id')->get(), $notification);
+    }
+
+    public static function notifyByQuery($notification, Builder $builder): void
+    {
+        \Notification::send($builder->get(), $notification);
     }
 
     /**

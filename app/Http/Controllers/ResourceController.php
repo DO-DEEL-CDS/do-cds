@@ -34,7 +34,7 @@ class ResourceController extends Controller
         $resource->resourceable_type = $valid['entity_type'];
         $resource->save();
 
-        return $this->success($resource);
+        return $this->success($resource, 'Resource Created', 201);
     }
 
     public function show(Resource $resource): JsonResponse
