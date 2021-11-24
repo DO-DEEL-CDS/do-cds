@@ -29,9 +29,9 @@ class RegistrationController extends Controller
 
     public function getStarted(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'email' => ['required', 'exists:prospects,email']
-        ]);
+//        $validated = $request->validate([
+//            'email' => ['required', 'exists:prospects,email']
+//        ]);
 
         $this->validate($request, ['email' => ['required', 'exists:prospects,email']], [
             'email.exists' => 'The provided email does not exist in our record. Kindly ensure you already enrolled on the website'
