@@ -30,7 +30,7 @@ class UpdateProjectRequest extends FormRequest
             'title' => ['sometimes', 'string', 'min:3'],
             'status' => ['sometimes', new EnumValue(ProjectStatus::class)],
             'overview' => ['sometimes', 'string'],
-            'guide' => ['sometimes', 'string'],
+            'guide' => ['sometimes', 'nullable', 'string'],
             'batch' => ['sometimes', new EnumValue(Batch::class)],
             'year' => ['sometimes', 'date_format:Y'],
         ];

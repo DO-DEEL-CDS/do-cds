@@ -36,7 +36,7 @@ class UpdateUserRequest extends FormRequest
             'nysc_call_up_number' => ['sometimes', 'string', Rule::unique('profiles')->ignore($userId, 'user_id')],
             'nysc_state_code' => ['sometimes', new NyscStateCode(), Rule::unique('profiles')->ignore($userId, 'user_id')],
             'device_id' => ['sometimes', 'uuid'],
-            'photo' => ['sometimes', 'image', 'max:10000'],
+            'photo' => ['sometimes', 'nullable', 'image', 'max:10000'],
             'status' => ['sometimes', new EnumValue(UserStatus::class)]
         ];
     }

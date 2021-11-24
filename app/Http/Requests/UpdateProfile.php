@@ -33,9 +33,7 @@ class UpdateProfile extends FormRequest
             'nysc_call_up_number' => ['sometimes', 'string', 'filled'],
             'nysc_state_code' => ['sometimes', new NyscStateCode()],
             'device_id' => ['sometimes', 'string', 'uuid'],
-            'photo' => ['sometimes', 'image', 'max:10000']
+            'photo' => ['sometimes', 'nullable', 'image', 'max:10000']
         ];
     }
-
-
 }

@@ -32,7 +32,7 @@ class UpdateTrainingRequest extends FormRequest
             'attendance_time' => ['sometimes', 'date_format:Y-m-d H:i:s'],
             'tutor' => ['sometimes', 'string'],
             'live_video' => ['sometimes', 'active_url'],
-            'resources.' => ['sometimes', 'array'],
+//            'resources.' => ['sometimes', 'array'],
 //            'resources.*.attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000'],
             'status' => ['sometimes', new EnumValue(TrainingStatus::class, false)],
         ];
