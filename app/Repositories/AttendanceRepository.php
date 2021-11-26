@@ -26,11 +26,16 @@ class AttendanceRepository extends BaseRepository
 
         abort_if($training->status->is(TrainingStatus::Approved), Response::HTTP_BAD_REQUEST, 'The training is yet to start');
 
-        abort_unless($training->status->is(TrainingStatus::Started) && $training->attendance_time->isPast(), Response::HTTP_BAD_REQUEST,
-            'Attendance is not Open');
+        abort_unless($this->canTakeAttendance($training), Response::HTTP_BAD_REQUEST, 'Attendance is not Open');
 
         return $training->attendance()->updateOrCreate([
             'user_id' => $user->id
         ]);
+    }
+
+    public function canTakeAttendance(Training $training): bool
+    {
+        return $training->status->is(TrainingStatus::AttendanceOpened()) ||
+            ($training->attendance_time->isPast() && $training->status->in([TrainingStatus::Started(), TrainingStatus::AttendanceOpened()]));
     }
 }

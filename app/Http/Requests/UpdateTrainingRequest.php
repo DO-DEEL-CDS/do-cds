@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\TrainingStatus;
+use App\Models\Training;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,11 +26,17 @@ class UpdateTrainingRequest extends FormRequest
      */
     public function rules(): array
     {
+        /** @var Training $training */
+        $training = $this->route('training');
+        if ($training === null) {
+            throw new \LogicException('Training not returned from route');
+        }
+
         return [
             'title' => ['sometimes', 'string', 'min:3'],
             'overview' => ['sometimes', 'string', 'min:5'],
-            'start_time' => ['sometimes', 'date_format:Y-m-d H:i:s'],
-            'attendance_time' => ['sometimes', 'date_format:Y-m-d H:i:s'],
+            'start_time' => ['sometimes', 'date_format:Y-m-d H:i:s', 'after_or_equal:' . $training->start_time],
+            'attendance_time' => ['sometimes', 'date_format:Y-m-d H:i:s', 'after:start_time'],
             'tutor' => ['sometimes', 'string'],
             'live_video' => ['sometimes', 'active_url'],
 //            'resources.' => ['sometimes', 'array'],

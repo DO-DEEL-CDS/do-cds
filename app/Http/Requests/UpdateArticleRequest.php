@@ -24,7 +24,7 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => ['sometimes', 'image', 'max:10000'],
+            'image' => ['sometimes', 'nullable', 'image', 'max:10000'],
             'title' => ['required', 'string', 'min:3'],
             'content' => ['sometimes', 'string'],
             'category_id' => ['sometimes', 'exists:categories,id'],
