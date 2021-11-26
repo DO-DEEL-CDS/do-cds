@@ -173,9 +173,7 @@ class UserRepository extends BaseRepository
             'roles',
             'profile',
             'unreadNotifications',
-            'businesses' => function ($q) {
-                $q->where('status', GMBStatus::approved);
-            }
+            'businesses'
         ]);
         $user->loadCount([
             'attendance',
