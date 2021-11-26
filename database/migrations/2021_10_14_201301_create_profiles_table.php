@@ -18,8 +18,8 @@ class CreateProfilesTable extends Migration
             $table->string('photo')->default(url(asset('img/user-avatar.svg')));
             $table->string('deployed_state', 4)->nullable();
             $table->string('nysc_call_up_number')->nullable();
-            $table->string('nysc_state_code')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('nysc_state_code')->nullable()->index();
+            $table->string('phone_number')->nullable()->index();
             $table->string('state_code');
             $table->timestamps();
             $table->softDeletes();

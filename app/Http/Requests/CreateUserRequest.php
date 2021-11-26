@@ -35,4 +35,11 @@ class CreateUserRequest extends FormRequest
             'device_id' => ['sometimes', 'uuid'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'phone_number.string' => 'Kindly provide a valid phone number'
+        ];
+    }
 }
