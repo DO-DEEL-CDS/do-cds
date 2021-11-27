@@ -17,7 +17,7 @@ class AnnouncementRepository extends BaseRepository
 
     public function getAnnouncements(array $search = []): LengthAwarePaginator
     {
-        return Announcement::query()->search($search)->paginate();
+        return Announcement::query()->latest()->search($search)->paginate();
     }
 
     public function getAnnouncement(Announcement $announcement): Announcement
@@ -47,7 +47,7 @@ class AnnouncementRepository extends BaseRepository
         }
 
         if ($announcement->state_code !== null) {
-            $corpMembers->year($announcement->state_code);
+            $corpMembers->state($announcement->state_code);
         }
 
         Corper::notifyByQuery(new AnnouncementNotification($announcement), $corpMembers);

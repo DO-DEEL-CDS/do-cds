@@ -38,4 +38,10 @@ class AttendanceRepository extends BaseRepository
         return $training->status->is(TrainingStatus::AttendanceOpened()) ||
             ($training->attendance_time->isPast() && $training->status->in([TrainingStatus::Started(), TrainingStatus::AttendanceOpened()]));
     }
+
+    public function getUsersAttendance(User $user)
+    {
+        $user->load('attendance');
+        return $user->attendance;
+    }
 }

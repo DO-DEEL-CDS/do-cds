@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfile;
+use App\Repositories\AttendanceRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -45,5 +46,11 @@ class ProfileController extends Controller
     public function projectProgress(): array
     {
         return $this->userRepository->getUserGmbProgress(auth()->user());
+    }
+
+    public function getTrainingAttendance(Request $request): JsonResponse
+    {
+        $repo = new AttendanceRepository();
+        return $this->success($repo->getUsersAttendance($request->user()));
     }
 }

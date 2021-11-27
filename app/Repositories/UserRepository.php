@@ -173,13 +173,14 @@ class UserRepository extends BaseRepository
             'roles',
             'profile',
             'unreadNotifications',
-            'businesses'
+            'businesses',
+            'attendance',
         ]);
         $user->loadCount([
             'attendance',
             'businesses' => function ($q) {
                 $q->where('status', GMBStatus::approved);
-            }
+            },
         ]);
         $user->gmb_project_status = $this->getUserGmbProgress($user);
 

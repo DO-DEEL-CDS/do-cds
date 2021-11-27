@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('auth/profile/gmb-progress', [ProfileController::class, 'projectProgress']);
     Route::get('auth/notifications', [ProfileController::class, 'getNotifications']);
     Route::patch('auth/notifications', [ProfileController::class, 'updateNotificationsRead']);
+    Route::get('auth/attendance', [ProfileController::class, 'getTrainingAttendance']);
 
     Route::resource('users', UserController::class)->except('destroy');
     Route::post('users/{user}/trainings/{training}', [UserController::class, 'recordAttendance']);
