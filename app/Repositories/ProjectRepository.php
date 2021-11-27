@@ -21,7 +21,8 @@ class ProjectRepository extends BaseRepository
 
     public function getProjects(array $search): LengthAwarePaginator
     {
-        return Project::query()->active()->paginate($search['per_page'] ?? 15, ['id', 'title', 'type', 'status', 'created_at', 'updated_at']);
+        return Project::query()->active()->paginate($search['per_page'] ?? 15,
+            ['id', 'title', 'overview', 'type', 'status', 'created_at', 'updated_at']);
     }
 
     public function submitBusiness(Project $project, array $data): GmbSubmission
