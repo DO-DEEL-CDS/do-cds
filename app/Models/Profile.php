@@ -31,6 +31,10 @@ class Profile extends Model
         'user_id',
     ];
 
+    protected $appends = [
+        'photo_url'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -39,5 +43,10 @@ class Profile extends Model
     public function state()
     {
         return $this->belongsTo(State::class, 'state_code', 'state_code');
+    }
+
+    public function getPhotoUrlAttribute($value)
+    {
+        return url($this->photo);
     }
 }

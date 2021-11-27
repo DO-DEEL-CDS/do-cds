@@ -47,7 +47,7 @@ class EmploymentRepository extends BaseRepository
         return $job;
     }
 
-    public function updateJob(Employment $job, array $data)
+    public function updateJob(Employment $job, array $data): Employment
     {
         $employerData = [];
 
@@ -67,10 +67,18 @@ class EmploymentRepository extends BaseRepository
             $employerData['location'] = $data['employer_location'];
         }
 
+        $oldLogo = $job->employer->logo;
+
+        $job->load('employer');
         $job->employer->update($employerData);
         $job->update($data);
         $job->refresh();
         $job->load('employer');
+
+        if ($oldLogo !== null && $job->employer->logo !== $oldLogo) {
+            \Storage::delete($oldLogo);
+        }
+
         return $job;
     }
 

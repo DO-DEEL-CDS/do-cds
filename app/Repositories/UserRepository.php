@@ -133,12 +133,18 @@ class UserRepository extends BaseRepository
 
     public function updateUser(User $user, ValidatedInput $data): User
     {
+        $oldPhoto = $user->profile->photo;
+
         $user->update($data->all());
         $user->profile->update($data->only('photo', 'deployed_state', 'nysc_call_up_number', 'nysc_state_code', 'phone_number'));
         $user->refresh();
         if ($user->status->isNot(UserStatus::Active)) {
             $user->tokens()->delete();
             auth()->logout();
+        }
+
+        if ($oldPhoto !== null && $user->profile->photo !== $oldPhoto) {
+            \Storage::delete($oldPhoto);
         }
 
         return $this->getUserData($user);
