@@ -56,7 +56,7 @@ Route::prefix('misc')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('auth/profile', [ProfileController::class, 'show']);
-    Route::patch('auth/profile', [ProfileController::class, 'update']);
+    Route::match(['post', 'patch'], 'auth/profile', [ProfileController::class, 'update']);
     Route::get('auth/profile/gmb-progress', [ProfileController::class, 'projectProgress']);
     Route::get('auth/notifications', [ProfileController::class, 'getNotifications']);
     Route::patch('auth/notifications', [ProfileController::class, 'updateNotificationsRead']);
