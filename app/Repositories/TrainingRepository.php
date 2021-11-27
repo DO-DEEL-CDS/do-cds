@@ -53,7 +53,6 @@ class TrainingRepository extends BaseRepository
             if ($data['status']->is(TrainingStatus::Started) && $training->status->isNot(TrainingStatus::Started)) {
                 $sendStartedNotification = true;
             } elseif ($data['status']->is(TrainingStatus::AttendanceOpened) && $training->status->isNot(TrainingStatus::AttendanceOpened)) {
-                $data['attendance_time'] = now();
                 $sendAttendanceNotification = true;
             }
         }
