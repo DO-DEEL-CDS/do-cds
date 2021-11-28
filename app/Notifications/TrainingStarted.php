@@ -60,7 +60,7 @@ class TrainingStarted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'type' => 'news',
+            'type' => 'training',
             'content' => $this->training
         ];
     }
