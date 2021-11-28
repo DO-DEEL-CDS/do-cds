@@ -23,16 +23,34 @@ class ResourceController extends Controller
     public function store(Request $request): JsonResponse
     {
         $valid = $request->validate([
-            'attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000'],
+            'attachment' => ['sometimes', 'file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000'],
+            'files' => ['sometimes', 'array'],
+            'files.*.attachment' => ['file', 'mimes:jpg,png,jpeg,webp,pdf,xlsx,doc,docx,ppt,txt', 'max:10000'],
             'entity_type' => ['required', 'in:project,training'],
             'entity_id' => ['required', new ResourceEntityExist($request)]
         ]);
 
-        $resource = new Resource();
-        $resource->attachment = $valid['attachment'];
-        $resource->resourceable_id = $valid['entity_id'];
-        $resource->resourceable_type = $valid['entity_type'];
-        $resource->save();
+        $resource = [];
+        if (isset($valid['attachment'])) {
+            $resource = new Resource();
+            $resource->attachment = $valid['attachment'];
+            $resource->resourceable_id = $valid['entity_id'];
+            $resource->resourceable_type = $valid['entity_type'];
+            $resource->save();
+        }
+
+        if (!empty($valid['files'])) {
+            $resources = [];
+            foreach ($valid['files'] as $file) {
+                $resource = new Resource();
+                $resource->attachment = $file['attachment'];
+                $resource->resourceable_id = $valid['entity_id'];
+                $resource->resourceable_type = $valid['entity_type'];
+                $resource->save();
+                $resources[] = $resource;
+            }
+            $resource = $resources;
+        }
 
         return $this->success($resource, 'Resource Created', 201);
     }
