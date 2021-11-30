@@ -41,6 +41,6 @@ class Employer extends Model
 
     public function getLogoURLAttribute()
     {
-        return $this->logo !== null ? url($this->image) : '';
+        return $this->logo !== null ? url($this->logo) : '';
     }
 }

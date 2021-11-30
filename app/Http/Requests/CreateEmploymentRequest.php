@@ -35,7 +35,7 @@ class CreateEmploymentRequest extends FormRequest
             'perks.*' => ['string', 'max:191'],
             'employer_name' => ['required', 'string', 'max:191'],
             'employer_location' => ['sometimes', 'string', 'max:191'],
-            'employer_logo' => ['image', 'max:50000'],
+            'employer_logo' => ['file', 'mimes:jpg,jpeg,png', 'max:50000'],
             'employer_email' => ['sometimes', 'email', 'max:191'],
         ];
     }

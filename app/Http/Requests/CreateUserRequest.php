@@ -31,7 +31,7 @@ class CreateUserRequest extends FormRequest
             'nysc_call_up_number' => ['required', 'string', 'max:20', 'unique:profiles'],
             'email' => ['bail', 'sometimes', 'email:dns', 'unique:users,email'],
             'nysc_state_code' => ['bail', 'required', new NyscStateCode(), 'unique:profiles'],
-            'photo' => ['sometimes', 'image', 'max:10000'],
+            'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
             'device_id' => ['sometimes', 'uuid'],
         ];
     }

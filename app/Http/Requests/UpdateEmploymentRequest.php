@@ -35,7 +35,7 @@ class UpdateEmploymentRequest extends FormRequest
             'perks.*' => ['string', 'max:191'],
             'employer_name' => ['sometimes', 'string', 'max:191'],
             'employer_location' => ['sometimes', 'string', 'max:191'],
-            'employer_logo' => ['sometimes', 'image', 'max:50000'],
+            'employer_logo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
             'employer_email' => ['sometimes', 'email', 'max:191'],
         ];
     }
