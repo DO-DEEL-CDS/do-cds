@@ -31,7 +31,7 @@ class CreateStateMemberRequest extends FormRequest
             'batch' => ['required', new EnumValue(Batch::class)],
             'name' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'position' => ['required', 'string'],
+            'position' => ['nullable', 'string'],
             'facebook' => ['required', 'active_url'],
             'phone_number' => ['required', 'max:16'],
             'instagram' => ['required', 'string'],
