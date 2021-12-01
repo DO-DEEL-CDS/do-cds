@@ -37,7 +37,7 @@ class StateRepository extends BaseRepository
     public function getExecutives(State $state, array $search = [])
     {
         return $state->members()
-            ->type(StateMembershipType::CommunityManager())
+            ->type(StateMembershipType::Executive())
             ->search($search)
             ->get();
     }
