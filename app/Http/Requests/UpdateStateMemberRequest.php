@@ -31,12 +31,12 @@ class UpdateStateMemberRequest extends FormRequest
             'batch' => ['sometimes', new EnumValue(Batch::class)],
             'name' => ['sometimes', 'string'],
             'email' => ['sometimes', 'email'],
-            'position' => ['sometimes', 'string'],
+            'position' => ['sometimes', 'nullable', 'string'],
             'facebook' => ['sometimes', 'active_url'],
             'state_code' => ['sometimes', 'exists:states'],
             'phone_number' => ['sometimes', 'max:16'],
             'instagram' => ['sometimes', 'string'],
-            'type' => ['sometimes', new EnumValue(StateMembershipType::class)],
+            'type' => ['sometimes', new EnumValue(StateMembershipType::class, false)],
         ];
     }
 }

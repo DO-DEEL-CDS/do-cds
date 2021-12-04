@@ -23,7 +23,7 @@ class ProspectSeeder extends Seeder
         ]);
 
         if (!app()->environment('production')) {
-            Prospect::factory(5)->create();
+            Prospect::factory(2)->create();
         }
     }
 }

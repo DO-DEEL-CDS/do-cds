@@ -33,7 +33,7 @@ class CreateCorperAccountRequest extends FormRequest
             'call_up_number' => ['required', 'string', 'max:20'],
             'password' => $this->passwordRules(),
             'secret' => new RegistrationSecret(),
-            'device_id' => ['sometimes', 'present', 'string']
+            'device_id' => ['sometimes', 'present', 'uuid'],
         ];
     }
 }

@@ -20,18 +20,26 @@ class ProjectMemberController extends Controller
 
     public function store(CreateProjectMemberRequest $request, Project $project): JsonResponse
     {
+        $this->authorize('update', $project);
+
         $member = $this->projectRepository->addMember($project, $request->validated());
         return $this->success($member, 'Project Member Created', 201);
     }
 
     public function update(UpdateProjectMemberRequest $request, ProjectMember $member): JsonResponse
     {
+        $member->load('project');
+        $this->authorize('update', $member->project);
+
         $member = $this->projectRepository->updateMember($member, $request->validated());
         return $this->success($member);
     }
 
     public function destroy(ProjectMember $member): JsonResponse
     {
+        $member->load('project');
+        $this->authorize('update', $member->project);
+
         $this->projectRepository->deleteMember($member);
         return $this->success();
     }

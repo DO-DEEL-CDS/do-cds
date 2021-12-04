@@ -10,4 +10,9 @@ use BenSampo\Enum\Enum;
 final class ProjectMemberType extends Enum
 {
     public const Exco = 1;
+
+    public function toArray()
+    {
+        return \Str::snake($this->description);
+    }
 }

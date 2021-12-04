@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\State;
 use App\Models\Training;
 use App\Models\User;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\UserRepository;
+use App\Services\ImportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,6 +19,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $userRepository)
     {
+        $this->authorizeResource(User::class);
         $this->userRepository = $userRepository;
     }
 
@@ -45,8 +48,21 @@ class UserController extends Controller
 
     public function recordAttendance(User $user, Training $training): JsonResponse
     {
+        $this->authorize('update', $user);
+        $this->authorize('update', $training);
+
         $attendanceRepository = new AttendanceRepository();
         $attendanceRepository->recordAttendance($training, $user);
         return $this->success();
+    }
+
+    public function import(State $state, Request $request): JsonResponse
+    {
+        $this->authorize('import', User::class);
+
+        $request->validate(['file' => ['file', 'max:50000', 'mimes:csv']]);
+        ImportService::importUsers($state, $request);
+
+        return $this->success([], 'Import Queued');
     }
 }

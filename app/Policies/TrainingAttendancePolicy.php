@@ -19,7 +19,7 @@ class TrainingAttendancePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermissionTo('manage-attendance');
     }
 
     /**
@@ -31,7 +31,7 @@ class TrainingAttendancePolicy
      */
     public function view(User $user, TrainingAttendance $trainingAttendance)
     {
-        //
+        return $user->id === $trainingAttendance->user_id || $user->hasPermissionTo('manage-attendance');
     }
 
     /**
@@ -42,7 +42,7 @@ class TrainingAttendancePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermissionTo('access=projects') || $user->hasPermissionTo('manage-attendance');
     }
 
     /**
@@ -54,7 +54,7 @@ class TrainingAttendancePolicy
      */
     public function update(User $user, TrainingAttendance $trainingAttendance)
     {
-        //
+        return $user->hasPermissionTo('manage-attendance');
     }
 
     /**
@@ -66,7 +66,7 @@ class TrainingAttendancePolicy
      */
     public function delete(User $user, TrainingAttendance $trainingAttendance)
     {
-        //
+        return $user->hasPermissionTo('manage-attendance');
     }
 
     /**
@@ -78,7 +78,7 @@ class TrainingAttendancePolicy
      */
     public function restore(User $user, TrainingAttendance $trainingAttendance)
     {
-        //
+        return $user->hasPermissionTo('manage-attendance');
     }
 
     /**
@@ -90,6 +90,11 @@ class TrainingAttendancePolicy
      */
     public function forceDelete(User $user, TrainingAttendance $trainingAttendance)
     {
-        //
+        return $user->hasRole('super-admin');
+    }
+
+    public function import(User $user): bool
+    {
+        return $user->hasPermissionTo('manage-attendance');
     }
 }

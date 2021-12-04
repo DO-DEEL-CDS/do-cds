@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserStatus;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'device_id' => ['nullable', 'string']
+            'device_id' => ['nullable', 'string', 'uuid']
         ];
     }
 
@@ -51,6 +52,15 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
+            ]);
+        }
+
+        if (Auth::user()->status->isNot(UserStatus::Active)) {
+            Auth::user()->tokens()->delete();
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Deactivated Account',
             ]);
         }
 

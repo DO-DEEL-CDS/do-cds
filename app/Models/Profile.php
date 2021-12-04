@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Extensions\Traits\ModelDoesUploads;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Profile extends Model
 {
-    use HasFactory;
+    use HasFactory, ModelDoesUploads;
+
+    public array $uploadable = ['photo'];
 
     protected $guarded = ['id'];
 
@@ -28,6 +31,10 @@ class Profile extends Model
         'user_id',
     ];
 
+    protected $appends = [
+        'photo_url'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -36,5 +43,10 @@ class Profile extends Model
     public function state()
     {
         return $this->belongsTo(State::class, 'state_code', 'state_code');
+    }
+
+    public function getPhotoUrlAttribute($value)
+    {
+        return url($this->photo);
     }
 }

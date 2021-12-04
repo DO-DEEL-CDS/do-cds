@@ -31,12 +31,11 @@ class CreateStateMemberRequest extends FormRequest
             'batch' => ['required', new EnumValue(Batch::class)],
             'name' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'position' => ['required', 'string'],
+            'position' => ['nullable', 'string'],
             'facebook' => ['required', 'active_url'],
-            'state_code' => ['required', 'exists:states'],
             'phone_number' => ['required', 'max:16'],
             'instagram' => ['required', 'string'],
-            'type' => ['required', new EnumValue(StateMembershipType::class)],
+            'type' => ['required', new EnumValue(StateMembershipType::class, false)],
         ];
     }
 }

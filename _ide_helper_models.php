@@ -13,12 +13,52 @@
 namespace App\Models {
 
     /**
+     * App\Models\Announcement
+     *
+     * @property int $id
+     * @property string $title
+     * @property string $content
+     * @property string|null $state_code
+     * @property mixed|null $year
+     * @property \App\Enums\Batch|null $batch
+     * @property int|null $user_id
+     * @property int $author_id
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\User $author
+     * @property-read \App\Models\User|null $corper
+     * @property-read \App\Models\State|null $state
+     * @method static \Database\Factories\AnnouncementFactory factory(...$parameters)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement query()
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement search(array $search)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereAuthorId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereBatch($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereContent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereStateCode($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereTitle($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereUserId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Announcement whereYear($value)
+     */
+    class Announcement extends \Eloquent
+    {
+    }
+}
+
+namespace App\Models {
+
+    /**
      * App\Models\Article
      *
      * @property int $id
      * @property string $title
      * @property string $image
      * @property string $content
+     * @property bool $is_featured
      * @property \App\Enums\ArticleStatus $status
      * @property \App\Models\User $author
      * @property int $category_id
@@ -39,6 +79,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereImage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Article whereIsFeatured($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereStateCode($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Article whereTitle($value)
@@ -89,6 +130,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Employment[] $employments
      * @property-read int|null $employments_count
+     * @property-read mixed $logo_u_r_l
      * @method static \Database\Factories\EmployerFactory factory(...$parameters)
      * @method static \Illuminate\Database\Eloquent\Builder|Employer newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Employer newQuery()
@@ -173,6 +215,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission query()
+     * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereApprovedBy($value)
      * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereBusinessEmail($value)
      * @method static \Illuminate\Database\Eloquent\Builder|GmbSubmission whereBusinessName($value)
@@ -310,6 +353,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property string|null $deleted_at
+     * @property-read mixed $photo_url
      * @property-read \App\Models\State $state
      * @property-read \App\Models\User $user
      * @method static \Database\Factories\ProfileFactory factory(...$parameters)
@@ -476,6 +520,8 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read mixed $attachment_url
+     * @property-read mixed $path
+     * @property-read int $size
      * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $resourceable
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Profile[] $users
      * @property-read int|null $users_count
@@ -615,12 +661,14 @@ namespace App\Models\Roles {
      * @property-read int|null $tokens_count
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Training[] $training
      * @property-read int|null $training_count
+     * @method static \Illuminate\Database\Eloquent\Builder|Corper batch(string $batch)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Corper newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper query()
      * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
      * @method static \Illuminate\Database\Eloquent\Builder|User search(array $search)
+     * @method static \Illuminate\Database\Eloquent\Builder|Corper state(string $stateCode)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereDeviceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereEmail($value)
@@ -631,6 +679,7 @@ namespace App\Models\Roles {
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereRememberToken($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder|Corper whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Corper year(string $year)
      */
     class Corper extends \Eloquent
     {
@@ -676,7 +725,7 @@ namespace App\Models {
      * @property string|null $facebook
      * @property string|null $position
      * @property \App\Enums\StateMembershipType $type
-     * @property mixed $year
+     * @property string $year
      * @property \App\Enums\Batch $batch
      * @property string $state_code
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -686,6 +735,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember query()
+     * @method static \Illuminate\Database\Eloquent\Builder|StateMember search(array $search)
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember type(\App\Enums\StateMembershipType $type)
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereBatch($value)
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereCreatedAt($value)
@@ -703,20 +753,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder|StateMember whereYear($value)
      */
     class StateMember extends \Eloquent
-    {
-    }
-}
-
-namespace App\Models {
-
-    /**
-     * App\Models\StateMembershipType
-     *
-     * @method static \Illuminate\Database\Eloquent\Builder|StateMembershipType newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|StateMembershipType newQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|StateMembershipType query()
-     */
-    class StateMembershipType extends \Eloquent
     {
     }
 }

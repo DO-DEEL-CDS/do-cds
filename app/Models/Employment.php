@@ -20,7 +20,8 @@ class Employment extends Model
         'type',
         'apply_link',
         'rate',
-        'perks'
+        'perks',
+        'closing_date',
     ];
 
     protected $casts = [

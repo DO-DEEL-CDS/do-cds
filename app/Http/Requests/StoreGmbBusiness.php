@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class storeGmbBusiness extends FormRequest
+class StoreGmbBusiness extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class storeGmbBusiness extends FormRequest
     {
         return [
             'business_email' => ['required', 'email:dns'],
-            'business_name' => ['required', 'string', 'min:3'],
+            'business_name' => ['required', 'string', 'min:3', 'unique:gmb_submissions'],
             'business_owner' => ['required', 'string', 'min:3'],
             'owner_gender' => ['required', 'string', 'in:,male,female'],
         ];

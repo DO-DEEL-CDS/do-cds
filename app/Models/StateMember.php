@@ -29,7 +29,6 @@ class StateMember extends Model
     protected $casts = [
         'type' => StateMembershipType::class,
         'batch' => Batch::class,
-        'year' => 'date:Y'
     ];
 
     protected $hidden = [
@@ -45,6 +44,23 @@ class StateMember extends Model
 
     public function scopeType(Builder $builder, StateMembershipType $type): void
     {
-        $builder->where('type', $type->key);
+        $builder->where('type', $type);
+    }
+
+    public function scopeSearch(Builder $builder, array $search)
+    {
+        if (!empty($search['type'])) {
+            $type = StateMembershipType::fromValue((int) $search['type']);
+            $builder->where('state_members.type', $type);
+        }
+
+        if (!empty($search['batch'])) {
+            $batch = Batch::fromValue($search['batch']);
+            $builder->where('state_members.batch', $batch);
+        }
+
+        if (!empty($search['year'])) {
+            $builder->where('year', '=', $search['year']);
+        }
     }
 }

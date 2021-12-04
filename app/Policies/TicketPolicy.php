@@ -19,7 +19,7 @@ class TicketPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $user->hasRole('admin');
     }
 
     /**
@@ -31,7 +31,7 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket)
     {
-        //
+        return $user->id === $ticket->user_id || $user->hasRole('admin');
     }
 
     /**
@@ -42,7 +42,7 @@ class TicketPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('corper');
     }
 
     /**
@@ -54,7 +54,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        //
+        return $user->id === $ticket->user_id || $user->hasRole('admin');
     }
 
     /**
@@ -66,7 +66,7 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -78,7 +78,7 @@ class TicketPolicy
      */
     public function restore(User $user, Ticket $ticket)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
@@ -90,6 +90,6 @@ class TicketPolicy
      */
     public function forceDelete(User $user, Ticket $ticket)
     {
-        //
+        return $user->hasRole('admin');
     }
 }

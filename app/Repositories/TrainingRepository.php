@@ -3,7 +3,10 @@
 namespace App\Repositories;
 
 use App\Enums\TrainingStatus;
+use App\Models\Roles\Corper;
 use App\Models\Training;
+use App\Notifications\AttendanceOpened;
+use App\Notifications\TrainingStarted;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class TrainingRepository extends BaseRepository
@@ -29,7 +32,10 @@ class TrainingRepository extends BaseRepository
         $user = request()->user();
 
         $training = $user->training()->create($data);
-        $training->resources()->createMany($data['resources']);
+        if (!empty($data['resources'])) {
+            $training->resources()->createMany($data['resources']);
+        }
+
         return $this->getTraining($training);
     }
 
@@ -40,13 +46,27 @@ class TrainingRepository extends BaseRepository
 
     public function updateTraining(Training $training, array $data): Training
     {
+        $sendStartedNotification = $sendAttendanceNotification = false;
         if (!empty($data['status'])) {
-            $data['status'] = TrainingStatus::fromValue($data['status']);
-            if ($data['status']->is(TrainingStatus::AttendanceOpened())) {
-                $data['attendance_time'] = now();
+            $data['status'] = TrainingStatus::fromValue((int) $data['status']);
+
+            if ($data['status']->is(TrainingStatus::Started) && $training->status->isNot(TrainingStatus::Started)) {
+                $sendStartedNotification = true;
+            } elseif ($data['status']->is(TrainingStatus::AttendanceOpened) && $training->status->isNot(TrainingStatus::AttendanceOpened)) {
+                $sendAttendanceNotification = true;
             }
         }
         $training->update($data);
+        $training->refresh();
+
+        if ($sendStartedNotification) {
+            Corper::notifyAll(new TrainingStarted($training));
+        }
+
+        if ($sendAttendanceNotification) {
+            Corper::pushNotifyAll(new AttendanceOpened($training));
+        }
+
         return $this->getTraining($training);
     }
 
@@ -54,6 +74,6 @@ class TrainingRepository extends BaseRepository
     {
         $training->delete();
         $training->resources()->delete();
-        // $training->attendance()->delete(); // softDeletes so no need to delete attendance (for reference)
+        $training->attendance()->delete();
     }
 }

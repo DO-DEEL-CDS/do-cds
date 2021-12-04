@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Employment;
+use App\Models\Announcement;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class JobPolicy
+class AnnouncementPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class JobPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  User  $user
-     * @param  Employment  $job
+     * @param  Announcement  $announcement
      * @return Response|bool
      */
-    public function view(User $user, Employment $job)
+    public function view(User $user, Announcement $announcement)
     {
-        //
+        return true;
     }
 
     /**
@@ -42,54 +42,54 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('admin');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  User  $user
-     * @param  Employment  $job
+     * @param  Announcement  $announcement
      * @return Response|bool
      */
-    public function update(User $user, Employment $job)
+    public function update(User $user, Announcement $announcement)
     {
-        //
+        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  User  $user
-     * @param  Employment  $job
+     * @param  Announcement  $announcement
      * @return Response|bool
      */
-    public function delete(User $user, Employment $job)
+    public function delete(User $user, Announcement $announcement)
     {
-        //
+        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  User  $user
-     * @param  Employment  $job
+     * @param  Announcement  $announcement
      * @return Response|bool
      */
-    public function restore(User $user, Employment $job)
+    public function restore(User $user, Announcement $announcement)
     {
-        //
+        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  User  $user
-     * @param  Employment  $job
+     * @param  Announcement  $announcement
      * @return Response|bool
      */
-    public function forceDelete(User $user, Employment $job)
+    public function forceDelete(User $user, Announcement $announcement)
     {
-        //
+        return $user->hasRole('super-admin');
     }
 }

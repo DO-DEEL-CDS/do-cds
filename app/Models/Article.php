@@ -21,7 +21,8 @@ class Article extends Model
         'content',
         'category_id',
         'state_code',
-        'status'
+        'status',
+        'is_featured'
     ];
 
     protected $hidden = [
@@ -33,11 +34,12 @@ class Article extends Model
 
     protected $with = [
         'author:id,name',
-        'category:id,title'
+        'category:id,title',
     ];
 
     protected $casts = [
-        'status' => ArticleStatus::class
+        'status' => ArticleStatus::class,
+        'is_featured' => 'boolean'
     ];
 
     protected $appends = [
@@ -63,6 +65,10 @@ class Article extends Model
 
     public function scopeSearch($query, array $search): void
     {
+        if (isset($search['featured'])) {
+            $query->where('is_featured', true);
+        }
+
         if (!empty($search['category'])) {
             $query->where('category_id', $search['category']);
         }

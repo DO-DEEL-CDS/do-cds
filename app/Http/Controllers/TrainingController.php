@@ -15,6 +15,7 @@ class TrainingController extends Controller
 
     public function __construct(TrainingRepository $trainingRepository)
     {
+        $this->authorizeResource(Training::class);
         $this->trainingRepository = $trainingRepository;
     }
 
@@ -23,12 +24,6 @@ class TrainingController extends Controller
         $trainings = $this->trainingRepository->getTrainings($request->all());
         return $this->success($trainings);
     }
-
-/*    public function userTrainings(User $user): JsonResponse
-    {
-        $trainings = $this->trainingRepository->getTrainingsWithAttendanceStatus($user);
-        return $this->success($trainings);
-    }*/
 
     public function store(CreateTrainingRequest $request): JsonResponse
     {

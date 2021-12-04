@@ -22,7 +22,12 @@ class Employer extends Model
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
+//        'logo',
+    ];
+
+    protected $appends = [
+        'logo_url',
     ];
 
     public $uploadable = [
@@ -32,5 +37,10 @@ class Employer extends Model
     public function employments(): HasMany
     {
         return $this->hasMany(Employment::class);
+    }
+
+    public function getLogoURLAttribute()
+    {
+        return $this->logo !== null ? url($this->logo) : '';
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Enums\GMBStatus;
+use App\Enums\UserStatus;
 use App\Models\User;
 use DB;
 use Exception;
@@ -132,14 +133,24 @@ class UserRepository extends BaseRepository
 
     public function updateUser(User $user, ValidatedInput $data): User
     {
-        $user->update($data->all());
+        $oldPhoto = $user->profile->photo;
 
-        $user->profile()->update($data->only('photo', 'deployed_state', 'nysc_call_up_number', 'nysc_state_code', 'phone_number'));
+        $user->update($data->all());
+        $user->profile->update($data->only('photo', 'deployed_state', 'nysc_call_up_number', 'nysc_state_code', 'phone_number'));
         $user->refresh();
+        if ($user->status->isNot(UserStatus::Active)) {
+            $user->tokens()->delete();
+            auth()->logout();
+        }
+
+        if ($oldPhoto !== null && $user->profile->photo !== $oldPhoto) {
+            \Storage::delete($oldPhoto);
+        }
+
         return $this->getUserData($user);
     }
 
-    public function getUsers(array $search)
+    public function getUsers(array $search): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return User::query()
             ->with('profile')
@@ -161,14 +172,57 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function getFUllUserProfile(User $user): User
+    {
+        $user->load([
+            'permissions',
+            'roles',
+            'profile',
+            'unreadNotifications',
+            'businesses',
+            'attendance',
+        ]);
+        $user->loadCount([
+            'attendance',
+            'businesses' => function ($q) {
+                $q->where('status', GMBStatus::approved);
+            },
+        ]);
+        $user->gmb_project_status = $this->getUserGmbProgress($user);
+
+        return $user;
+    }
+
     public function getUserGmbProgress(User $user, int $max = 10): array
     {
-        $userBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
+        $userBusinessCount = $user->businesses()->where('gmb_submissions.status')->count();
+        $userApprovedBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
         return [
-            'onboarded' => $userBusinessCount,
+            'submitted' => $userBusinessCount,
+            'approved' => $userApprovedBusinessCount,
             'recommended_max' => $max,
-            'percentage' => $max <= 0 ? 0 : round($userBusinessCount / $max)
+            'percentage' => $max > 0 ? round(($userApprovedBusinessCount / $max) * 100) : 0,
         ];
     }
 
+    public function getNotifications(User $user, array $data): \Illuminate\Contracts\Pagination\Paginator
+    {
+        switch ($data['status'] ?? '') {
+            case 'read':
+                $notifications = $user->readNotifications();
+                break;
+            case 'unread':
+                $notifications = $user->unreadNotifications();
+                break;
+            default:
+                $notifications = $user->notifications();
+        }
+
+        return $notifications->simplePaginate(50);
+    }
+
+    public function markNotificationsRead(User $user): int
+    {
+        return $user->unreadNotifications()->update(['read_at' => now()]);
+    }
 }

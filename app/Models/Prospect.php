@@ -47,7 +47,7 @@ class Prospect extends Model
         }
 
         if (!empty($search['status'])) {
-            $status = ProspectStatus::fromValue($search['status']);
+            $status = ProspectStatus::fromValue((int) $search['status']);
             $builder->where('status', $status);
         }
 

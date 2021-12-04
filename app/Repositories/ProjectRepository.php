@@ -8,6 +8,8 @@ use App\Enums\ProjectStatus;
 use App\Models\GmbSubmission;
 use App\Models\Project;
 use App\Models\ProjectMember;
+use App\Notifications\BusinessUpdated;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectRepository extends BaseRepository
@@ -17,9 +19,10 @@ class ProjectRepository extends BaseRepository
         parent::__construct(new Project());
     }
 
-    public function getProjects(array $search): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function getProjects(array $search): LengthAwarePaginator
     {
-        return Project::query()->active()->paginate($search['per_page'] ?? 15, ['id', 'title', 'type', 'status', 'created_at', 'updated_at']);
+        return Project::query()->active()->paginate($search['per_page'] ?? 15,
+            ['id', 'title', 'overview', 'type', 'status', 'created_at', 'updated_at']);
     }
 
     public function submitBusiness(Project $project, array $data): GmbSubmission
@@ -63,5 +66,24 @@ class ProjectRepository extends BaseRepository
     public function deleteMember(ProjectMember $projectMember): ?bool
     {
         return $projectMember->delete();
+    }
+
+    public function updateBusiness(GmbSubmission $business, array $data): GmbSubmission
+    {
+        $notify = isset($data['status']) && $data['status'] !== $business->status->key;
+
+        $business->update($data);
+        $business->refresh();
+
+        if ($notify) {
+            $business->corper->notify(new BusinessUpdated($business));
+        }
+
+        return $business;
+    }
+
+    public function getAllBusinesses(array $search): LengthAwarePaginator
+    {
+        return GmbSubmission::query()->search($search)->paginate($search['per_page'] ?? 15);
     }
 }

@@ -19,7 +19,7 @@ class ProspectPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermissionTo('manage-prospects');
     }
 
     /**
@@ -31,7 +31,7 @@ class ProspectPolicy
      */
     public function view(User $user, Prospect $prospect)
     {
-        //
+        return $user->hasPermissionTo('manage-prospects');
     }
 
     /**
@@ -40,9 +40,9 @@ class ProspectPolicy
      * @param  User  $user
      * @return Response|bool
      */
-    public function create(User $user)
+    public function create(?User $user)
     {
-        //
+        return optional($user)->hasPermissionTo('manage-prospects') || auth()->guest();
     }
 
     /**
@@ -54,7 +54,7 @@ class ProspectPolicy
      */
     public function update(User $user, Prospect $prospect)
     {
-        //
+        return $user->hasPermissionTo('manage-prospects');
     }
 
     /**
@@ -66,7 +66,7 @@ class ProspectPolicy
      */
     public function delete(User $user, Prospect $prospect)
     {
-        //
+        return $user->hasPermissionTo('manage-prospects');
     }
 
     /**
@@ -78,7 +78,7 @@ class ProspectPolicy
      */
     public function restore(User $user, Prospect $prospect)
     {
-        //
+        return $user->hasPermissionTo('manage-prospects');
     }
 
     /**
@@ -90,6 +90,6 @@ class ProspectPolicy
      */
     public function forceDelete(User $user, Prospect $prospect)
     {
-        //
+        return $user->hasRole('super-admin');
     }
 }

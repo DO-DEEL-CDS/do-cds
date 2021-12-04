@@ -24,11 +24,12 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => ['sometimes', 'image', 'max:10000'],
+            'image' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
             'title' => ['required', 'string', 'min:3'],
             'content' => ['sometimes', 'string'],
             'category_id' => ['sometimes', 'exists:categories,id'],
             'state_code' => ['sometimes', 'exists:states,state_code'],
+            'is_featured' => ['sometimes', 'boolean'],
         ];
     }
 }

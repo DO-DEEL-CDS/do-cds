@@ -16,6 +16,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $admin = Role::findByName('admin');
+        User::factory(1)
+            ->state([
+                'email' => 'admin@example.com',
+                'password' => Hash::make('password123')
+            ])
+            ->hasAttached($admin)
+            ->hasProfile()
+            ->create();
+
         $corperRole = Role::findByName('corper');
         User::factory(1)
             ->state([
@@ -27,20 +37,10 @@ class UserSeeder extends Seeder
             ->create();
 
         if (!app()->environment('production')) {
-            User::factory(50)
+            User::factory(5)
                 ->hasAttached($corperRole)
                 ->hasProfile()
                 ->create();
         }
-
-        $admin = Role::findByName('admin');
-        User::factory(1)
-            ->state([
-                'email' => 'admin@example.com',
-                'password' => Hash::make('password123')
-            ])
-            ->hasAttached($admin)
-            ->hasProfile()
-            ->create();
     }
 }

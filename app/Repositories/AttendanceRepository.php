@@ -7,6 +7,7 @@ use App\Models\Training;
 use App\Models\TrainingAttendance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class AttendanceRepository extends BaseRepository
 {
@@ -21,15 +22,26 @@ class AttendanceRepository extends BaseRepository
 
     public function recordAttendance(Training $training, User $user): Model
     {
-        abort_unless(
-            ($training->status->isNot(TrainingStatus::Closed) && $training->attendance_time->isPast()) ||
-            $user->hasPermissionTo('manage-attendance'),
-            400,
-            'Training attendance is not Open'
-        );
+        abort_if($training->status->is(TrainingStatus::Closed), Response::HTTP_BAD_REQUEST, 'The training attendance has been closed');
+
+        abort_if($training->status->is(TrainingStatus::Approved), Response::HTTP_BAD_REQUEST, 'The training is yet to start');
+
+        abort_unless($this->canTakeAttendance($training), Response::HTTP_BAD_REQUEST, 'Attendance is not Open');
 
         return $training->attendance()->updateOrCreate([
             'user_id' => $user->id
         ]);
+    }
+
+    public function canTakeAttendance(Training $training): bool
+    {
+        return $training->status->is(TrainingStatus::AttendanceOpened()) ||
+            ($training->attendance_time->isPast() && $training->status->in([TrainingStatus::Started(), TrainingStatus::AttendanceOpened()]));
+    }
+
+    public function getUsersAttendance(User $user)
+    {
+        $user->load('attendance');
+        return $user->attendance;
     }
 }

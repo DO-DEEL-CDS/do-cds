@@ -37,10 +37,10 @@ jobs:
             git add .
             git stash
             git checkout master
-            git pull origin master
             php artisan down
+            git pull origin master
             composer install
-            php artisan migrate:fresh --seed
+            php artisan migrate
             php artisan up
             echo "End"
 
