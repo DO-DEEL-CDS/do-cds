@@ -130,6 +130,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Employment[] $employments
      * @property-read int|null $employments_count
+     * @property-read mixed $logo_u_r_l
      * @method static \Database\Factories\EmployerFactory factory(...$parameters)
      * @method static \Illuminate\Database\Eloquent\Builder|Employer newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Employer newQuery()
@@ -352,6 +353,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property string|null $deleted_at
+     * @property-read mixed $photo_url
      * @property-read \App\Models\State $state
      * @property-read \App\Models\User $user
      * @method static \Database\Factories\ProfileFactory factory(...$parameters)
