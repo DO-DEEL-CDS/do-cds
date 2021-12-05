@@ -74,7 +74,7 @@ class AuthService extends BaseService
         Auth::login($user);
         $user->deletePasswordResetCode();
         $user->notify(new PasswordChanged());
-        return $this->userRepository->getCurrentUser($data['device_id']);
+        return $this->userRepository->getCurrentUser($data['device_id'] ?? false);
     }
 
     public function getUserFromSecret(string $secret): User
