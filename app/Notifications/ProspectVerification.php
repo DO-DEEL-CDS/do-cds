@@ -47,7 +47,7 @@ class ProspectVerification extends Notification
         return (new MailMessage)
                 ->subject('Email Verification')
                 ->line('Kindly use the code below to verify Your Email Address')
-                ->line("**{$this->code}**")
+                ->line("**$this->code**")
                 ->line('Thank you for choosing Do-DEEL CDS!');
     }
 

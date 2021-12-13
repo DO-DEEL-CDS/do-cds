@@ -38,7 +38,6 @@ trait HasParentModel
      * Get the class name for Parent Class.
      *
      * @return string
-     * @throws ReflectionException
      */
     protected function getParentClass(): string
     {

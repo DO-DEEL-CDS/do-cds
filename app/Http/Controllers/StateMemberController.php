@@ -22,6 +22,7 @@ class StateMemberController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Request  $request
      * @param  State  $state
      * @return JsonResponse
      */

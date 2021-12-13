@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -81,6 +82,9 @@ class User extends Authenticatable
         return $this->hasMany(Training::class, 'created_by', 'id');
     }
 
+    /**
+     * @throws Exception
+     */
     public function getPasswordResetCode()
     {
         $expires = config('auth.passwords.users.expire');

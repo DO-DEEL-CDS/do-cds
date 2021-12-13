@@ -6,6 +6,7 @@ use App\Models\Training;
 use App\Models\TrainingAttendance;
 use App\Repositories\AttendanceRepository;
 use App\Services\ImportService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,7 +24,9 @@ class TrainingAttendanceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
+     * @param  Training  $training
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(Request $request, Training $training): JsonResponse
     {

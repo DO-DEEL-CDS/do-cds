@@ -27,7 +27,6 @@ class UserRepository extends BaseRepository
     /**
      * Instantiate repository
      *
-     * @param  User  $model
      */
     public function __construct()
     {

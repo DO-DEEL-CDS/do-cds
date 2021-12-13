@@ -30,7 +30,7 @@ final class Batch extends Enum
         $selectArray = [];
 
         foreach ($array as $key => $value) {
-            $selectArray[$value] = ucwords(static::getFriendlyKeyName($value));
+            $selectArray[$value] = ucwords(self::getFriendlyKeyName($value));
         }
 
         return $selectArray;

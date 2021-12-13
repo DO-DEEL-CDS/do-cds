@@ -43,8 +43,8 @@ trait HasChildren
         }
 
         foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $trace) {
-            $class = isset($trace['class']) ? $trace['class'] : null;
-            $function = isset($trace['function']) ? $trace['function'] : '';
+            $class = $trace['class'] ?? null;
+            $function = $trace['function'] ?? '';
 
             if ($class === self::class && isset(self::$parentBootMethods[$function])) {
                 return true;
@@ -119,7 +119,7 @@ trait HasChildren
                 $attributes[$this->getInheritanceColumn()]
         );
 
-        return new $className((array) $attributes);
+        return new $className($attributes);
     }
 
     /**

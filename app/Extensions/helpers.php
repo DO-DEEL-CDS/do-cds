@@ -29,7 +29,7 @@ function gravatarUrl($email, $size): string
     //$gravatarURL = "https://www.gravatar.com/avatar/" . $email."?s=".$size."&d=mm";
     $defaultImage = urlencode('https://raw.githubusercontent.com/BadChoice/handesk/master/public/images/default-avatar.png');
 
-    return 'https://www.gravatar.com/avatar/' . $email . '?s=' . $size . "&default={$defaultImage}";
+    return 'https://www.gravatar.com/avatar/' . $email . '?s=' . $size . "&default=$defaultImage";
 }
 
 
@@ -58,8 +58,9 @@ if (!function_exists('unique_api_token')) {
 if (!function_exists('generate_code')) {
     /**
      * Generate unique code
-     * @param  string  $prefix
      * @param  Model  $model
+     * @param  string  $prefix
+     * @param  string  $column
      * @return mixed|string
      * @throws Exception
      */

@@ -31,6 +31,6 @@ class ResourceEntityExist implements Rule
 
     public function message(): string
     {
-        return "The selected  {$this->entityType} does not exist";
+        return "The selected  $this->entityType does not exist";
     }
 }

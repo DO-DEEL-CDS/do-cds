@@ -6,7 +6,6 @@ use App\Enums\ArticleStatus;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class ArticlePolicy
 {
@@ -16,7 +15,7 @@ class ArticlePolicy
      * Determine whether the user can view any models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return void
      */
     public function viewAny(User $user)
     {
@@ -28,7 +27,7 @@ class ArticlePolicy
      *
      * @param  User  $user
      * @param  Article  $article
-     * @return Response|bool
+     * @return bool
      */
     public function view(User $user, Article $article)
     {
@@ -50,7 +49,7 @@ class ArticlePolicy
      * Determine whether the user can create models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return bool
      */
     public function create(User $user)
     {
@@ -62,7 +61,7 @@ class ArticlePolicy
      *
      * @param  User  $user
      * @param  Article  $article
-     * @return Response|bool
+     * @return bool
      */
     public function update(User $user, Article $article)
     {
@@ -74,7 +73,7 @@ class ArticlePolicy
      *
      * @param  User  $user
      * @param  Article  $article
-     * @return Response|bool
+     * @return bool
      */
     public function delete(User $user, Article $article)
     {
@@ -86,7 +85,7 @@ class ArticlePolicy
      *
      * @param  User  $user
      * @param  Article  $article
-     * @return Response|bool
+     * @return bool
      */
     public function restore(User $user, Article $article)
     {
@@ -98,7 +97,7 @@ class ArticlePolicy
      *
      * @param  User  $user
      * @param  Article  $article
-     * @return Response|bool
+     * @return bool
      */
     public function forceDelete(User $user, Article $article)
     {
