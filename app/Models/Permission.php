@@ -10,9 +10,9 @@ class Permission extends BasePermission
     use HasFactory;
 
     protected $hidden = [
-        'pivot',
-        'guard_name',
-        'created_at',
-        'updated_at',
+            'pivot',
+            'guard_name',
+            'created_at',
+            'updated_at',
     ];
 }

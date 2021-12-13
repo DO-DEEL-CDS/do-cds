@@ -12,11 +12,11 @@ class Page extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'title',
-        'content'
+            'title',
+            'content'
     ];
 
     protected $hidden = [
-        'updated_at'
+            'updated_at'
     ];
 }

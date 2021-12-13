@@ -22,14 +22,14 @@ class ArticleRepository extends BaseRepository
 
         if (auth()->check() && auth()->user()->hasRole('corper')) {
             $q->where('state_code', auth()->user()->profile->state_code)
-                ->orWhereNull('state_code');
+                    ->orWhereNull('state_code');
         }
 
         return $q->search($search)
-            ->published()
-            ->with('author')
-            ->latest()
-            ->paginate($search['per_page'] ?? 15);
+                ->published()
+                ->with('author')
+                ->latest()
+                ->paginate($search['per_page'] ?? 15);
     }
 
     public function createArticle(array $data): Article

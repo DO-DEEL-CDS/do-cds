@@ -14,24 +14,24 @@ class Employer extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'name',
-        'logo',
-        'email',
-        'location'
+            'name',
+            'logo',
+            'email',
+            'location'
     ];
 
     protected $hidden = [
-        'created_at',
-        'updated_at',
+            'created_at',
+            'updated_at',
 //        'logo',
     ];
 
     protected $appends = [
-        'logo_url',
+            'logo_url',
     ];
 
     public $uploadable = [
-        'logo'
+            'logo'
     ];
 
     public function employments(): HasMany

@@ -27,16 +27,16 @@ class UpdateProjectMemberRequest extends FormRequest
     public function rules()
     {
         return [
-            'year' => ['sometimes', 'date_format:Y'],
-            'batch' => ['sometimes', new EnumValue(Batch::class)],
-            'name' => ['sometimes', 'string'],
-            'email' => ['sometimes', 'email'],
-            'position' => ['sometimes', 'string'],
-            'facebook_link' => ['sometimes', 'active_url'],
-            'state_code' => ['sometimes', 'exists:states'],
-            'phone_number' => ['sometimes', 'max:16'],
-            'instagram' => ['sometimes', 'string'],
-            'type' => ['sometimes', new EnumValue(ProjectMemberType::class)],
+                'year' => ['sometimes', 'date_format:Y'],
+                'batch' => ['sometimes', new EnumValue(Batch::class)],
+                'name' => ['sometimes', 'string'],
+                'email' => ['sometimes', 'email'],
+                'position' => ['sometimes', 'string'],
+                'facebook_link' => ['sometimes', 'active_url'],
+                'state_code' => ['sometimes', 'exists:states'],
+                'phone_number' => ['sometimes', 'max:16'],
+                'instagram' => ['sometimes', 'string'],
+                'type' => ['sometimes', new EnumValue(ProjectMemberType::class)],
         ];
     }
 }

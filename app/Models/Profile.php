@@ -16,23 +16,23 @@ class Profile extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'photo',
-        'phone_number',
-        'nysc_call_up_number',
-        'nysc_state_code',
-        'state_code',
-        'deployed_state'
+            'photo',
+            'phone_number',
+            'nysc_call_up_number',
+            'nysc_state_code',
+            'state_code',
+            'deployed_state'
     ];
 
     protected $hidden = [
-        'created_at',
-        'deleted_at',
-        'state_code',
-        'user_id',
+            'created_at',
+            'deleted_at',
+            'state_code',
+            'user_id',
     ];
 
     protected $appends = [
-        'photo_url'
+            'photo_url'
     ];
 
     public function user(): BelongsTo

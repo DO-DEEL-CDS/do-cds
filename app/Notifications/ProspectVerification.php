@@ -45,10 +45,10 @@ class ProspectVerification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Email Verification')
-            ->line('Kindly use the code below to verify Your Email Address')
-            ->line("**{$this->code}**")
-            ->line('Thank you for choosing Do-DEEL CDS!');
+                ->subject('Email Verification')
+                ->line('Kindly use the code below to verify Your Email Address')
+                ->line("**{$this->code}**")
+                ->line('Thank you for choosing Do-DEEL CDS!');
     }
 
     /**

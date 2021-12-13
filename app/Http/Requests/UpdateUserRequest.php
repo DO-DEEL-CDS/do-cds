@@ -29,22 +29,22 @@ class UpdateUserRequest extends FormRequest
     {
         $userId = $this->route()->parameter('user')->id;
         return [
-            'name' => ['sometimes', 'string', 'min:3'],
-            'email' => ['sometimes', 'email:dns', Rule::unique('users')->ignore($userId)],
-            'phone_number' => ['sometimes', 'string', 'max:15'],
-            'deployed_state' => ['sometimes', 'exists:states,state_code'],
-            'nysc_call_up_number' => ['sometimes', 'string', Rule::unique('profiles')->ignore($userId, 'user_id')],
-            'nysc_state_code' => ['sometimes', new NyscStateCode(), Rule::unique('profiles')->ignore($userId, 'user_id')],
-            'device_id' => ['sometimes', 'uuid'],
-            'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
-            'status' => ['sometimes', new EnumValue(UserStatus::class)]
+                'name' => ['sometimes', 'string', 'min:3'],
+                'email' => ['sometimes', 'email:dns', Rule::unique('users')->ignore($userId)],
+                'phone_number' => ['sometimes', 'string', 'max:15'],
+                'deployed_state' => ['sometimes', 'exists:states,state_code'],
+                'nysc_call_up_number' => ['sometimes', 'string', Rule::unique('profiles')->ignore($userId, 'user_id')],
+                'nysc_state_code' => ['sometimes', new NyscStateCode(), Rule::unique('profiles')->ignore($userId, 'user_id')],
+                'device_id' => ['sometimes', 'uuid'],
+                'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
+                'status' => ['sometimes', new EnumValue(UserStatus::class)]
         ];
     }
 
     public function messages(): array
     {
         return [
-            'phone_number.string' => 'Kindly provide a valid phone number'
+                'phone_number.string' => 'Kindly provide a valid phone number'
         ];
     }
 }

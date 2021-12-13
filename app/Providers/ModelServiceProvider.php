@@ -23,11 +23,11 @@ class ModelServiceProvider extends ServiceProvider
         Relation::requireMorphMap();
 
         Relation::morphMap([
-            'training' => Training::class,
-            'project' => Project::class,
-            'user' => User::class,
-            'prospect' => Prospect::class,
-            'permission' => Permission::class
+                'training' => Training::class,
+                'project' => Project::class,
+                'user' => User::class,
+                'prospect' => Prospect::class,
+                'permission' => Permission::class
         ]);
     }
 }

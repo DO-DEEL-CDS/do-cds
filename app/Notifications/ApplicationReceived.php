@@ -40,11 +40,11 @@ class ApplicationReceived extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Application Received')
-            ->success()
-            ->line('Thank you for indicating interest in the Digital On-boarders CDS group.')
-            ->line('We would review the request and revert to you soonest, In the mean time kindly get intouch with your states CDS officer for more information.')
-            ->line('Thank you for showing interest.');
+                ->subject('Application Received')
+                ->success()
+                ->line('Thank you for indicating interest in the Digital On-boarders CDS group.')
+                ->line('We would review the request and revert to you soonest, In the mean time kindly get intouch with your states CDS officer for more information.')
+                ->line('Thank you for showing interest.');
     }
 
     /**

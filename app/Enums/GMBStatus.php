@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static pending()
@@ -17,6 +18,6 @@ final class GMBStatus extends Enum
 
     public function toArray(): string
     {
-        return \Str::snake($this->description);
+        return Str::snake($this->description);
     }
 }

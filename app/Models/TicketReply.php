@@ -14,8 +14,8 @@ class TicketReply extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'reply',
-        'user_id'
+            'reply',
+            'user_id'
     ];
 
     public function user(): BelongsTo

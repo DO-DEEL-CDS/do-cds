@@ -25,13 +25,13 @@ class GmbSubmissionFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => Corper::query()->inRandomOrder()->first()->id,
-            'business_name' => $this->faker->company,
-            'business_owner' => $this->faker->name,
-            'business_email' => $this->faker->companyEmail,
-            'owner_gender' => $this->faker->randomElement(['male', 'female', 'other']),
-            'status' => GMBStatus::getRandomInstance(),
-            'approved_by' => Admin::first()->id,
+                'user_id' => Corper::query()->inRandomOrder()->first()->id,
+                'business_name' => $this->faker->company,
+                'business_owner' => $this->faker->name,
+                'business_email' => $this->faker->companyEmail,
+                'owner_gender' => $this->faker->randomElement(['male', 'female', 'other']),
+                'status' => GMBStatus::getRandomInstance(),
+                'approved_by' => Admin::first()->id,
         ];
     }
 }

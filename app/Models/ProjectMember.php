@@ -13,22 +13,22 @@ class ProjectMember extends Model
     use HasFactory;
 
     protected $fillable = [
-        'year',
-        'batch',
-        'name',
-        'email',
-        'position',
-        'facebook_link',
-        'state_code',
-        'phone_number',
-        'instagram',
-        'type'
+            'year',
+            'batch',
+            'name',
+            'email',
+            'position',
+            'facebook_link',
+            'state_code',
+            'phone_number',
+            'instagram',
+            'type'
     ];
 
     protected $casts = [
-        'batch' => Batch::class,
-        'type' => ProjectMemberType::class,
-        'year' => 'date:Y',
+            'batch' => Batch::class,
+            'type' => ProjectMemberType::class,
+            'year' => 'date:Y',
     ];
 
     public function project(): BelongsTo

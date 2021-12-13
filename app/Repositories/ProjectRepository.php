@@ -22,13 +22,13 @@ class ProjectRepository extends BaseRepository
     public function getProjects(array $search): LengthAwarePaginator
     {
         return Project::query()->active()->paginate($search['per_page'] ?? 15,
-            ['id', 'title', 'overview', 'type', 'status', 'created_at', 'updated_at']);
+                ['id', 'title', 'overview', 'type', 'status', 'created_at', 'updated_at']);
     }
 
     public function submitBusiness(Project $project, array $data): GmbSubmission
     {
         return $project->businesses()->create(array_merge($data, [
-            'status' => GMBStatus::pending()
+                'status' => GMBStatus::pending()
         ]));
     }
 
@@ -45,7 +45,7 @@ class ProjectRepository extends BaseRepository
     public function getProjectData(Project $project): Project
     {
         return $project
-            ->load(['excos', 'resources']);
+                ->load(['excos', 'resources']);
     }
 
     public function addMember(Project $project, array $data): Model

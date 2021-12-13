@@ -27,16 +27,16 @@ class CreateProjectMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'year' => ['required', 'date_format:Y'],
-            'batch' => ['required', new EnumValue(Batch::class)],
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'position' => ['required', 'string'],
-            'facebook_link' => ['required', 'active_url'],
-            'state_code' => ['required', 'exists:states'],
-            'phone_number' => ['required', 'max:16'],
-            'instagram' => ['required', 'string'],
-            'type' => ['required', new EnumValue(ProjectMemberType::class)],
+                'year' => ['required', 'date_format:Y'],
+                'batch' => ['required', new EnumValue(Batch::class)],
+                'name' => ['required', 'string'],
+                'email' => ['required', 'email'],
+                'position' => ['required', 'string'],
+                'facebook_link' => ['required', 'active_url'],
+                'state_code' => ['required', 'exists:states'],
+                'phone_number' => ['required', 'max:16'],
+                'instagram' => ['required', 'string'],
+                'type' => ['required', new EnumValue(ProjectMemberType::class)],
         ];
     }
 }

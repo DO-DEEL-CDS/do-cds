@@ -24,19 +24,19 @@ class CreateEmploymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:191'],
-            'description' => ['required', 'string'],
-            'role' => ['required', 'string', 'max:191'],
-            'closing_date' => ['required', 'date'],
-            'location' => ['sometimes', 'string', 'max:191'],
-            'apply_link' => ['required', 'active_url', 'max:191'],
-            'rate' => ['required', 'string', 'max:191'],
-            'perks' => ['sometimes', 'array'],
-            'perks.*' => ['string', 'max:191'],
-            'employer_name' => ['required', 'string', 'max:191'],
-            'employer_location' => ['sometimes', 'string', 'max:191'],
-            'employer_logo' => ['file', 'mimes:jpg,jpeg,png', 'max:50000'],
-            'employer_email' => ['sometimes', 'email', 'max:191'],
+                'title' => ['required', 'string', 'max:191'],
+                'description' => ['required', 'string'],
+                'role' => ['required', 'string', 'max:191'],
+                'closing_date' => ['required', 'date'],
+                'location' => ['sometimes', 'string', 'max:191'],
+                'apply_link' => ['required', 'active_url', 'max:191'],
+                'rate' => ['required', 'string', 'max:191'],
+                'perks' => ['sometimes', 'array'],
+                'perks.*' => ['string', 'max:191'],
+                'employer_name' => ['required', 'string', 'max:191'],
+                'employer_location' => ['sometimes', 'string', 'max:191'],
+                'employer_logo' => ['file', 'mimes:jpg,jpeg,png', 'max:50000'],
+                'employer_email' => ['sometimes', 'email', 'max:191'],
         ];
     }
 }

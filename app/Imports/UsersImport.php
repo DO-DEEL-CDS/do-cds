@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Row;
+use Str;
 
 class UsersImport implements OnEachRow, WithValidation, WithHeadingRow, WithChunkReading, WithEvents, SkipsOnFailure
 {
@@ -35,10 +36,10 @@ class UsersImport implements OnEachRow, WithValidation, WithHeadingRow, WithChun
     public function onRow(Row $row): void
     {
         $data = array_merge($row->toArray(), [
-            'state_code' => $this->stateCode,
+                'state_code' => $this->stateCode,
         ]);
         $data['phone_number'] = str_replace($data['phone_number'], '\s', '');
-        $data['password'] = \Str::random(8);
+        $data['password'] = Str::random(8);
 
         $user = $this->userRepository->addUser($data);
         $user->markEmailAsVerified();
@@ -53,12 +54,12 @@ class UsersImport implements OnEachRow, WithValidation, WithHeadingRow, WithChun
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:191'],
-            'phone_number' => ['required', 'max:16'],
-            'email' => ['sometimes', 'email:dns', 'unique:users,email', 'max:191'],
-            'nysc_call_up_number' => ['required', 'string', 'max:20', 'unique:profiles'],
-            'nysc_state_code' => ['required', new NyscStateCode(), 'unique:profiles', 'max:191'],
-            'photo' => ['sometimes', 'active_url', 'max:191'],
+                'name' => ['required', 'string', 'max:191'],
+                'phone_number' => ['required', 'max:16'],
+                'email' => ['sometimes', 'email:dns', 'unique:users,email', 'max:191'],
+                'nysc_call_up_number' => ['required', 'string', 'max:20', 'unique:profiles'],
+                'nysc_state_code' => ['required', new NyscStateCode(), 'unique:profiles', 'max:191'],
+                'photo' => ['sometimes', 'active_url', 'max:191'],
         ];
     }
 
@@ -73,9 +74,9 @@ class UsersImport implements OnEachRow, WithValidation, WithHeadingRow, WithChun
 //            ImportFailed::class => function (ImportFailed $event) {
 //                Admin::notifyAll(new ImportHasFailedNotification($event, 'Users'));
 //            },
-            AfterImport::class => function (AfterImport $event) {
-                Admin::notifyAll(new ImportSuccessNotification($event, 'Users'));
-            },
+                AfterImport::class => function (AfterImport $event) {
+                    Admin::notifyAll(new ImportSuccessNotification($event, 'Users'));
+                },
         ];
     }
 }

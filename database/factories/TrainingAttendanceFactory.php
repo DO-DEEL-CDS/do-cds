@@ -24,8 +24,8 @@ class TrainingAttendanceFactory extends Factory
     public function definition(): array
     {
         return [
-            'training_id' => Training::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id
+                'training_id' => Training::inRandomOrder()->first()->id,
+                'user_id' => User::inRandomOrder()->first()->id
         ];
     }
 }

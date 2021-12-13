@@ -16,34 +16,34 @@ class Article extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'image',
-        'title',
-        'content',
-        'category_id',
-        'state_code',
-        'status',
-        'is_featured'
+            'image',
+            'title',
+            'content',
+            'category_id',
+            'state_code',
+            'status',
+            'is_featured'
     ];
 
     protected $hidden = [
-        'updated_at',
-        'state_code',
-        'category_id',
-        'image'
+            'updated_at',
+            'state_code',
+            'category_id',
+            'image'
     ];
 
     protected $with = [
-        'author:id,name',
-        'category:id,title',
+            'author:id,name',
+            'category:id,title',
     ];
 
     protected $casts = [
-        'status' => ArticleStatus::class,
-        'is_featured' => 'boolean'
+            'status' => ArticleStatus::class,
+            'is_featured' => 'boolean'
     ];
 
     protected $appends = [
-        'image_url'
+            'image_url'
     ];
 
     private array $uploadable = ['image'];

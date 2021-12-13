@@ -54,7 +54,7 @@ class AnnouncementPolicy
      */
     public function update(User $user, Announcement $announcement)
     {
-        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
+        return $announcement->author_id === $user->id || $user->hasRole('admin');
     }
 
     /**
@@ -66,7 +66,7 @@ class AnnouncementPolicy
      */
     public function delete(User $user, Announcement $announcement)
     {
-        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
+        return $announcement->author_id === $user->id || $user->hasRole('admin');
     }
 
     /**
@@ -78,7 +78,7 @@ class AnnouncementPolicy
      */
     public function restore(User $user, Announcement $announcement)
     {
-        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
+        return $announcement->author_id === $user->id || $user->hasRole('admin');
     }
 
     /**

@@ -6,6 +6,7 @@ namespace App\Extensions\Traits;
 use App\Extensions\Utils\UploadManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Schema;
 
 /**
  * @property string[] $uploadable attributes that are uploadable
@@ -32,14 +33,14 @@ trait ModelDoesUploads
                     $upload_path = UploadManager::init()->saveFile($file);
                     $model->setAttribute($uploadable_field, $upload_path);
 
-                    if (\Schema::hasColumn($model->getTable(), 'filename')) {
+                    if (Schema::hasColumn($model->getTable(), 'filename')) {
                         $filename = $file->getClientOriginalName();
                         $model->setAttribute('filename', $filename);
                     }
                 } elseif ($model->$uploadable_field instanceof UploadedFile) {
                     $upload_path = UploadManager::init()->saveFile($model->$uploadable_field);
 
-                    if (\Schema::hasColumn($model->getTable(), 'filename')) {
+                    if (Schema::hasColumn($model->getTable(), 'filename')) {
                         $filename = $model->$uploadable_field->getClientOriginalName();
                         $model->setAttribute('filename', $filename);
                     }

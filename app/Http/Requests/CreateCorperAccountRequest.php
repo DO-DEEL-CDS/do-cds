@@ -28,12 +28,12 @@ class CreateCorperAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:191'],
-            'deployed_state' => ['required', 'exists:states,state_code'],
-            'call_up_number' => ['required', 'string', 'max:20'],
-            'password' => $this->passwordRules(),
-            'secret' => new RegistrationSecret(),
-            'device_id' => ['sometimes', 'present', 'uuid'],
+                'name' => ['required', 'string', 'max:191'],
+                'deployed_state' => ['required', 'exists:states,state_code'],
+                'call_up_number' => ['required', 'string', 'max:20'],
+                'password' => $this->passwordRules(),
+                'secret' => new RegistrationSecret(),
+                'device_id' => ['sometimes', 'present', 'uuid'],
         ];
     }
 }

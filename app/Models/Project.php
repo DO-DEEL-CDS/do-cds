@@ -18,26 +18,26 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'status',
-        'overview',
-        'guide',
-        'batch',
-        'year',
-        'type',
+            'title',
+            'status',
+            'overview',
+            'guide',
+            'batch',
+            'year',
+            'type',
     ];
 
     protected $casts = [
-        'type' => ProjectType::class,
-        'status' => ProjectStatus::class,
-        'year' => 'date:Y',
-        'batch' => Batch::class,
+            'type' => ProjectType::class,
+            'status' => ProjectStatus::class,
+            'year' => 'date:Y',
+            'batch' => Batch::class,
     ];
 
     protected $hidden = [
-        'user_id',
-        'batch',
-        'year',
+            'user_id',
+            'batch',
+            'year',
     ];
 
     public function author(): BelongsTo

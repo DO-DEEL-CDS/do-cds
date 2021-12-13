@@ -111,7 +111,7 @@ class ProspectRepository extends BaseRepository
     {
         $status = ProspectStatus::fromValue($data['status']);
         return Prospect::query()->whereIn('id', $data['ids'])->update([
-            'status' => $status
+                'status' => $status
         ]);
     }
 }

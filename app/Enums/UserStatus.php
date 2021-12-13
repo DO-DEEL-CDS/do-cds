@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static Inactive()
@@ -15,6 +16,6 @@ final class UserStatus extends Enum
 
     public function toArray(): string
     {
-        return \Str::snake($this->description);
+        return Str::snake($this->description);
     }
 }

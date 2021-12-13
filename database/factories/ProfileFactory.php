@@ -23,8 +23,8 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'state_code' => State::inRandomOrder()->first()->state_code,
-            'phone_number' => $this->faker->e164PhoneNumber,
+                'state_code' => State::inRandomOrder()->first()->state_code,
+                'phone_number' => $this->faker->e164PhoneNumber,
         ];
     }
 }

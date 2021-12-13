@@ -42,20 +42,20 @@ class ContactNotification extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New Message on DO-DEEL Website')
-            ->line('A new submission has been received. Details Below.')
-            ->line('****')
-            ->line('**Name :** ' . $this->name)
-            ->line('**Email :** ' . $this->email)
-            ->line('**Message :** ')
-            ->line($this->message)
-            ->line('***')
-            ->success();
+                ->subject('New Message on DO-DEEL Website')
+                ->line('A new submission has been received. Details Below.')
+                ->line('****')
+                ->line('**Name :** ' . $this->name)
+                ->line('**Email :** ' . $this->email)
+                ->line('**Message :** ')
+                ->line($this->message)
+                ->line('***')
+                ->success();
     }
 
     /**

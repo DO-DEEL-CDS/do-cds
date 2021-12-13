@@ -23,9 +23,9 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => TicketStatus::getRandomInstance(),
-            'message' => $this->faker->paragraph,
-            'title' => $this->faker->sentence,
+                'status' => TicketStatus::getRandomInstance(),
+                'message' => $this->faker->paragraph,
+                'title' => $this->faker->sentence,
         ];
     }
 }

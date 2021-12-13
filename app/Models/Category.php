@@ -13,13 +13,13 @@ class Category extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'title',
-        'slug'
+            'title',
+            'slug'
     ];
 
     protected $hidden = [
-        'created_at',
-        'updated_at'
+            'created_at',
+            'updated_at'
     ];
 
     public function articles(): BelongsTo

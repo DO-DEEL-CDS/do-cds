@@ -13,31 +13,31 @@ class Employment extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'title',
-        'location',
-        'description',
-        'role',
-        'type',
-        'apply_link',
-        'rate',
-        'perks',
-        'closing_date',
+            'title',
+            'location',
+            'description',
+            'role',
+            'type',
+            'apply_link',
+            'rate',
+            'perks',
+            'closing_date',
     ];
 
     protected $casts = [
-        'perks' => 'array'
+            'perks' => 'array'
     ];
 
     protected $dates = [
-        'closing_date'
+            'closing_date'
     ];
 
     protected $with = [
-        'employer'
+            'employer'
     ];
 
     protected $hidden = [
-        'employer_id'
+            'employer_id'
     ];
 
     public function employer(): BelongsTo

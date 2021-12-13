@@ -14,22 +14,22 @@ class GmbSubmission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'status',
-        'business_email',
-        'business_name',
-        'business_owner',
-        'owner_gender',
-        'reject_reason',
-        'user_id',
-        'project_id',
+            'status',
+            'business_email',
+            'business_name',
+            'business_owner',
+            'owner_gender',
+            'reject_reason',
+            'user_id',
+            'project_id',
     ];
 
     protected $hidden = [
-        'approved_by'
+            'approved_by'
     ];
 
     protected $casts = [
-        'status' => GMBStatus::class
+            'status' => GMBStatus::class
     ];
 
     public function corper(): BelongsTo

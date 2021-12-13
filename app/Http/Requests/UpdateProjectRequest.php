@@ -27,12 +27,12 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['sometimes', 'string', 'min:3'],
-            'status' => ['sometimes', new EnumValue(ProjectStatus::class)],
-            'overview' => ['sometimes', 'string'],
-            'guide' => ['sometimes', 'nullable', 'string'],
-            'batch' => ['sometimes', new EnumValue(Batch::class)],
-            'year' => ['sometimes', 'date_format:Y'],
+                'title' => ['sometimes', 'string', 'min:3'],
+                'status' => ['sometimes', new EnumValue(ProjectStatus::class)],
+                'overview' => ['sometimes', 'string'],
+                'guide' => ['sometimes', 'nullable', 'string'],
+                'batch' => ['sometimes', new EnumValue(Batch::class)],
+                'year' => ['sometimes', 'date_format:Y'],
         ];
     }
 }

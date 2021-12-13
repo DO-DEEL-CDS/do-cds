@@ -25,21 +25,21 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:191'],
-            'phone_number' => ['required', 'string', 'max:16'],
-            'deployed_state' => ['required', 'exists:states,state_code'],
-            'nysc_call_up_number' => ['required', 'string', 'max:20', 'unique:profiles'],
-            'email' => ['bail', 'sometimes', 'email:dns', 'unique:users,email'],
-            'nysc_state_code' => ['bail', 'required', new NyscStateCode(), 'unique:profiles'],
-            'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
-            'device_id' => ['sometimes', 'uuid'],
+                'name' => ['required', 'string', 'max:191'],
+                'phone_number' => ['required', 'string', 'max:16'],
+                'deployed_state' => ['required', 'exists:states,state_code'],
+                'nysc_call_up_number' => ['required', 'string', 'max:20', 'unique:profiles'],
+                'email' => ['bail', 'sometimes', 'email:dns', 'unique:users,email'],
+                'nysc_state_code' => ['bail', 'required', new NyscStateCode(), 'unique:profiles'],
+                'photo' => ['sometimes', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
+                'device_id' => ['sometimes', 'uuid'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'phone_number.string' => 'Kindly provide a valid phone number'
+                'phone_number.string' => 'Kindly provide a valid phone number'
         ];
     }
 }

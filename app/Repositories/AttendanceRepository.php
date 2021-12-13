@@ -29,14 +29,14 @@ class AttendanceRepository extends BaseRepository
         abort_unless($this->canTakeAttendance($training), Response::HTTP_BAD_REQUEST, 'Attendance is not Open');
 
         return $training->attendance()->updateOrCreate([
-            'user_id' => $user->id
+                'user_id' => $user->id
         ]);
     }
 
     public function canTakeAttendance(Training $training): bool
     {
         return $training->status->is(TrainingStatus::AttendanceOpened()) ||
-            ($training->attendance_time->isPast() && $training->status->in([TrainingStatus::Started(), TrainingStatus::AttendanceOpened()]));
+                ($training->attendance_time->isPast() && $training->status->in([TrainingStatus::Started(), TrainingStatus::AttendanceOpened()]));
     }
 
     public function getUsersAttendance(User $user)

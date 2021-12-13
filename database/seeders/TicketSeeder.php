@@ -17,8 +17,8 @@ class TicketSeeder extends Seeder
     public function run()
     {
         Ticket::factory(5)
-            ->for(Corper::inRandomOrder()->first(), 'user')
-            ->for(Admin::first(), 'agent')
-            ->create();
+                ->for(Corper::inRandomOrder()->first(), 'user')
+                ->for(Admin::first(), 'agent')
+                ->create();
     }
 }

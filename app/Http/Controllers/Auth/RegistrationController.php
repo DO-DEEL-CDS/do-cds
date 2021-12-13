@@ -30,7 +30,7 @@ class RegistrationController extends Controller
     public function getStarted(Request $request): JsonResponse
     {
         $validated = $this->validate($request, ['email' => ['required', 'email', 'exists:prospects,email']], [
-            'email.exists' => 'The provided email does not exist in our record. Kindly ensure you already enrolled on the website'
+                'email.exists' => 'The provided email does not exist in our record. Kindly ensure you already enrolled on the website'
         ]);
 
         $prospect = $this->prospectRepository->findByEmail($validated['email']);
@@ -46,11 +46,11 @@ class RegistrationController extends Controller
     public function verifyEmail(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'email' => ['required', 'email', 'exists:prospects,email'],
-            'otp' => [
-                'required', "digits:4",
-                Rule::exists('prospects', 'verify_token')->where('email', $request->input('email'))
-            ]
+                'email' => ['required', 'email', 'exists:prospects,email'],
+                'otp' => [
+                        'required', "digits:4",
+                        Rule::exists('prospects', 'verify_token')->where('email', $request->input('email'))
+                ]
         ]);
 
         abort_if(!$this->prospectRepository->isOTPValid($validated['email']), Response::HTTP_BAD_REQUEST, 'OTP Expired, Request a new one');

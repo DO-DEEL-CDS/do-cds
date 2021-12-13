@@ -29,9 +29,9 @@ class ImportSuccessNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->importType . ' Import Completed')
-            ->line('The Import has Been Completed.')
-            ->line('Total Rows with Errors not imported: ' . $this->failuresCount());
+                ->subject($this->importType . ' Import Completed')
+                ->line('The Import has Been Completed.')
+                ->line('Total Rows with Errors not imported: ' . $this->failuresCount());
     }
 
     public function failuresCount(): int
@@ -51,10 +51,10 @@ class ImportSuccessNotification extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'type' => 'import',
-            'content' => [
-                'feedback' => 'Import Completed',
-            ],
+                'type' => 'import',
+                'content' => [
+                        'feedback' => 'Import Completed',
+                ],
         ];
     }
 }

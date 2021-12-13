@@ -24,10 +24,10 @@ class StoreGmbBusiness extends FormRequest
     public function rules(): array
     {
         return [
-            'business_email' => ['required', 'email:dns'],
-            'business_name' => ['required', 'string', 'min:3', 'unique:gmb_submissions'],
-            'business_owner' => ['required', 'string', 'min:3'],
-            'owner_gender' => ['required', 'string', 'in:,male,female'],
+                'business_email' => ['required', 'email:dns'],
+                'business_name' => ['required', 'string', 'min:3', 'unique:gmb_submissions'],
+                'business_owner' => ['required', 'string', 'min:3'],
+                'owner_gender' => ['required', 'string', 'in:,male,female'],
         ];
     }
 }

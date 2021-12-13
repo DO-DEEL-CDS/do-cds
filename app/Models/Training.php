@@ -16,29 +16,29 @@ class Training extends Model
     use HasFactory, SoftDeletes, ModelDoesUploads;
 
     protected $fillable = [
-        'status',
-        'batch',
-        'title',
-        'overview',
-        'start_time',
-        'attendance_time',
-        'tutor',
-        'live_video',
+            'status',
+            'batch',
+            'title',
+            'overview',
+            'start_time',
+            'attendance_time',
+            'tutor',
+            'live_video',
     ];
 
     protected $casts = [
-        'status' => TrainingStatus::class,
+            'status' => TrainingStatus::class,
     ];
 
     protected $dates = [
-        'start_time',
-        'attendance_time',
+            'start_time',
+            'attendance_time',
     ];
 
     protected $hidden = [
-        'batch',
-        'deleted_at',
-        'created_by',
+            'batch',
+            'deleted_at',
+            'created_by',
     ];
 
     public function attendance(): HasMany

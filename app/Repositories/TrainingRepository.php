@@ -22,8 +22,8 @@ class TrainingRepository extends BaseRepository
     public function getTrainings(array $search): Paginator
     {
         return Training::query()
-            ->search($search)
-            ->paginate();
+                ->search($search)
+                ->paginate();
     }
 
     public function createTraining(array $data): Training

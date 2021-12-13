@@ -9,30 +9,31 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\FileNotFoundException;
+use Log;
 
 class Resource extends Model
 {
     use HasFactory, ModelDoesUploads;
 
     public array $uploadable = [
-        'attachment'
+            'attachment'
     ];
 
     protected $fillable = [
-        'attachment',
-        'filename'
+            'attachment',
+            'filename'
     ];
 
     protected $hidden = [
-        'resourceable_id',
-        'resourceable_type',
-        'updated_at',
-        'attachment',
+            'resourceable_id',
+            'resourceable_type',
+            'updated_at',
+            'attachment',
     ];
 
     protected $appends = [
-        'attachment_url',
-        'size'
+            'attachment_url',
+            'size'
     ];
 
     public function resourceable(): MorphTo
@@ -55,7 +56,7 @@ class Resource extends Model
         try {
             return Storage::size($this->path);
         } catch (FileNotFoundException $exception) {
-            \Log::warning('File_not_found: ' . $exception->getMessage());
+            Log::warning('File_not_found: ' . $exception->getMessage());
             return 0;
         }
     }

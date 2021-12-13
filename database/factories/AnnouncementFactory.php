@@ -23,9 +23,9 @@ class AnnouncementFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => 'Hello World',
-            'content' => 'Must Be Sorted Now',
-            'author_id' => Admin::firstOrFail()->id
+                'title' => 'Hello World',
+                'content' => 'Must Be Sorted Now',
+                'author_id' => Admin::firstOrFail()->id
         ];
     }
 }

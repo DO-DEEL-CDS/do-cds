@@ -6,6 +6,7 @@ use App\Enums\TrainingStatus;
 use App\Models\Training;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
+use LogicException;
 
 class UpdateTrainingRequest extends FormRequest
 {
@@ -29,19 +30,19 @@ class UpdateTrainingRequest extends FormRequest
         /** @var Training $training */
         $training = $this->route('training');
         if ($training === null) {
-            throw new \LogicException('Training not returned from route');
+            throw new LogicException('Training not returned from route');
         }
 
         return [
-            'title' => ['sometimes', 'string', 'min:3'],
-            'overview' => ['sometimes', 'string', 'min:5'],
-            'start_time' => ['sometimes', 'date_format:Y-m-d H:i:s', 'after_or_equal:' . $training->start_time],
-            'attendance_time' => ['sometimes', 'date_format:Y-m-d H:i:s', 'after:start_time'],
-            'tutor' => ['sometimes', 'string'],
-            'live_video' => ['sometimes', 'active_url'],
+                'title' => ['sometimes', 'string', 'min:3'],
+                'overview' => ['sometimes', 'string', 'min:5'],
+                'start_time' => ['sometimes', 'date_format:Y-m-d H:i:s', 'after_or_equal:' . $training->start_time],
+                'attendance_time' => ['sometimes', 'date_format:Y-m-d H:i:s', 'after:start_time'],
+                'tutor' => ['sometimes', 'string'],
+                'live_video' => ['sometimes', 'active_url'],
 //            'resources.' => ['sometimes', 'array'],
 //            'resources.*.attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt', 'max:10000'],
-            'status' => ['sometimes', new EnumValue(TrainingStatus::class, false)],
+                'status' => ['sometimes', new EnumValue(TrainingStatus::class, false)],
         ];
     }
 }

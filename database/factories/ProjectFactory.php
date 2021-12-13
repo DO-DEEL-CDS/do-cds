@@ -26,10 +26,10 @@ class ProjectFactory extends Factory
         return [
 //            'year' => $this->faker->year,
 //            'batch' => Batch::getRandomInstance(),
-            'status' => ProjectStatus::Active(),
-            'guide' => $this->faker->paragraph,
-            'overview' => $this->faker->paragraph,
-            'user_id' => User::firstOrFail()->id,
+                'status' => ProjectStatus::Active(),
+                'guide' => $this->faker->paragraph,
+                'overview' => $this->faker->paragraph,
+                'user_id' => User::firstOrFail()->id,
         ];
     }
 }

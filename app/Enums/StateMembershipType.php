@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static ScheduleOfficer()
@@ -17,6 +18,6 @@ final class StateMembershipType extends Enum
 
     public function toArray(): string
     {
-        return \Str::slug($this->description);
+        return Str::slug($this->description);
     }
 }
