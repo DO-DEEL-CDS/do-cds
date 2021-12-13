@@ -41,14 +41,14 @@ class TrainingStarted extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                ->line('The introduction to the notification.')
+                ->action('Notification Action', url('/'))
+                ->line('Thank you for using our application!');
     }
 
     /**
@@ -60,16 +60,16 @@ class TrainingStarted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'type' => 'training',
-            'content' => $this->training
+                'type' => 'training',
+                'content' => $this->training
         ];
     }
 
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
-            ->setSubject('Training started')
-            ->setBody($this->training->title)
-            ->setData('training', $this->training);
+                ->setSubject('Training started')
+                ->setBody($this->training->title)
+                ->setData('training', $this->training);
     }
 }

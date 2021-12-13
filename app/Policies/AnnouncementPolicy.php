@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\Announcement;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class AnnouncementPolicy
 {
@@ -15,7 +14,7 @@ class AnnouncementPolicy
      * Determine whether the user can view any models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return bool
      */
     public function viewAny(User $user)
     {
@@ -27,7 +26,7 @@ class AnnouncementPolicy
      *
      * @param  User  $user
      * @param  Announcement  $announcement
-     * @return Response|bool
+     * @return bool
      */
     public function view(User $user, Announcement $announcement)
     {
@@ -38,7 +37,7 @@ class AnnouncementPolicy
      * Determine whether the user can create models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return bool
      */
     public function create(User $user)
     {
@@ -50,11 +49,11 @@ class AnnouncementPolicy
      *
      * @param  User  $user
      * @param  Announcement  $announcement
-     * @return Response|bool
+     * @return bool
      */
     public function update(User $user, Announcement $announcement)
     {
-        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
+        return $announcement->author_id === $user->id || $user->hasRole('admin');
     }
 
     /**
@@ -62,11 +61,11 @@ class AnnouncementPolicy
      *
      * @param  User  $user
      * @param  Announcement  $announcement
-     * @return Response|bool
+     * @return bool
      */
     public function delete(User $user, Announcement $announcement)
     {
-        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
+        return $announcement->author_id === $user->id || $user->hasRole('admin');
     }
 
     /**
@@ -74,11 +73,11 @@ class AnnouncementPolicy
      *
      * @param  User  $user
      * @param  Announcement  $announcement
-     * @return Response|bool
+     * @return bool
      */
     public function restore(User $user, Announcement $announcement)
     {
-        return $announcement->author_id === $user->id || $user->hasRole('aadmin');
+        return $announcement->author_id === $user->id || $user->hasRole('admin');
     }
 
     /**
@@ -86,7 +85,7 @@ class AnnouncementPolicy
      *
      * @param  User  $user
      * @param  Announcement  $announcement
-     * @return Response|bool
+     * @return bool
      */
     public function forceDelete(User $user, Announcement $announcement)
     {

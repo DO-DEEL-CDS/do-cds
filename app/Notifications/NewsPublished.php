@@ -8,6 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\OneSignal\OneSignalChannel;
 use NotificationChannels\OneSignal\OneSignalMessage;
+use Str;
 
 class NewsPublished extends Notification
 {
@@ -45,9 +46,9 @@ class NewsPublished extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+                ->line('The introduction to the notification.')
+                ->action('Notification Action', url('/'))
+                ->line('Thank you for using our application!');
     }
 
     /**
@@ -59,16 +60,16 @@ class NewsPublished extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'type' => 'news',
-            'content' => $this->article
+                'type' => 'news',
+                'content' => $this->article
         ];
     }
 
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
-            ->setSubject('Update: '. $this->article->title)
-            ->setBody(\Str::limit($this->article->content,120))
-            ->setData('news', $this->article);
+                ->setSubject('Update: ' . $this->article->title)
+                ->setBody(Str::limit($this->article->content, 120))
+                ->setData('news', $this->article);
     }
 }

@@ -11,7 +11,7 @@ class State extends Model
     use HasFactory;
 
     protected $hidden = [
-        'id',
+            'id',
     ];
 
     public function getRouteKeyName(): string

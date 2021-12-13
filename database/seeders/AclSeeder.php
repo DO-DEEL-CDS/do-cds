@@ -16,16 +16,16 @@ class AclSeeder extends Seeder
     public function run(): void
     {
         Role::create([
-            'name' => 'Super Admin'
+                'name' => 'Super Admin'
         ]);
 
         $admin = Role::create([
-            'name' => 'admin'
+                'name' => 'admin'
         ]);
         $admin->syncPermissions($this->permissions());
 
         $corper = Role::create([
-            'name' => 'corper'
+                'name' => 'corper'
         ]);
         $corper->syncPermissions($this->corperPermissions());
     }

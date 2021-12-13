@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\ImportSuccessNotification;
 use App\Rules\NyscStateCode;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -39,7 +40,7 @@ class TrainingAttendanceImport implements ToModel, WithHeadingRow, WithValidatio
     /**
      * @param  array  $row
      *
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return Model|null
      */
     public function model(array $row)
     {
@@ -51,8 +52,8 @@ class TrainingAttendanceImport implements ToModel, WithHeadingRow, WithValidatio
             return null;
         }
         return new TrainingAttendance([
-            'user_id' => $user->id,
-            'training_id' => $this->training->id
+                'user_id' => $user->id,
+                'training_id' => $this->training->id
         ]);
     }
 
@@ -69,9 +70,9 @@ class TrainingAttendanceImport implements ToModel, WithHeadingRow, WithValidatio
     public function registerEvents(): array
     {
         return [
-            AfterImport::class => function (AfterImport $event) {
-                Admin::notifyAll(new ImportSuccessNotification($event, 'Attendance'));
-            },
+                AfterImport::class => function (AfterImport $event) {
+                    Admin::notifyAll(new ImportSuccessNotification($event, 'Attendance'));
+                },
         ];
     }
 
@@ -83,8 +84,8 @@ class TrainingAttendanceImport implements ToModel, WithHeadingRow, WithValidatio
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'nysc_state_code' => ['required', new NyscStateCode(), 'exists:profile'],
+                'email' => ['required', 'email'],
+                'nysc_state_code' => ['required', new NyscStateCode(), 'exists:profile'],
         ];
     }
 }

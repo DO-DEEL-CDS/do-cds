@@ -18,14 +18,14 @@ class Ticket extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'title',
-        'message',
-        'status',
-        'agent_id',
+            'title',
+            'message',
+            'status',
+            'agent_id',
     ];
 
     protected $casts = [
-        'status' => TicketStatus::class,
+            'status' => TicketStatus::class,
     ];
 
 

@@ -28,20 +28,20 @@ class ImportHasFailedNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject($this->importType . ' Import Failed')
-            ->line('The Import Was Unsuccessful.')
-            ->line('Log:' . $this->importFailedEvent->getException()->getMessage())
-            ->line('Correct the error in the file and try again!');
+                ->subject($this->importType . ' Import Failed')
+                ->line('The Import Was Unsuccessful.')
+                ->line('Log:' . $this->importFailedEvent->getException()->getMessage())
+                ->line('Correct the error in the file and try again!');
     }
 
     public function toArray($notifiable): array
     {
         return [
-            'type' => 'import',
-            'content' => [
-                'feedback' => 'Import Failed',
-                'reason' => 'Log: ' . $this->importFailedEvent->getException()->getMessage(),
-            ],
+                'type' => 'import',
+                'content' => [
+                        'feedback' => 'Import Failed',
+                        'reason' => 'Log: ' . $this->importFailedEvent->getException()->getMessage(),
+                ],
         ];
     }
 }

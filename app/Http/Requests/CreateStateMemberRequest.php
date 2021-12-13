@@ -27,15 +27,15 @@ class CreateStateMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'year' => ['required', 'date_format:Y'],
-            'batch' => ['required', new EnumValue(Batch::class)],
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'position' => ['nullable', 'string'],
-            'facebook' => ['required', 'active_url'],
-            'phone_number' => ['required', 'max:16'],
-            'instagram' => ['required', 'string'],
-            'type' => ['required', new EnumValue(StateMembershipType::class, false)],
+                'year' => ['required', 'date_format:Y'],
+                'batch' => ['required', new EnumValue(Batch::class)],
+                'name' => ['required', 'string'],
+                'email' => ['required', 'email'],
+                'position' => ['nullable', 'string'],
+                'facebook' => ['required', 'active_url'],
+                'phone_number' => ['required', 'max:16'],
+                'instagram' => ['required', 'string'],
+                'type' => ['required', new EnumValue(StateMembershipType::class, false)],
         ];
     }
 }

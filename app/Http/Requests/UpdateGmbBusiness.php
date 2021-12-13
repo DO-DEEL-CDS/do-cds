@@ -26,11 +26,11 @@ class UpdateGmbBusiness extends FormRequest
     public function rules(): array
     {
         return [
-            'business_email' => ['sometimes', 'email:dns'],
-            'business_name' => ['sometimes', 'string', 'min:3', 'unique:gmb_submissions'],
-            'business_owner' => ['sometimes', 'string', 'min:3'],
-            'owner_gender' => ['sometimes', 'string', 'in:,male,female'],
-            'status' => ['sometimes', new EnumValue(GMBStatus::class)]
+                'business_email' => ['sometimes', 'email:dns'],
+                'business_name' => ['sometimes', 'string', 'min:3', 'unique:gmb_submissions'],
+                'business_owner' => ['sometimes', 'string', 'min:3'],
+                'owner_gender' => ['sometimes', 'string', 'in:,male,female'],
+                'status' => ['sometimes', new EnumValue(GMBStatus::class)]
         ];
     }
 }

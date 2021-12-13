@@ -25,16 +25,16 @@ class StateMemberFactory extends Factory
     public function definition()
     {
         return [
-            'type' => StateMembershipType::getRandomInstance(),
-            'state_code' => State::inRandomOrder()->first()->state_code,
-            'instagram' => $this->faker->userName,
-            'facebook' => $this->faker->url,
-            'name' => $this->faker->name,
-            'email' => $this->faker->safeEmail,
-            'position' => $this->faker->title,
-            'phone_number' => $this->faker->e164PhoneNumber,
-            'batch' => Batch::getRandomInstance(),
-            'year' => $this->faker->year,
+                'type' => StateMembershipType::getRandomInstance(),
+                'state_code' => State::inRandomOrder()->first()->state_code,
+                'instagram' => $this->faker->userName,
+                'facebook' => $this->faker->url,
+                'name' => $this->faker->name,
+                'email' => $this->faker->safeEmail,
+                'position' => $this->faker->title,
+                'phone_number' => $this->faker->e164PhoneNumber,
+                'batch' => Batch::getRandomInstance(),
+                'year' => $this->faker->year,
         ];
     }
 }

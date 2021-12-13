@@ -37,15 +37,15 @@ class PasswordChanged extends Notification
      * @param  mixed  $notifiable
      * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Password Change Notification')
-            ->greeting("Hello {$notifiable->name}")
-            ->line('You as receiving this email because your password was changed/reset recently.')
-            ->line('If you did not carry out this action, get in-touch with us immediately')
-            ->line('Thank you for choosing Do-DEEL CDS!')
-            ->success();
+                ->subject('Password Change Notification')
+                ->greeting("Hello $notifiable->name")
+                ->line('You as receiving this email because your password was changed/reset recently.')
+                ->line('If you did not carry out this action, get in-touch with us immediately')
+                ->line('Thank you for choosing Do-DEEL CDS!')
+                ->success();
     }
 
     /**

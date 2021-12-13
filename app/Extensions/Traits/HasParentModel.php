@@ -5,6 +5,7 @@ namespace App\Extensions\Traits;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Str;
 use ReflectionClass;
+use ReflectionException;
 
 trait HasParentModel
 {
@@ -18,7 +19,7 @@ trait HasParentModel
         static::creating(function ($model) {
             if ($model->parentHasHasChildrenTrait()) {
                 $model->forceFill(
-                    [$model->getInheritanceColumn() => $model->classToAlias(get_class($model))]
+                        [$model->getInheritanceColumn() => $model->classToAlias(get_class($model))]
                 );
             }
         });
@@ -37,7 +38,6 @@ trait HasParentModel
      * Get the class name for Parent Class.
      *
      * @return string
-     * @throws \ReflectionException
      */
     protected function getParentClass(): string
     {
@@ -54,8 +54,8 @@ trait HasParentModel
     public function joiningTable($related, $INSTANCE = null): string
     {
         $models = [
-            Str::snake(class_basename($related)),
-            Str::snake(class_basename($this->getParentClass())),
+                Str::snake(class_basename($related)),
+                Str::snake(class_basename($this->getParentClass())),
         ];
         sort($models);
 
@@ -64,7 +64,7 @@ trait HasParentModel
 
     /**
      * @return string
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getClassNameForRelationships(): string
     {
@@ -75,7 +75,7 @@ trait HasParentModel
      * Get the class name for polymorphic relations.
      *
      * @return string
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getMorphClass(): string
     {

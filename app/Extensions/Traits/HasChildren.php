@@ -2,6 +2,9 @@
 
 namespace App\Extensions\Traits;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 trait HasChildren
@@ -40,8 +43,8 @@ trait HasChildren
         }
 
         foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $trace) {
-            $class = isset($trace['class']) ? $trace['class'] : null;
-            $function = isset($trace['function']) ? $trace['function'] : '';
+            $class = $trace['class'] ?? null;
+            $function = $trace['function'] ?? '';
 
             if ($class === self::class && isset(self::$parentBootMethods[$function])) {
                 return true;
@@ -94,13 +97,13 @@ trait HasChildren
     public function newInstance($attributes = [], $exists = false)
     {
         $model = isset($attributes[$this->getInheritanceColumn()])
-            ? $this->getChildModel($attributes)
-            : new static(((array) $attributes));
+                ? $this->getChildModel($attributes)
+                : new static(((array) $attributes));
 
         $model->exists = $exists;
 
         $model->setConnection(
-            $this->getConnectionName()
+                $this->getConnectionName()
         );
 
         return $model;
@@ -113,10 +116,10 @@ trait HasChildren
     protected function getChildModel(array $attributes)
     {
         $className = $this->classFromAlias(
-            $attributes[$this->getInheritanceColumn()]
+                $attributes[$this->getInheritanceColumn()]
         );
 
-        return new $className((array) $attributes);
+        return new $className($attributes);
     }
 
     /**
@@ -141,7 +144,7 @@ trait HasChildren
      * @param  string  $foreignKey
      * @param  string  $ownerKey
      * @param  string  $relation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function belongsTo($related, $foreignKey = null, $ownerKey = null, $relation = null)
     {
@@ -164,7 +167,7 @@ trait HasChildren
      * @param  string  $related
      * @param  string  $foreignKey
      * @param  string  $localKey
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function hasMany($related, $foreignKey = null, $localKey = null)
     {
@@ -181,16 +184,16 @@ trait HasChildren
      * @param  string  $parentKey
      * @param  string  $relatedKey
      * @param  string  $relation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function belongsToMany(
-        $related,
-        $table = null,
-        $foreignPivotKey = null,
-        $relatedPivotKey = null,
-        $parentKey = null,
-        $relatedKey = null,
-        $relation = null
+            $related,
+            $table = null,
+            $foreignPivotKey = null,
+            $relatedPivotKey = null,
+            $parentKey = null,
+            $relatedKey = null,
+            $relation = null
     ) {
         $instance = $this->newRelatedInstance($related);
 

@@ -24,10 +24,10 @@ class ProspectFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->safeEmail,
-            'nysc_state_code' => State::query()->inRandomOrder()->first()->state_code . '/21A/' . random_int(1000, 9999),
-            'status' => ProspectStatus::getRandomValue()
+                'name' => $this->faker->name,
+                'email' => $this->faker->safeEmail,
+                'nysc_state_code' => State::query()->inRandomOrder()->first()->state_code . '/21A/' . random_int(1000, 9999),
+                'status' => ProspectStatus::getRandomValue()
         ];
     }
 }

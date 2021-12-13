@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static Pending()
@@ -17,6 +18,6 @@ final class ProjectStatus extends Enum
 
     public function toArray()
     {
-        return \Str::snake($this->description);
+        return Str::snake($this->description);
     }
 }

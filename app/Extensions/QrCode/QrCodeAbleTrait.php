@@ -21,7 +21,7 @@ trait QrCodeAbleTrait
 
         /** @var QrCode $qr_code */
         $qr_code = QrCode::query()->create([
-            'code' => $value
+                'code' => $value
         ]);
 
         $this->assignQrCode($qr_code);
@@ -31,7 +31,7 @@ trait QrCodeAbleTrait
     {
         $qrCode->qrCodeAble()->associate($this);
         $qrCode->update([
-            'active' => true
+                'active' => true
         ]);
     }
 

@@ -27,11 +27,11 @@ class UpdateProspectRequest extends FormRequest
     {
         $prospect = $this->route()->parameter('prospect');
         return [
-            'name' => ['bail', 'sometimes', 'string', 'min:3'],
-            'email' => ['bail', 'sometimes', 'email:dns', Rule::unique('prospects')->ignoreModel($prospect)],
-            'deployed_state' => ['bail', 'sometimes', 'exists:states,state_code'],
-            'nysc_state_code' => ['bail', 'sometimes', new NyscStateCode(), Rule::unique('prospects')->ignoreModel($prospect)],
-            'intro_video' => ['sometimes', 'string', 'active_url']
+                'name' => ['bail', 'sometimes', 'string', 'min:3'],
+                'email' => ['bail', 'sometimes', 'email:dns', Rule::unique('prospects')->ignoreModel($prospect)],
+                'deployed_state' => ['bail', 'sometimes', 'exists:states,state_code'],
+                'nysc_state_code' => ['bail', 'sometimes', new NyscStateCode(), Rule::unique('prospects')->ignoreModel($prospect)],
+                'intro_video' => ['sometimes', 'string', 'active_url']
         ];
     }
 

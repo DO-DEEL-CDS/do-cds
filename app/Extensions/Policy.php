@@ -4,8 +4,6 @@
 namespace App\Extensions;
 
 
-use App\Models\Role;
-
 class Policy
 {
     /**

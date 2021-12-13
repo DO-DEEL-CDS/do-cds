@@ -16,10 +16,10 @@ class ProspectSeeder extends Seeder
     public function run(): void
     {
         Prospect::create([
-            'name' => 'Doug',
-            'email' => 'corper@example.com',
-            'nysc_state_code' => 'FC/21A/0000',
-            'status' => ProspectStatus::Approved(),
+                'name' => 'Doug',
+                'email' => 'corper@example.com',
+                'nysc_state_code' => 'FC/21A/0000',
+                'status' => ProspectStatus::Approved(),
         ]);
 
         if (!app()->environment('production')) {

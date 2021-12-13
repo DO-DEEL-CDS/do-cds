@@ -24,12 +24,12 @@ class createArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
-            'title' => ['required', 'string', 'min:3'],
-            'content' => ['required', 'string'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'state_code' => ['sometimes', 'exists:states,state_code'],
-            'is_featured' => ['required', 'boolean'],
+                'image' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:10000'],
+                'title' => ['required', 'string', 'min:3'],
+                'content' => ['required', 'string'],
+                'category_id' => ['required', 'exists:categories,id'],
+                'state_code' => ['sometimes', 'exists:states,state_code'],
+                'is_featured' => ['required', 'boolean'],
         ];
     }
 }

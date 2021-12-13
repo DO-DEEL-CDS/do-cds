@@ -21,25 +21,25 @@ class StateRepository extends BaseRepository
     public function getScheduleOfficers(State $state, array $search = [])
     {
         return $state->members()
-            ->type(StateMembershipType::ScheduleOfficer())
-            ->search($search)
-            ->get();
+                ->type(StateMembershipType::ScheduleOfficer())
+                ->search($search)
+                ->get();
     }
 
     public function getCommunityManagers(State $state, array $search = [])
     {
         return $state->members()
-            ->type(StateMembershipType::CommunityManager())
-            ->search($search)
-            ->get();
+                ->type(StateMembershipType::CommunityManager())
+                ->search($search)
+                ->get();
     }
 
     public function getExecutives(State $state, array $search = [])
     {
         return $state->members()
-            ->type(StateMembershipType::Executive())
-            ->search($search)
-            ->get();
+                ->type(StateMembershipType::Executive())
+                ->search($search)
+                ->get();
     }
 
     public function addMember(State $state, array $data): StateMember

@@ -6,6 +6,7 @@ use App\Extensions\Traits\AuthenticatableRoles;
 use App\Extensions\Traits\HasParentModel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Str;
 
 /**
  * @extends User
@@ -25,7 +26,7 @@ class Corper extends User
 
     public function scopeYear(Builder $builder, string $year): void
     {
-        if (\Str::length($year) > 2) {
+        if (Str::length($year) > 2) {
             $year = substr($year, 2, 2);
         }
         $builder->whereHas('profile', static function (Builder $q) use ($year) {

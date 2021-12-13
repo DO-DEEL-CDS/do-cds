@@ -16,7 +16,7 @@ trait ControllerExportsDataToExcel
      * @param  string  $filename
      * @return BinaryFileResponse
      */
-    public function exportAndDownloadFromRequest($data, $excel_export, $filename = 'data.xlsx'): BinaryFileResponse
+    public function exportAndDownloadFromRequest($data, $excel_export, string $filename = 'data.xlsx'): BinaryFileResponse
     {
         if ($data instanceof Collection) {
             if ($data) {

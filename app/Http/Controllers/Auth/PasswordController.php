@@ -24,7 +24,7 @@ class PasswordController extends Controller
     public function sendPasswordResetCode(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'email' => ['required', 'string', 'email', 'exists:users']
+                'email' => ['required', 'string', 'email', 'exists:users']
         ]);
 
         $this->authService->sendPasswordResetCode($request->post('email'));
@@ -34,11 +34,11 @@ class PasswordController extends Controller
     public function verifyPasswordResetCode(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => ['required', 'string', 'email', 'exists:users'],
-            'code' => [
-                'required', 'digits:4',
-                Rule::exists('password_resets', 'token')->where('email', $request->post('email'))
-            ],
+                'email' => ['required', 'string', 'email', 'exists:users'],
+                'code' => [
+                        'required', 'digits:4',
+                        Rule::exists('password_resets', 'token')->where('email', $request->post('email'))
+                ],
         ]);
 
         $user = $this->authService->verifyPasswordResetCode($request->only(['email', 'code']));
@@ -49,9 +49,9 @@ class PasswordController extends Controller
     public function setNewPassword(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'password' => $this->passwordRules(),
-            'secret' => ['required', 'string', new PasswordResetSecret($this->authService)],
-            'device_id' => ['sometimes', 'nullable', 'string']
+                'password' => $this->passwordRules(),
+                'secret' => ['required', 'string', new PasswordResetSecret($this->authService)],
+                'device_id' => ['sometimes', 'nullable', 'string']
         ]);
 
         $data = $this->authService->setPassword($request->only('secret', 'password', 'device_id'));

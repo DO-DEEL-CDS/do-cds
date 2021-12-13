@@ -7,6 +7,7 @@ use App\Models\Employment;
 use App\Models\Roles\Corper;
 use App\Notifications\JobPublished;
 use Illuminate\Contracts\Pagination\Paginator;
+use Storage;
 
 class EmploymentRepository extends BaseRepository
 {
@@ -23,18 +24,18 @@ class EmploymentRepository extends BaseRepository
     public function getLatestJobs(array $search): Paginator
     {
         return Employment::latest()
-            ->search($search)
-            ->open()
-            ->paginate($search['per_page'] ?? 15);
+                ->search($search)
+                ->open()
+                ->paginate($search['per_page'] ?? 15);
     }
 
     public function createJob(array $data): Employment
     {
         $employerData = [
-            'logo' => $data['employer_logo'],
-            'name' => $data['employer_name'],
-            'email' => $data['employer_email'] ?? '',
-            'location' => $data['employer_location'],
+                'logo' => $data['employer_logo'],
+                'name' => $data['employer_name'],
+                'email' => $data['employer_email'] ?? '',
+                'location' => $data['employer_location'],
         ];
 
         $employer = Employer::updateOrCreate(['name' => $employerData['name']], $employerData);
@@ -76,7 +77,7 @@ class EmploymentRepository extends BaseRepository
         $job->load('employer');
 
         if ($oldLogo !== null && $job->employer->logo !== $oldLogo) {
-            \Storage::delete($oldLogo);
+            Storage::delete($oldLogo);
         }
 
         return $job;

@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\Prospect;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Auth\Access\Response;
 
 class ProspectPolicy
 {
@@ -15,7 +14,7 @@ class ProspectPolicy
      * Determine whether the user can view any models.
      *
      * @param  User  $user
-     * @return Response|bool
+     * @return bool
      */
     public function viewAny(User $user)
     {
@@ -27,7 +26,7 @@ class ProspectPolicy
      *
      * @param  User  $user
      * @param  Prospect  $prospect
-     * @return Response|bool
+     * @return bool
      */
     public function view(User $user, Prospect $prospect)
     {
@@ -37,8 +36,8 @@ class ProspectPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  User  $user
-     * @return Response|bool
+     * @param  User|null  $user
+     * @return bool
      */
     public function create(?User $user)
     {
@@ -50,7 +49,7 @@ class ProspectPolicy
      *
      * @param  User  $user
      * @param  Prospect  $prospect
-     * @return Response|bool
+     * @return bool
      */
     public function update(User $user, Prospect $prospect)
     {
@@ -62,7 +61,7 @@ class ProspectPolicy
      *
      * @param  User  $user
      * @param  Prospect  $prospect
-     * @return Response|bool
+     * @return bool
      */
     public function delete(User $user, Prospect $prospect)
     {
@@ -74,7 +73,7 @@ class ProspectPolicy
      *
      * @param  User  $user
      * @param  Prospect  $prospect
-     * @return Response|bool
+     * @return bool
      */
     public function restore(User $user, Prospect $prospect)
     {
@@ -86,7 +85,7 @@ class ProspectPolicy
      *
      * @param  User  $user
      * @param  Prospect  $prospect
-     * @return Response|bool
+     * @return bool
      */
     public function forceDelete(User $user, Prospect $prospect)
     {

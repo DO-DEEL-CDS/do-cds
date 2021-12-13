@@ -20,7 +20,7 @@ function gravatar($email, $size = 30): string
 {
     $gravatarURL = gravatarUrl($email, $size);
 
-    return '<img id = ' . $email . '' . $size . ' class="gravatar" src="' . $gravatarURL . '" width="' . $size . '">';
+    return '<img id = ' . $email . $size . ' class="gravatar" src="' . $gravatarURL . '" width="' . $size . '">';
 }
 
 function gravatarUrl($email, $size): string
@@ -29,7 +29,7 @@ function gravatarUrl($email, $size): string
     //$gravatarURL = "https://www.gravatar.com/avatar/" . $email."?s=".$size."&d=mm";
     $defaultImage = urlencode('https://raw.githubusercontent.com/BadChoice/handesk/master/public/images/default-avatar.png');
 
-    return 'https://www.gravatar.com/avatar/' . $email . '?s=' . $size . "&default={$defaultImage}";
+    return 'https://www.gravatar.com/avatar/' . $email . '?s=' . $size . "&default=$defaultImage";
 }
 
 
@@ -58,17 +58,18 @@ if (!function_exists('unique_api_token')) {
 if (!function_exists('generate_code')) {
     /**
      * Generate unique code
-     * @param  string  $prefix
      * @param  Model  $model
+     * @param  string  $prefix
+     * @param  string  $column
      * @return mixed|string
      * @throws Exception
      */
     function generate_code(Model $model, $prefix = '', $column = 'code')
     {
         $prefix = strtoupper($prefix);
-        $code = $prefix . mt_rand(1000000000, 9999999999);
+        $code = $prefix . random_int(1000000000, 9999999999);
         if (!is_null($model::where($column, $code)->first())) {
-            return call_user_func(generate_code($model, $prefix, $column));
+            return generate_code($model, $prefix, $column);
         }
 
         return $code;
@@ -102,13 +103,16 @@ if (!function_exists('friendly_number_format')) {
 if (!function_exists('generate_otp')) {
     /**
      * Generate random 4 digit OTP
+     * @param $model
+     * @param  string  $column
      * @return string
+     * @throws Exception
      */
-    function generate_otp($model, $column = 'verify_token'): string
+    function generate_otp($model, string $column = 'verify_token'): string
     {
         $otp = random_int(1000, 9999);
         if (!is_null($model::where($column, $otp)->first())) {
-            return call_user_func(generate_otp($model, $column));
+            return generate_otp($model, $column);
         }
 
         return $otp;
@@ -124,10 +128,10 @@ if (!function_exists('calc_progress')) {
      */
     function calc_progress($actualValue, $maxValue): array
     {
-        $maxValue = $maxValue == 0 ? 1 : $maxValue;
+        $maxValue = $maxValue === 0 ? 1 : $maxValue;
         return [
-            'value' => $actualValue,
-            'percentage' => round(($actualValue / $maxValue) * 100)
+                'value' => $actualValue,
+                'percentage' => round(($actualValue / $maxValue) * 100)
         ];
     }
 }
@@ -139,7 +143,7 @@ if (!function_exists('unique_rand_user_email')) {
      */
     function unique_rand_user_email(): string
     {
-        return 'u' . time() . '@' . preg_replace("/(http(|s)):\/\//", '', env('APP_URL'));
+        return 'u' . time() . '@' . preg_replace("/(http(|s)):\/\//", '', config('app.url'));
     }
 }
 

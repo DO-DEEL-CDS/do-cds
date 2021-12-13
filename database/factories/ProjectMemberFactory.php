@@ -25,16 +25,16 @@ class ProjectMemberFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => ProjectMemberType::getRandomInstance(),
-            'batch' => Batch::getRandomInstance(),
-            'year' => $this->faker->year,
-            'instagram' => $this->faker->userName,
-            'phone_number' => $this->faker->e164PhoneNumber,
-            'state_code' => State::query()->inRandomOrder()->first()->state_code,
-            'facebook_link' => $this->faker->url,
-            'position' => $this->faker->randomElement(['president', 'vice president', 'secretary']),
-            'name' => $this->faker->name,
-            'email' => $this->faker->email
+                'type' => ProjectMemberType::getRandomInstance(),
+                'batch' => Batch::getRandomInstance(),
+                'year' => $this->faker->year,
+                'instagram' => $this->faker->userName,
+                'phone_number' => $this->faker->e164PhoneNumber,
+                'state_code' => State::query()->inRandomOrder()->first()->state_code,
+                'facebook_link' => $this->faker->url,
+                'position' => $this->faker->randomElement(['president', 'vice president', 'secretary']),
+                'name' => $this->faker->name,
+                'email' => $this->faker->email
         ];
     }
 }

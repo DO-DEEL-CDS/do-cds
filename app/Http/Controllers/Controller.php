@@ -15,19 +15,19 @@ class Controller extends BaseController
     public function success($data = [], string $message = 'Success', int $status = 200): JsonResponse
     {
         return response()->json([
-            'success' => true,
-            'message' => $message,
-            'data' => $data
+                'success' => true,
+                'message' => $message,
+                'data' => $data
         ], $status);
     }
 
     public function error(string $message = 'Invalid Request', int $status = 400): JsonResponse
     {
         return response()->json([
-            'error' => [
-                'message' => $message,
-                'code' => $status
-            ]
+                'error' => [
+                        'message' => $message,
+                        'code' => $status
+                ]
         ], $status);
     }
 }

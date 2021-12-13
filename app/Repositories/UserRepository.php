@@ -8,9 +8,13 @@ use App\Models\User;
 use DB;
 use Exception;
 use Hash;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Support\ValidatedInput;
+use Storage;
+use Str;
 use Throwable;
 
 class UserRepository extends BaseRepository
@@ -23,7 +27,6 @@ class UserRepository extends BaseRepository
     /**
      * Instantiate repository
      *
-     * @param  User  $model
      */
     public function __construct()
     {
@@ -38,7 +41,7 @@ class UserRepository extends BaseRepository
     public function createAccount(array $data)
     {
         if (empty($data['password'])) {
-            $data['password'] = \Str::random();
+            $data['password'] = Str::random();
         }
         if (!empty($data['deployed_state'])) {
             $data['state_code'] = $data['deployed_state'];
@@ -99,7 +102,7 @@ class UserRepository extends BaseRepository
     public function setPassword(User $user, $password): User
     {
         $user->update([
-            'password' => Hash::make($password)
+                'password' => Hash::make($password)
         ]);
 
         return $user;
@@ -144,49 +147,49 @@ class UserRepository extends BaseRepository
         }
 
         if ($oldPhoto !== null && $user->profile->photo !== $oldPhoto) {
-            \Storage::delete($oldPhoto);
+            Storage::delete($oldPhoto);
         }
 
         return $this->getUserData($user);
     }
 
-    public function getUsers(array $search): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function getUsers(array $search): LengthAwarePaginator
     {
         return User::query()
-            ->with('profile')
-            ->withCount(['attendance', 'businesses'])
-            ->role('corper')
-            ->search($search)
-            ->orderBy('id', 'desc')
-            ->paginate($search['per_page'] ?? 15);
+                ->with('profile')
+                ->withCount(['attendance', 'businesses'])
+                ->role('corper')
+                ->search($search)
+                ->orderBy('id', 'desc')
+                ->paginate($search['per_page'] ?? 15);
     }
 
     public function adminGetUser(User $user): User
     {
         return $user->load([
-            'profile',
-            'businesses',
-            'permissions',
-            'roles',
-            'attendance'
+                'profile',
+                'businesses',
+                'permissions',
+                'roles',
+                'attendance'
         ]);
     }
 
     public function getFUllUserProfile(User $user): User
     {
         $user->load([
-            'permissions',
-            'roles',
-            'profile',
-            'unreadNotifications',
-            'businesses',
-            'attendance',
+                'permissions',
+                'roles',
+                'profile',
+                'unreadNotifications',
+                'businesses',
+                'attendance',
         ]);
         $user->loadCount([
-            'attendance',
-            'businesses' => function ($q) {
-                $q->where('status', GMBStatus::approved);
-            },
+                'attendance',
+                'businesses' => function ($q) {
+                    $q->where('status', GMBStatus::approved);
+                },
         ]);
         $user->gmb_project_status = $this->getUserGmbProgress($user);
 
@@ -198,14 +201,14 @@ class UserRepository extends BaseRepository
         $userBusinessCount = $user->businesses()->where('gmb_submissions.status')->count();
         $userApprovedBusinessCount = $user->businesses()->where('gmb_submissions.status', GMBStatus::approved)->count();
         return [
-            'submitted' => $userBusinessCount,
-            'approved' => $userApprovedBusinessCount,
-            'recommended_max' => $max,
-            'percentage' => $max > 0 ? round(($userApprovedBusinessCount / $max) * 100) : 0,
+                'submitted' => $userBusinessCount,
+                'approved' => $userApprovedBusinessCount,
+                'recommended_max' => $max,
+                'percentage' => $max > 0 ? round(($userApprovedBusinessCount / $max) * 100) : 0,
         ];
     }
 
-    public function getNotifications(User $user, array $data): \Illuminate\Contracts\Pagination\Paginator
+    public function getNotifications(User $user, array $data): Paginator
     {
         switch ($data['status'] ?? '') {
             case 'read':

@@ -22,8 +22,8 @@ class ResourceFactory extends Factory
     public function definition()
     {
         return [
-            'attachment' => $this->faker->url,
-            'filename' => $this->faker->name . '.' . $this->faker->fileExtension(),
+                'attachment' => $this->faker->url,
+                'filename' => $this->faker->name . '.' . $this->faker->fileExtension(),
         ];
     }
 }

@@ -30,7 +30,7 @@ class ProspectService extends BaseService
         $secret = $this->repository->generateRegistrationSecret($prospect);
 
         return [
-            'registration_secret' => $secret
+                'registration_secret' => $secret
         ];
     }
 }

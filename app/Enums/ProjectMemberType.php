@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static Exco()
@@ -13,6 +14,6 @@ final class ProjectMemberType extends Enum
 
     public function toArray()
     {
-        return \Str::snake($this->description);
+        return Str::snake($this->description);
     }
 }

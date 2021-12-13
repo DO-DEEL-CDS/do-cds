@@ -44,15 +44,15 @@ class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBa
 
         $status = GMBStatus::fromValue((int ) $row['status']);
         return new GmbSubmission([
-            'business_name' => $row['business_name'],
-            'business_owner' => $row['business_owner'],
-            'business_email' => $row['business_email'],
-            'owner_gender' => $row['owner_gender'],
-            'status' => $status,
-            'project_id' => Project::whereType(ProjectType::gmb)->firstOrFail()->id,
-            'approved_by' => $status->is(GMBStatus::approved) ? Admin::first()->id : null,
-            'user_id' => $user->id,
-            'reject_reason' => $row['reject_reason'] ?? ''
+                'business_name' => $row['business_name'],
+                'business_owner' => $row['business_owner'],
+                'business_email' => $row['business_email'],
+                'owner_gender' => $row['owner_gender'],
+                'status' => $status,
+                'project_id' => Project::whereType(ProjectType::gmb)->firstOrFail()->id,
+                'approved_by' => $status->is(GMBStatus::approved) ? Admin::first()->id : null,
+                'user_id' => $user->id,
+                'reject_reason' => $row['reject_reason'] ?? ''
         ]);
     }
 
@@ -69,24 +69,24 @@ class GMBSubmissionImport implements ToModel, WithHeadingRow, WithEvents, WithBa
     public function registerEvents(): array
     {
         return [
-            AfterImport::class => function (AfterImport $event) {
-                Admin::notifyAll(new ImportSuccessNotification($event, 'Business'));
-            },
+                AfterImport::class => function (AfterImport $event) {
+                    Admin::notifyAll(new ImportSuccessNotification($event, 'Business'));
+                },
         ];
     }
 
     public function rules(): array
     {
         return [
-            'business_name' => ['required', 'string', 'min:3', 'unique:gmb_submissions'],
-            'business_owner' => ['required', 'string', 'min:3'],
-            'business_email' => ['required', 'email:dns'],
-            'owner_gender' => ['required', 'string', 'in:,male,female'],
-            'status' => ['required', new EnumValue(GMBStatus::class)],
-            'corper_email' => ['required', 'email:dns', 'exists:users,email'],
-            'nysc_state_code' => ['required', 'string', 'min:3'],
-            'corper_phone_number' => ['nullable', 'string', 'max:16'],
-            'reject_reason' => ['sometimes', 'nullable', 'string'],
+                'business_name' => ['required', 'string', 'min:3', 'unique:gmb_submissions'],
+                'business_owner' => ['required', 'string', 'min:3'],
+                'business_email' => ['required', 'email:dns'],
+                'owner_gender' => ['required', 'string', 'in:,male,female'],
+                'status' => ['required', new EnumValue(GMBStatus::class)],
+                'corper_email' => ['required', 'email:dns', 'exists:users,email'],
+                'nysc_state_code' => ['required', 'string', 'min:3'],
+                'corper_phone_number' => ['nullable', 'string', 'max:16'],
+                'reject_reason' => ['sometimes', 'nullable', 'string'],
         ];
     }
 }

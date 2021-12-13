@@ -23,11 +23,11 @@ class ResourceController extends Controller
     public function store(Request $request): JsonResponse
     {
         $valid = $request->validate([
-            'attachment' => ['sometimes', 'file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000'],
-            'files' => ['sometimes', 'array'],
-            'files.*.attachment' => ['file', 'mimes:jpg,png,jpeg,webp,pdf,xlsx,doc,docx,ppt,txt', 'max:10000'],
-            'entity_type' => ['required', 'in:project,training'],
-            'entity_id' => ['required', new ResourceEntityExist($request)]
+                'attachment' => ['sometimes', 'file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000'],
+                'files' => ['sometimes', 'array'],
+                'files.*.attachment' => ['file', 'mimes:jpg,png,jpeg,webp,pdf,xlsx,doc,docx,ppt,txt', 'max:10000'],
+                'entity_type' => ['required', 'in:project,training'],
+                'entity_id' => ['required', new ResourceEntityExist($request)]
         ]);
 
         $resource = [];
@@ -63,8 +63,8 @@ class ResourceController extends Controller
     public function update(Request $request, Resource $resource): JsonResponse
     {
         $validated = $request->validate([
-            'filename' => ['string', 'max:10'],
-            'attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000']
+                'filename' => ['string', 'max:10'],
+                'attachment' => ['file', 'mimes:jpg,png,pdf,xlsx,doc,docx,ppt,mp4', 'max:10000']
         ]);
 
         $deletable = $resource->attachment;

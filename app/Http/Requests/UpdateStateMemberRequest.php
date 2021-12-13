@@ -27,16 +27,16 @@ class UpdateStateMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'year' => ['sometimes', 'date_format:Y'],
-            'batch' => ['sometimes', new EnumValue(Batch::class)],
-            'name' => ['sometimes', 'string'],
-            'email' => ['sometimes', 'email'],
-            'position' => ['sometimes', 'nullable', 'string'],
-            'facebook' => ['sometimes', 'active_url'],
-            'state_code' => ['sometimes', 'exists:states'],
-            'phone_number' => ['sometimes', 'max:16'],
-            'instagram' => ['sometimes', 'string'],
-            'type' => ['sometimes', new EnumValue(StateMembershipType::class, false)],
+                'year' => ['sometimes', 'date_format:Y'],
+                'batch' => ['sometimes', new EnumValue(Batch::class)],
+                'name' => ['sometimes', 'string'],
+                'email' => ['sometimes', 'email'],
+                'position' => ['sometimes', 'nullable', 'string'],
+                'facebook' => ['sometimes', 'active_url'],
+                'state_code' => ['sometimes', 'exists:states'],
+                'phone_number' => ['sometimes', 'max:16'],
+                'instagram' => ['sometimes', 'string'],
+                'type' => ['sometimes', new EnumValue(StateMembershipType::class, false)],
         ];
     }
 }

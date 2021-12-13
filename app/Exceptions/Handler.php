@@ -33,10 +33,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
-        'secret'
+            'current_password',
+            'password',
+            'password_confirmation',
+            'secret'
     ];
 
     /**
@@ -64,73 +64,73 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson() || $request->isJson()) {
             if ($e instanceof QueryException || $e instanceof RelationNotFoundException) {
                 return response()->json([
-                    'error' => [
-                        'message' => 'An error occurred, please try again later.',
-                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR
-                    ]
+                        'error' => [
+                                'message' => 'An error occurred, please try again later.',
+                                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
+                        ]
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             if ($e instanceof ModelNotFoundException) {
                 return response()->json([
-                    'error' => [
-                        'message' => 'Missing parameters or resource not found.',
-                        'code' => Response::HTTP_NOT_FOUND
-                    ]
+                        'error' => [
+                                'message' => 'Missing parameters or resource not found.',
+                                'code' => Response::HTTP_NOT_FOUND
+                        ]
                 ], Response::HTTP_NOT_FOUND);
             }
 
             if ($e instanceof NotFoundHttpException) {
                 return response()->json([
-                    'error' => [
-                        'message' => $e->getMessage(),
-                        'code' => Response::HTTP_NOT_FOUND
-                    ]
+                        'error' => [
+                                'message' => $e->getMessage(),
+                                'code' => Response::HTTP_NOT_FOUND
+                        ]
                 ], Response::HTTP_NOT_FOUND);
             }
 
             if ($e instanceof AuthorizationException) {
                 return response()->json([
-                    'error' => [
-                        'message' => 'You Do Not Have Permission to carry out this action',
-                        'code' => Response::HTTP_FORBIDDEN,
-                    ]
+                        'error' => [
+                                'message' => 'You Do Not Have Permission to carry out this action',
+                                'code' => Response::HTTP_FORBIDDEN,
+                        ]
                 ], Response::HTTP_FORBIDDEN);
             }
 
             if ($e instanceof HttpResponseException) {
                 return response()->json([
-                    'error' => [
-                        'message' => $e->getResponse()->getContent(),
-                        'code' => $e->getResponse()->getStatusCode()
-                    ]
+                        'error' => [
+                                'message' => $e->getResponse()->getContent(),
+                                'code' => $e->getResponse()->getStatusCode()
+                        ]
                 ], Response::HTTP_BAD_REQUEST);
             }
 
             if ($e instanceof HttpException) {
                 return response()->json([
-                    'error' => [
-                        'message' => $e->getMessage(),
-                        'code' => $e->getStatusCode()
-                    ]
+                        'error' => [
+                                'message' => $e->getMessage(),
+                                'code' => $e->getStatusCode()
+                        ]
                 ], $e->getStatusCode());
             }
 
             if ($e instanceof InvalidEnumMemberException) {
                 return response()->json([
-                    'error' => [
-                        'message' => $e->getMessage(),
-                        'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    ]
+                        'error' => [
+                                'message' => $e->getMessage(),
+                                'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                        ]
                 ], Response::HTTP_BAD_REQUEST);
             }
 
             if ($e instanceof ValidationException) {
                 return response()->json([
-                    'error' => [
-                        'message' => $e->validator->errors()->first(),
-                        'errors' => $e->errors()
-                    ]
+                        'error' => [
+                                'message' => $e->validator->errors()->first(),
+                                'errors' => $e->errors()
+                        ]
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         }
@@ -142,10 +142,10 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson() || $request->isJson()) {
             return response()->json([
-                'error' => [
-                    'message' => $exception->getMessage(),
-                    'code' => Response::HTTP_UNAUTHORIZED
-                ]
+                    'error' => [
+                            'message' => $exception->getMessage(),
+                            'code' => Response::HTTP_UNAUTHORIZED
+                    ]
             ], Response::HTTP_UNAUTHORIZED);
         }
         return parent::unauthenticated($request, $exception);
@@ -154,11 +154,11 @@ class Handler extends ExceptionHandler
     protected function invalidJson($request, ValidationException $exception)
     {
         return response()->json([
-            'error' => [
-                'message' => $exception->getMessage(),
-                'code' => $exception->status,
-                'errors' => $exception->errors()
-            ]
+                'error' => [
+                        'message' => $exception->getMessage(),
+                        'code' => $exception->status,
+                        'errors' => $exception->errors()
+                ]
         ], $exception->status);
     }
 }

@@ -27,8 +27,8 @@ class GlobalUtils
         $ts = strtotime($date);
         $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
         return [
-            date('Y-m-d H:i:s', $start),
-            date('Y-m-d H:i:s', strtotime('next saturday', $start))
+                date('Y-m-d H:i:s', $start),
+                date('Y-m-d H:i:s', strtotime('next saturday', $start))
         ];
     }
 
@@ -52,8 +52,8 @@ class GlobalUtils
         $next_month_first_day = strtotime('+1 month', $month_first_day);
 
         return [
-            date('Y-m-d', $month_first_day),
-            date('Y-m-d', strtotime('-1 day', $next_month_first_day)),
+                date('Y-m-d', $month_first_day),
+                date('Y-m-d', strtotime('-1 day', $next_month_first_day)),
         ];
     }
 

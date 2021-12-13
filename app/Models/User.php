@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,12 +23,12 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
-        'device_id',
-        'status',
-        'password',
-        'email_verified_at',
+            'name',
+            'email',
+            'device_id',
+            'status',
+            'password',
+            'email_verified_at',
     ];
 
     /**
@@ -36,9 +37,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
-        'email_verified_at',
+            'password',
+            'remember_token',
+            'email_verified_at',
     ];
 
     /**
@@ -47,8 +48,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'status' => UserStatus::class
+            'email_verified_at' => 'datetime',
+            'status' => UserStatus::class
     ];
 
     public function profile(): HasOne
@@ -81,12 +82,15 @@ class User extends Authenticatable
         return $this->hasMany(Training::class, 'created_by', 'id');
     }
 
+    /**
+     * @throws Exception
+     */
     public function getPasswordResetCode()
     {
         $expires = config('auth.passwords.users.expire');
         return $this->passwordReset()
-            ->whereDate('created_at', '>=', now()->subtract($expires . ' minutes'))
-            ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
+                ->whereDate('created_at', '>=', now()->subtract($expires . ' minutes'))
+                ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
     }
 
     private function passwordReset(): HasOne

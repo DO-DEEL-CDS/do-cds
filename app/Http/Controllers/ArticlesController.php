@@ -48,7 +48,7 @@ class ArticlesController extends Controller
         $this->authorize('update', $article);
 
         $article = $this->articleRepository->updateArticle($article, $request->validated());
-        return $this->success($article, 'Article Updated', 200);
+        return $this->success($article, 'Article Updated');
     }
 
     public function destroy(Article $article): JsonResponse

@@ -76,7 +76,7 @@ class QrCode extends Model
     {
         if (!$this->qr_image) {
             $this->qr_image = 'data:image/png;base64, ' .
-                base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(300)->generate($this->code));
+                    base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(300)->generate($this->code));
             $this->update();
         }
 

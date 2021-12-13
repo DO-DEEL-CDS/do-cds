@@ -35,18 +35,18 @@ class UserImportedNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Welcome Onboard')
-            ->greeting('Hello ' . $notifiable->name)
-            ->line('Your DO DEEL CDS Profile has been created. Kindly login on the mobile app with the details below')
-            ->line('Email: ' . $notifiable->email)
-            ->line('Password: ' . $notifiable->initialPassword)
-            ->line('Ensure you change your Password After Login!')
-            ->line('If the password does not work for you, Kindly perform a password reset with the Email Address Specified above on the mobile App');
+                ->subject('Welcome Onboard')
+                ->greeting('Hello ' . $notifiable->name)
+                ->line('Your DO DEEL CDS Profile has been created. Kindly login on the mobile app with the details below')
+                ->line('Email: ' . $notifiable->email)
+                ->line('Password: ' . $notifiable->initialPassword)
+                ->line('Ensure you change your Password After Login!')
+                ->line('If the password does not work for you, Kindly perform a password reset with the Email Address Specified above on the mobile App');
     }
 
     /**

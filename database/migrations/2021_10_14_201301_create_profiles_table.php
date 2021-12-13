@@ -18,7 +18,7 @@ class CreateProfilesTable extends Migration
             $table->string('photo')->default(url(asset('img/design-img.png')));
             $table->string('deployed_state', 4)->nullable();
             $table->string('nysc_call_up_number')->nullable();
-            $table->string('nysc_state_code')->nullable()->index();
+            $table->string('nysc_state_code')->NULLABLE()->index();
             $table->string('phone_number')->nullable()->index();
             $table->string('state_code');
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static gmb()
@@ -19,6 +20,6 @@ final class ProjectType extends Enum
 
     public function toArray(): string
     {
-        return \Str::slug($this->description);
+        return Str::slug($this->description);
     }
 }

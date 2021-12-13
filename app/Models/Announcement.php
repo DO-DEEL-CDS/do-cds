@@ -12,23 +12,23 @@ class Announcement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'content',
-        'state_code',
-        'year',
-        'batch',
-        'user_id',
-        'author_id',
+            'title',
+            'content',
+            'state_code',
+            'year',
+            'batch',
+            'user_id',
+            'author_id',
     ];
 
     protected $casts = [
-        'batch' => Batch::class,
-        'year' => 'date:Y'
+            'batch' => Batch::class,
+            'year' => 'date:Y'
     ];
 
     protected $hidden = [
-        'user_id',
-        'author_id'
+            'user_id',
+            'author_id'
     ];
 
     public function author(): BelongsTo

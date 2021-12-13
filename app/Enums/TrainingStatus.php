@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BenSampo\Enum\Enum;
+use Str;
 
 /**
  * @method static static Pending()
@@ -21,6 +22,6 @@ final class TrainingStatus extends Enum
 
     public function toArray()
     {
-        return \Str::slug($this->description);
+        return Str::slug($this->description);
     }
 }

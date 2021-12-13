@@ -16,21 +16,21 @@ class Prospect extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'name',
-        'email',
-        'nysc_state_code',
-        'verify_token',
-        'state_code',
-        'intro_video',
-        'status'
+            'name',
+            'email',
+            'nysc_state_code',
+            'verify_token',
+            'state_code',
+            'intro_video',
+            'status'
     ];
 
     protected $casts = [
-        'status' => ProspectStatus::class
+            'status' => ProspectStatus::class
     ];
 
     protected $hidden = [
-        'verify_token'
+            'verify_token'
     ];
 
     public function user(): BelongsTo
@@ -42,8 +42,8 @@ class Prospect extends Model
     {
         if (!empty($search['search'])) {
             $builder->where('name', 'like', $search['search'] . '%')
-                ->orWhere('email', 'like', $search['search'] . '%')
-                ->orWhere('nysc_state_code', 'like', $search['search'] . '%');
+                    ->orWhere('email', 'like', $search['search'] . '%')
+                    ->orWhere('nysc_state_code', 'like', $search['search'] . '%');
         }
 
         if (!empty($search['status'])) {

@@ -22,10 +22,10 @@ class EmployerFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company,
-            'email' => $this->faker->companyEmail,
-            'logo' => $this->faker->imageUrl,
-            'location' => $this->faker->country,
+                'name' => $this->faker->company,
+                'email' => $this->faker->companyEmail,
+                'logo' => $this->faker->imageUrl,
+                'location' => $this->faker->country,
         ];
     }
 }

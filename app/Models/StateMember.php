@@ -14,27 +14,27 @@ class StateMember extends Model
     use HasFactory;
 
     protected $fillable = [
-        'year',
-        'type',
-        'name',
-        'email',
-        'position',
-        'state_code',
-        'phone_number',
-        'instagram',
-        'batch',
-        'facebook',
+            'year',
+            'type',
+            'name',
+            'email',
+            'position',
+            'state_code',
+            'phone_number',
+            'instagram',
+            'batch',
+            'facebook',
     ];
 
     protected $casts = [
-        'type' => StateMembershipType::class,
-        'batch' => Batch::class,
+            'type' => StateMembershipType::class,
+            'batch' => Batch::class,
     ];
 
     protected $hidden = [
-        'user_id',
-        'created_at',
-        'updated_at'
+            'user_id',
+            'created_at',
+            'updated_at'
     ];
 
     public function state(): BelongsTo
