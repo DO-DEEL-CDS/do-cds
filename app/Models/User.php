@@ -89,7 +89,7 @@ class User extends Authenticatable
     {
         $expires = config('auth.passwords.users.expire');
         return $this->passwordReset()
-                ->whereDate('created_at', '>=', now()->subtract($expires . ' minutes'))
+                ->whereDate('created_at', '>', now()->subtract($expires . ' minutes'))
                 ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
     }
 
