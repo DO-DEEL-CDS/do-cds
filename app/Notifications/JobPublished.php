@@ -68,8 +68,8 @@ class JobPublished extends Notification
     public function toOneSignal($notifiable): OneSignalMessage
     {
         return OneSignalMessage::create()
-                ->setSubject('Training Attendance Opened')
+                ->setSubject('New Job Shared')
                 ->setBody($this->job->title)
-                ->setData('job', $this->job);
+                ->setData('job', $this->job->only(['employer', 'id', 'title', 'role', 'location']));
     }
 }
