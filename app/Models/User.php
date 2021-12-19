@@ -89,8 +89,12 @@ class User extends Authenticatable
     {
         $expires = config('auth.passwords.users.expire');
         return $this->passwordReset()
-                ->whereDate('created_at', '>=', now()->subtract($expires . ' minutes'))
-                ->firstOrCreate([], ['token' => generate_otp(new PasswordReset(), 'token')])->token;
+                ->latest('created_at')
+                ->whereDate('created_at', '>', now()->subtract($expires.' minutes'))
+                ->firstOrCreate([], [
+                        'token' => generate_otp(new PasswordReset(), 'token'),
+                        'created_at' => now(),
+                ])->token;
     }
 
     private function passwordReset(): HasOne
@@ -106,10 +110,10 @@ class User extends Authenticatable
     public function scopeSearch(Builder $builder, array $search): void
     {
         if (!empty($search['search'])) {
-            $builder->where('name', 'like', $search['search'] . '%');
-            $builder->orWhere('email', 'like', $search['search'] . '%');
+            $builder->where('name', 'like', $search['search'].'%');
+            $builder->orWhere('email', 'like', $search['search'].'%');
             $builder->orWhereHas('profile', function ($q) use ($search) {
-                $q->where('nysc_state_code', 'like', $search['search'] . '%');
+                $q->where('nysc_state_code', 'like', $search['search'].'%');
             });
         }
     }

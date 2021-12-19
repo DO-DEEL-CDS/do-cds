@@ -60,7 +60,7 @@ class LoginRequest extends FormRequest
             Auth::logout();
 
             throw ValidationException::withMessages([
-                    'email' => 'Deactivated Account',
+                    'email' => 'Account Deactivated',
             ]);
         }
 
