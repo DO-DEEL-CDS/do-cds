@@ -35,8 +35,8 @@ class ProspectController extends Controller
                 'nysc_state_code' => ['bail', 'required', new NyscStateCode(), 'unique:prospects'],
                 'intro_video' => ['sometimes', 'string', 'active_url']
         ], [
-                'email.unique' => 'You Already Applied to Be a member',
-                'nysc_state_code.unique' => 'You Already Applied to Be a member',
+                'email.unique' => 'The provided Email has Already been used to apply.',
+                'nysc_state_code.unique' => 'The provided Already been used to apply.',
         ]);
 
         $this->prospectRepository->create($validated);

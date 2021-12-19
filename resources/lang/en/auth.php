@@ -13,7 +13,7 @@ return [
     |
     */
 
-        'failed' => 'These credentials do not match our records. Ensure you already created an account on the mobile app or try resetting your password',
+        'failed' => 'Incorrect login credentials. Ensure you already created an account on the mobile app or try resetting your password.',
         'password' => 'The provided password is incorrect.',
         'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

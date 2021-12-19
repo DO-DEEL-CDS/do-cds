@@ -71,6 +71,7 @@ class ProjectController extends Controller
     public function getGmbSubmission(GmbSubmission $business): JsonResponse
     {
         $this->authorize('view', $business);
+        $business->load('corper');
         return $this->success($business);
     }
 
