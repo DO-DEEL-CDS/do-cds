@@ -347,7 +347,7 @@ namespace App\Models {
      * @property string $photo
      * @property string|null $deployed_state
      * @property string|null $nysc_call_up_number
-     * @property string|null $nysc_state_code
+     * @property string $nysc_state_code
      * @property string|null $phone_number
      * @property string $state_code
      * @property \Illuminate\Support\Carbon|null $created_at

@@ -49,15 +49,19 @@ class GmbSubmission extends Model
         }
 
         if (!empty($search['business_owner'])) {
-            $builder->where('business_name', 'like', $search['business_name'] . '%s');
+            $builder->where('business_name', 'like', $search['business_name'].'%s');
         }
 
         if (!empty($search['owner_gender'])) {
-            $builder->where('business_name', 'like', $search['business_name'] . '%s');
+            $builder->where('business_name', 'like', $search['business_name'].'%s');
         }
 
         if (!empty($search['user_id'])) {
             $builder->where('user_id', '=', $search['user_id']);
+        }
+
+        if (!empty($search['status'])) {
+            $builder->where('status', (int) $search['status']);
         }
     }
 }
