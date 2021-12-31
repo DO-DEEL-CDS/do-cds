@@ -84,6 +84,9 @@ class ProjectRepository extends BaseRepository
 
     public function getAllBusinesses(array $search): LengthAwarePaginator
     {
-        return GmbSubmission::with('corper')->search($search)->paginate($search['per_page'] ?? 15);
+        return GmbSubmission::with('corper')
+            ->latest()
+            ->search($search)
+            ->paginate($search['per_page'] ?? 15);
     }
 }
