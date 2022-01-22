@@ -97,7 +97,7 @@ class User extends Authenticatable
                 ])->token;
     }
 
-    private function passwordReset(): HasOne
+    public function passwordReset(): HasOne
     {
         return $this->hasOne(PasswordReset::class, 'email', 'email');
     }
