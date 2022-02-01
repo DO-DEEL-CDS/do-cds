@@ -47,15 +47,15 @@ jobs:
             php artisan up
             echo "End"
 
-      #      - name: Notify slack Deployment Suceded
-      #        if: success()
-      #        env:
-      #          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-      #        uses: voxmedia/github-action-slack-notify-build@v1
-      #        with:
-      #          channel: deploys
-      #          status: SUCCESS
-      #          color: good
+      - name: Notify slack Deployment Suceeded
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: deploys
+          status: SUCCESS
+          color: good
 
       - name: Notify slack Deployment Failed
         if: failure()

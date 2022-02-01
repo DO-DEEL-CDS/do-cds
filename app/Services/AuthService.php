@@ -60,11 +60,12 @@ class AuthService extends BaseService
 
     public function verifyPasswordResetCode(array $data): User
     {
+        $expires = config('auth.passwords.users.expire');
         $user = $this->userRepository->findByEmail($data['email']);
-        $code = $user->getPasswordResetCode();
+        $reset = $user->passwordReset()->where('token', $data['code'])->first();
 
-        abort_if((int) $code !== $data['code'], Response::HTTP_BAD_REQUEST, 'Reset Code Expired');
-
+        abort_if($reset === null, Response::HTTP_BAD_REQUEST, 'Reset Code Invalid');
+        abort_if($reset->created_at->add($expires . ' minutes')->isPast(), Response::HTTP_BAD_REQUEST, 'Reset Code Expired');
         return $user;
     }
 
